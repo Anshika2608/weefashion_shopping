@@ -1,0 +1,149 @@
+{
+    "women":[
+    {
+        "id":"1",
+        "image":"./src/assets/Women_Images/Topwear/product_3.png" ,
+        "company":"Puma" ,
+        "Title":"A brown sports womens's top",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1200",
+        "Current_price":"Rs.1140",
+        "discount":"5% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"2",
+        "image":"./src/assets/Women_Images/Topwear/product_4.png" ,
+        "company":"Puma" ,
+        "Title":"A brown women's top",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 900",
+        "Current_price":"Rs.505",
+        "discount":"44% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"3",
+        "image":"./src/assets/Women_Images/Topwear/product_5.png" ,
+        "company":"Puma" ,
+        "Title":"A pinkish glittery women's top",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1000",
+        "Current_price":"Rs.700",
+        "discount":"30% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"4",
+        "image":"./src/assets/Women_Images/Topwear/product_7.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"5",
+        "image":"./src/assets/Women_Images/Topwear/product_6.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"6",
+        "image":"./src/assets/Women_Images/Topwear/product_1.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"7",
+        "image":"./src/assets/Women_Images/Topwear/product_2.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"8",
+        "image":"./src/assets/Women_Images/Topwear/product_8.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"9",
+        "image":"./src/assets/Women_Images/Topwear/product_9.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"10",
+        "image":"./src/assets/Women_Images/Topwear/product_10.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        
+        "id":"11",
+        "image":"./src/assets/Women_Images/Topwear/product_11.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    },
+    {
+        "id":"12",
+        "image":"./src/assets/Women_Images/Topwear/product_12.png" ,
+        "company":"Puma" ,
+        "Title":"A white highneck women's sweater",
+        "Category":"Topwear" ,
+        "Gender":"Women",
+        "previous_price":"Rs. 1500",
+        "Current_price":"Rs.1199",
+        "discount":"20% off",
+        "Quantity":"5"
+    }
+    ]
+}
