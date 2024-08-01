@@ -3,7 +3,6 @@ import React from 'react'
 function FilterKids({kidcolors,kidcompanys,kidcategorys,kidsizes,sizeFilter,ColorFilter,CategoryFilter,priceFilter,CompanyFilter,emptyFilter}) {
   return (
     <>
-     {/* <div className="flex flex-col  h-full sticky -top-64"> */}
                 <div className="w-64 border-b ml-6 border-dashed border-slate-400">
                     <p className="font-bold text-xl mt-6">FILTER</p>
 
@@ -13,7 +12,7 @@ function FilterKids({kidcolors,kidcompanys,kidcategorys,kidsizes,sizeFilter,Colo
                     {
                         kidcolors.map((kidcolor,index ) => (
                             <label htmlFor={kidcolor} key={index}>
-                                <input type="radio" id={kidcolor}  value={kidcolor} onChange={() => ColorFilter({ kidcolor })} name="color" />{kidcolor}
+                                <input type="radio" id={kidcolor}  value={kidcolor} onChange={(e) => ColorFilter(e.target.value)} name="color" />{kidcolor}
                             </label>
                         ))
                     }
@@ -21,9 +20,9 @@ function FilterKids({kidcolors,kidcompanys,kidcategorys,kidsizes,sizeFilter,Colo
                 <div className="ml-6 mt-4 flex flex-col">
                     <p className="font-bold text-lg text-slate-700 my-5">SIZE</p>
                     {
-                        (kidsizes).map((kidsize) => (
-                            <label htmlFor={kidsize}>
-                                <input type="radio" name='size' id={kidsize} value={kidsize} onChange={() => sizeFilter({ kidsize })} />{" "}
+                        (kidsizes).map((kidsize,index) => (
+                            <label htmlFor={kidsize} key={index}>
+                                <input type="radio" name='size' id={kidsize} value={kidsize} onChange={(e) => sizeFilter(e.target.value)} />{" "}
                                 {kidsize}
                             </label>
                         ))
@@ -33,9 +32,9 @@ function FilterKids({kidcolors,kidcompanys,kidcategorys,kidsizes,sizeFilter,Colo
                 <div className="ml-6 mt-4 flex flex-col">
                     <p className="font-bold text-lg text-slate-700 my-5">CATEGORY</p>
                     {
-                        (kidcategorys).map((kidcategory) => (
-                            <label htmlFor={kidcategory}>
-                                <input type="radio" id={kidcategory} value={kidcategory} name='category' onChange={() => CategoryFilter({ kidcategory })} />
+                        (kidcategorys).map((kidcategory,index) => (
+                            <label htmlFor={kidcategory} key={index}>
+                                <input type="radio" id={kidcategory} value={kidcategory} name='category' onChange={(e) => CategoryFilter(e.target.value)} />
                                 {kidcategory}
                             </label>
                         ))
@@ -45,9 +44,9 @@ function FilterKids({kidcolors,kidcompanys,kidcategorys,kidsizes,sizeFilter,Colo
                 <div className="ml-6 mt-4 flex flex-col">
                     <p className="font-bold text-lg text-slate-700 my-5">SIZE</p>
                     {
-                        (kidcompanys).map((kidcompany) => (
-                            <label htmlFor={kidcompany}>
-                                <input type="radio" id={kidcompany} value={kidcompany} name="company" onChange={() =>CompanyFilter({ kidcompany })} />
+                        (kidcompanys).map((kidcompany,index) => (
+                            <label htmlFor={kidcompany} key={index}>
+                                <input type="radio" id={kidcompany} value={kidcompany} name="company" onChange={(e) =>CompanyFilter(e.target.value)} />
                                 {kidcompany}
                             </label>
                         ))

@@ -38,7 +38,7 @@ function KidsTopwear() {
         </div>
         <div className="flex relative flex-col justify-end ">
           {(kidtopfiltervalue) ?
-            <div className="absolute block bg-white">
+            <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
               <FilterKids
 
                 kidcolors={kidcolors}
@@ -55,7 +55,7 @@ function KidsTopwear() {
             </div>
             : ""}
           <div className="sm:flex relative ">
-            <div className=" h-full sticky top-12">
+            <div className="hidden sm:block h-full sticky top-12">
               <FilterKids
                 kidcolors={kidcolors}
                 kidcompanys={kidcompanys}

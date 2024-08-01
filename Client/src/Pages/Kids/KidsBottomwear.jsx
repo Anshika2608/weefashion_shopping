@@ -34,14 +34,13 @@ function KidsBottomwear() {
         </nav>
         <img src={kidsbottomwear} alt="banner" className="w-full h-[22rem] " />
         <div className="flex sm:hidden justify-end">
-          <button className="  h-9 font-bold  m-4  w-20 cursor-pointer bg-cyan-700 text-white rounded-md " onClick={e => setFiltervalue(!filterValue)}>Filters</button>
+          <button className="  h-9 font-bold  m-4  w-20 cursor-pointer bg-cyan-700 text-white rounded-md " onClick={(e)=> setFiltervalue(!filterValue)}>Filters</button>
         </div>
         <div className="flex flex-col relative justify-end ">
 
-          {(filterValue) ?
-            <div className="  absolute block bg-white">
+        {filterValue && (
+            <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
               <FilterKids
-
                 kidcolors={kidcolors}
                 kidcompanys={kidcompanys}
                 kidsizes={kidsizes}
@@ -54,9 +53,9 @@ function KidsBottomwear() {
                 CategoryFilter={CategoryFilter}
               />
             </div>
-            : ""}
-          <div className="sm:flex relative ">
-          <div className=" h-full sticky top-12">
+          )}
+          <div className=" sm:flex relative ">
+          <div className="hidden sm:block h-full sticky top-12">
               <FilterKids
                 className=" h-full"
                 kidcolors={kidcolors}

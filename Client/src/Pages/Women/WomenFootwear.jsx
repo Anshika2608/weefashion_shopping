@@ -42,8 +42,8 @@ function WomenFootwear() {
         </div>
         <div className="flex relative flex-col justify-end">
           {(womenfootfiltervalue) ?
-            <div className="absolute block bg-white">
-              <FilterWomen
+            <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
+                            <FilterWomen
                 womencolors={womencolors}
                 womencompanys={womencompanys}
                 womencategorys={womencategorys}
@@ -59,7 +59,7 @@ function WomenFootwear() {
             </div>
             : ""}
           <div className="sm:flex relative ">
-            <div className=" h-full sticky top-12">
+            <div className=" h-full sm:block hidden sticky top-12">
               <FilterWomen
                 womencolors={womencolors}
                 womencompanys={womencompanys}

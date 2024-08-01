@@ -36,8 +36,8 @@ function MenTopwear() {
         </div>
         <div className="flex relative flex-col justify-end ">
           {(mentopfiltervalue) ?
-            <div className="absolute block bg-white">
-              <FilterComponent
+            <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
+                            <FilterComponent
                 colors={colors}
                 sizes={sizes}
                 categories={categories}
@@ -52,7 +52,7 @@ function MenTopwear() {
             </div>
             : ""}
           <div className="sm:flex relative ">
-            <div className=" h-full sticky top-12">
+            <div className=" h-full sm:block hidden sticky top-12">
               <FilterComponent
                 colors={colors}
                 sizes={sizes}
