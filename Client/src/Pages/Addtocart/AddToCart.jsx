@@ -63,7 +63,7 @@ const AddToCart = () => {
   let serialNo = 1
   const deleteCart = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/deletecart/deleteCart/${productId}`)
+      await axios.delete(`http://localhost:5000/api/cart/deleteCart/${productId}`)
       setCart((prevCart) =>
         prevCart.filter((item) => item.id !== productId)
       );

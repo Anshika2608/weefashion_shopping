@@ -20,7 +20,7 @@ export const MenContextProvider = ({ children }) => {
 
   const getTopwear = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/menTopwear/",{params:menFilters});
+      const response = await axios.get("http://localhost:5000/api/Clothing/",{params:menFilters});
       settopWearProducts(response.data.products)
       setErrort(null)
     } catch (error) {
@@ -30,7 +30,7 @@ export const MenContextProvider = ({ children }) => {
   };
   const getBottomwear=async()=>{
     try{
-       const response=await axios.get("http://localhost:5000/api/menBottomwear/bottom",{params:menFilters});
+       const response=await axios.get("http://localhost:5000/api/Clothing/bottom",{params:menFilters});
         setbottomwearProducts(response.data.products)
        seterrorbott(null)
     }
@@ -42,7 +42,7 @@ export const MenContextProvider = ({ children }) => {
   }
   const getFootwear=async()=>{
     try{
-       const response=await axios.get("http://localhost:5000/api/menFootwear/MenFootwear",{params:menFilters});
+       const response=await axios.get("http://localhost:5000/api/Clothing/MenFootwear",{params:menFilters});
         setFootwearProducts(response.data.products) 
         seterrorfootw(null)
 
@@ -129,7 +129,7 @@ const handlePriceSort = (sortBy) => {
 const getSingleProduct = async (productId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/menProducts/menProducts/${productId}`
+        `http://localhost:5000/api/Clothing/menProducts/${productId}`
       );
       setSingleProduct(response.data);
      console.log(response.data)

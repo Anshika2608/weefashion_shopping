@@ -17,7 +17,7 @@ export const WomenContextProvider=({children})=>{
     },[])
     const getTopwearProduct=async()=>{
         try{
-            const response=await axios.get("http://localhost:5000/api/womenTopwear/womenTopwear",{params:filters})
+            const response=await axios.get("http://localhost:5000/api/Clothing/womenTopwear",{params:filters})
             setTopwearpro(response.data.products)
             setError(null);
         }catch(err){
@@ -28,7 +28,7 @@ export const WomenContextProvider=({children})=>{
     const getBottomwearProduct = async () => {
         // API call to fetch bottomwear products based on filters
         try {
-            const response = await axios.get("http://localhost:5000/api/womenBottomwear/Bottomwear",{params:filters});
+            const response = await axios.get("http://localhost:5000/api/Clothing/Bottomwear",{params:filters});
             setBottomwearpro(response.data.products);
             seterrorbot(null);
         } catch (err) {
@@ -38,7 +38,7 @@ export const WomenContextProvider=({children})=>{
     };
     const getFootwearProduct=async()=>{
         try{
-            const response=await axios.get("http://localhost:5000/api/WomenFootwear/Footwear",{params:filters})
+            const response=await axios.get("http://localhost:5000/api/Clothing/Footwear",{params:filters})
             setFootwearpro(response.data.products)
             seterrorfoot(null)
         }catch(err){

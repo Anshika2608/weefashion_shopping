@@ -27,7 +27,7 @@ function Wishlist() {
 
   const handleDeleteFromWishlist = async (cardKey) => {
     try {
-      await axios.delete(`http://localhost:5000/api/deletewishlist/delete/${cardKey}`);
+      await axios.delete(`http://localhost:5000/api/wishlist/delete/${cardKey}`);
       setWish((prevWish) =>
         prevWish.filter((item) => item.cardKey !== cardKey)
       );

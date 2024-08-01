@@ -38,7 +38,7 @@ useEffect(() => {
       } else {
        
           if (!wishlist) {
-            await axios.post("http://localhost:5000/api/liked/liked", {
+            await axios.post("http://localhost:5000/api/wishlist/liked", {
               id,
               title,
               src,
@@ -48,7 +48,7 @@ useEffect(() => {
             });
             console.log("add");
           }else{
-            await axios.delete(`http://localhost:5000/api/deletewishlist/delete/${id}`);
+            await axios.delete(`http://localhost:5000/api/wishlist/delete/${id}`);
             console.log("delete");
           }
         
@@ -61,7 +61,7 @@ useEffect(() => {
   const [addedToCart, setAddedToCart] = useState(false);
  const addToCart=async()=>{
 try{
-  await axios.post("http://localhost:5000/api/addCart/addCart", {
+  await axios.post("http://localhost:5000/api/cart/addCart", {
               id,
               title,
               src,

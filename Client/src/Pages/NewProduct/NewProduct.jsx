@@ -19,7 +19,7 @@ function NewProduct() {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/newProduct/NewProduct', {
+            const response = await axios.post('http://localhost:5000/api/Clothing/NewProduct', {
                 Title,
                 company,
                 previous_price,
