@@ -12,10 +12,17 @@ export const MenContextProvider = ({ children }) => {
   const [errort, setErrort] = useState(null);
   const[errorbott,seterrorbott]=useState(null);
   const[errorfootw,seterrorfootw]=useState(null);
+  const[menLoading,setMenLoading]=useState(true)
   useEffect(() => {
-    getTopwear();
-    getBottomwear();
-    getFootwear();
+    setMenLoading(true);
+    const timer = setTimeout(() => {
+      getFootwear();
+      getTopwear();
+      getBottomwear();
+      setMenLoading(false);
+    }, 2000); 
+
+    return () => clearTimeout(timer); 
   }, []);
 
   const getTopwear = async () => {
@@ -75,6 +82,7 @@ export const MenContextProvider = ({ children }) => {
     }
   }
   useEffect(() => {
+    setMenLoading(true);
     const fetchTopwear = async () => {
       try {
         await getTopwear();
@@ -102,9 +110,14 @@ export const MenContextProvider = ({ children }) => {
 
         }
       };
-    fetchTopwear(); 
-    fetchBottomwear();
-    fetchFootwear();
+      const timer = setTimeout(() => {
+        fetchTopwear();
+        fetchBottomwear();
+        fetchFootwear();
+        setMenLoading(false);
+      }, 2000); // 2 seconds delay
+  
+      return () => clearTimeout(timer);
   }, [menFilters]);
 const handleColor = (color) => {
   setMenFilters(prevFilters => ({ ...prevFilters, color }));
@@ -139,7 +152,7 @@ const getSingleProduct = async (productId) => {
   };
 return (
     <MenContext.Provider
-      value={{ bottomwearProducts,topWearProducts,footwearProducts,clearFilter ,errorfootw,errorbott,errort,empty, getSingleProduct, singleProduct,handleColor,handleCategory,handleCompany,handleSize,handlePriceSort }}
+      value={{ bottomwearProducts,topWearProducts,footwearProducts,clearFilter ,menLoading,errorfootw,errorbott,errort,empty, getSingleProduct, singleProduct,handleColor,handleCategory,handleCompany,handleSize,handlePriceSort }}
     >
       {children}
     </MenContext.Provider>

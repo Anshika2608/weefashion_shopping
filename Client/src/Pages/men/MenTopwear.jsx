@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import Card from "../../Components/Card/Card";
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
 import menTopwear from "../../assets/Men_Images/banner.jpg";
-
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function MenTopwear() {
-  const { topWearProducts, errort, handleColor, handleCategory, handleCompany, handleSize, handlePriceSort, clearFilter } = useContext(MenContext);
+  const { topWearProducts, errort, handleColor, handleCategory, handleCompany, handleSize, handlePriceSort, clearFilter,menLoading } = useContext(MenContext);
 
   const colors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple", "Red"];
   const sizes = ["S", "M", "L", "XL", "XXL"];
@@ -73,8 +73,14 @@ function MenTopwear() {
               </h2>
 
               <div className="flex flex-wrap">
-                {topWearProducts &&
-                  topWearProducts.map((product, index) => (
+                {menLoading ? (
+                  [...Array(8)].map((_, index) => (
+                    <div key={index} className="m-4">
+                      <CardSkeleton />
+                    </div>
+                  ))
+                ) : (
+                  topWearProducts.map((product) => (
                     <div key={product.id} className="m-4">
                       <Card
                         id={product.id}
@@ -85,7 +91,8 @@ function MenTopwear() {
                         discount={product.discount}
                       />
                     </div>
-                  ))}
+                  ))
+                )}
               </div>
               {errort && (
                 <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">{errort}</p>

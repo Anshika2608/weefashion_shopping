@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState ,useEffect} from "react";
 import Card from "../../Components/Card/Card";
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
 import menBottomwear from "../../assets/Men_Images/banner1.jpg";
-
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function MenBottomwear() {
   const { bottomwearProducts,
-    handleColor, handleCategory, errorbott, handleCompany, handleSize, handlePriceSort, clearFilter } = useContext(MenContext);
+    handleColor, handleCategory, errorbott, handleCompany, handleSize, handlePriceSort, clearFilter,menLoading } = useContext(MenContext);
 
 
   const colors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple"];
@@ -74,18 +74,26 @@ function MenBottomwear() {
               </h2>
 
               <div className="flex flex-wrap">
-                {bottomwearProducts && bottomwearProducts.map((product, index) => (
-                  <div key={product.id} className="m-4">
-                    <Card
-                      id={product.id}
-                      src={product.image}
-                      title={product.Title}
-                      Previous={product.previous_price}
-                      Current={product.Current_price}
-                      discount={product.discount}
-                    />
-                  </div>
-                ))}
+                {menLoading ? (
+                  [...Array(8)].map((_, index) => (
+                    <div key={index} className="m-4">
+                      <CardSkeleton />
+                    </div>
+                  ))
+                ) : (
+                  bottomwearProducts.map((product) => (
+                    <div key={product.id} className="m-4">
+                      <Card
+                        id={product.id}
+                        src={product.image}
+                        title={product.Title}
+                        Previous={product.previous_price}
+                        Current={product.Current_price}
+                        discount={product.discount}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
               {errorbott && (
                 <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">{errorbott}</p>

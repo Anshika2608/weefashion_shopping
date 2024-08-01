@@ -9,11 +9,15 @@ export const WomenContextProvider=({children})=>{
     const [error, setError] = useState(null);
     const[errorbot,seterrorbot]=useState(null);
     const[errorfoot,seterrorfoot]=useState(null);
-
+  const[womenLoading,setWomenLoading]=useState(true)
     useEffect(()=>{
+      setWomenLoading(true)
+      const timer=setTimeout(()=>{
         getTopwearProduct();
         getBottomwearProduct();
         getFootwearProduct();
+      },2000)
+    return () => clearTimeout(timer);  
     },[])
     const getTopwearProduct=async()=>{
         try{
@@ -75,6 +79,7 @@ export const WomenContextProvider=({children})=>{
     //     fetchProducts();
     // }, [filters]);
       useEffect(() => {
+        setWomenLoading(true)
         const fetchTopwearProduct = async () => {
           try {
             await getTopwearProduct();
@@ -99,9 +104,14 @@ export const WomenContextProvider=({children})=>{
               seterrorfoot("No products for this combination is available")
             }
           };
-        fetchTopwearProduct(); 
-        fetchBottomwearProduct();
-        fetchFootwearProduct();
+          const timer=setTimeout(()=>{
+            fetchTopwearProduct(); 
+            fetchBottomwearProduct();
+            fetchFootwearProduct();
+            setWomenLoading(false)
+          },2000)
+        return ()=>clearTimeout(timer)
+       
       }, [filters]);
     const handleColorChange = (color) => {
         setFilters(prevFilters => ({ ...prevFilters, color }));
@@ -124,7 +134,7 @@ export const WomenContextProvider=({children})=>{
     };
     return(
         <WomenContext.Provider
-        value={{topwearpro,BottomWearpro,Footwearpro,handleColorChange,handleSizeChange,error,errorbot,errorfoot,handleCategoryChange,handleCompanyChange,handlePriceSortChange,clearFilters}}
+        value={{topwearpro,BottomWearpro,Footwearpro,womenLoading,handleColorChange,handleSizeChange,error,errorbot,errorfoot,handleCategoryChange,handleCompanyChange,handlePriceSortChange,clearFilters}}
         >
         {children}
         </WomenContext.Provider>

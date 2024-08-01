@@ -4,7 +4,7 @@ import WomenContext from "../../Contexts/WomenContext/WomenContext";
 import FilterWomen from "../../Components/Filter/FilterWomen";
 import womenTopwear from "../../assets/Women_Images/banner2.jpg";
 import { Link, useSearchParams } from "react-router-dom";
-
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 function WomenTopwear() {
     const {
         topwearpro,
@@ -15,6 +15,7 @@ function WomenTopwear() {
         handleCompanyChange,
         handlePriceSortChange,
         clearFilters,
+        womenLoading
     } = useContext(WomenContext);
 
     const womencolors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple", "Red", "Brown", "Pink"];
@@ -75,20 +76,27 @@ function WomenTopwear() {
                     <div className="ml-6">
                         <h2 className="text-2xl font-bold mb-4 mt-6 ml-6">Topwear for Women</h2>
                         <div className="flex flex-wrap">
-                            {topwearpro &&
-                                topwearpro.map((product) => (
-                                    <div key={product.id} className="m-4">
-                                        <Card
-                                            id={product.id}
-                                            src={product.image}
-                                            title={product.Title}
-                                            Previous={product.previous_price}
-                                            Current={product.Current_price}
-                                            discount={product.discount}
-                                        />
-                                    </div>
-                                ))}
-                        </div>
+                {womenLoading ? (
+                  [...Array(8)].map((_, index) => (
+                    <div key={index} className="m-4">
+                      <CardSkeleton />
+                    </div>
+                  ))
+                ) : (
+                  topwearpro.map((product) => (
+                    <div key={product.id} className="m-4">
+                      <Card
+                        id={product.id}
+                        src={product.image}
+                        title={product.Title}
+                        Previous={product.previous_price}
+                        Current={product.Current_price}
+                        discount={product.discount}
+                      />
+                    </div>
+                  ))
+                )}
+              </div>
                         {error && (
                             <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">
                                 {error}

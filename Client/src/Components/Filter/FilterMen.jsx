@@ -42,7 +42,7 @@ const FilterComponent = ({
       <div className="ml-6 mt-4 flex flex-col">
         <p className="font-bold text-lg text-slate-700 my-5">CATEGORY</p>
         {categories.map((category) => (
-          <label key={category} htmlFor={category}>
+          <label key={category} htmlFor={category} >
             <input
               type="radio"
               id={category}
