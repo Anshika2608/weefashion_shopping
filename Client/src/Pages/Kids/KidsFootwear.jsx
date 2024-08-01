@@ -4,9 +4,11 @@ import KidsContext from "../../Contexts/KidsContext/KidsContext";
 import FilterKids from "../../Components/Filter/FilterKids";
 import kidfootwear from "../../assets/Kids_Images/Kids_Topwear/kidsfootbanner.png";
 import { Link } from "react-router-dom";
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
+
 function KidsFootwear() {
   const {
-    kidsfootwearpro, sizeFilter, ColorFilter, CategoryFilter, footerror, CompanyFilter, emptyFilter, priceFilter } = useContext(KidsContext);
+    kidsfootwearpro, sizeFilter, ColorFilter, CategoryFilter, footerror, CompanyFilter, emptyFilter, priceFilter,loading } = useContext(KidsContext);
   const [kidfootfiltervalue, setKidFootFilterValue] = useState(false)
   const kidcolors = ["Blue", "Black", "Yello", "White", "Green", "Red", "Pink"]
   const kidcompanys = ["Puma", "Nike", "Campus"]
@@ -72,18 +74,26 @@ function KidsFootwear() {
               </h2>
 
               <div className="flex flex-wrap">
-                {kidsfootwearpro && kidsfootwearpro.map((product, index) => (
-                  <div key={product.id} className="m-4">
-                    <Card
-                      id={product.id}
-                      src={product.image}
-                      title={product.Title}
-                      Previous={product.previous_price}
-                      Current={product.Current_price}
-                      discount={product.discount}
-                    />
-                  </div>
-                ))}
+                {loading ? (
+                  [...Array(8)].map((_, index) => (
+                    <div key={index} className="m-4">
+                      <CardSkeleton />
+                    </div>
+                  ))
+                ) : (
+                  kidsfootwearpro.map((product) => (
+                    <div key={product.id} className="m-4">
+                      <Card
+                        id={product.id}
+                        src={product.image}
+                        title={product.Title}
+                        Previous={product.previous_price}
+                        Current={product.Current_price}
+                        discount={product.discount}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
               {footerror && (
                 <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">{footerror}</p>

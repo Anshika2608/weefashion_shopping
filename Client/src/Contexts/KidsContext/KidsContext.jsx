@@ -11,14 +11,21 @@ export const KidsContextProvider = ({ children }) => {
   const [toperror, setToperror] = useState(null);
   const [boterror, setboterror] = useState(null);
   const [footerror, setfooterror] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchKidsFootwear();
-    fetchKidsTopwear();
-    fetchKidsBottomwear();
+    setLoading(true);
+    const timer = setTimeout(() => {
+      fetchKidsFootwear();
+      fetchKidsTopwear();
+      fetchKidsBottomwear();
+      setLoading(false);
+    }, 2000); // 2 seconds delay
+
+    return () => clearTimeout(timer); // Cleanup timeout on unmount
   }, []);
 
   const fetchKidsFootwear = async () => {
+  
     try {
       const response = await axios.get("http://localhost:5000/api/Clothing/api/kidsFootwear", { params: kidsFilters });
       setKidsFootwearpro(response.data.products);
@@ -39,6 +46,7 @@ export const KidsContextProvider = ({ children }) => {
   };
 
   const fetchKidsBottomwear = async () => {
+    
     try {
       const response = await axios.get("http://localhost:5000/api/Clothing/KidsBottomwear", { params: kidsFilters });
       setKidsBottomwearpro(response.data.products);
@@ -82,8 +90,7 @@ export const KidsContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-   
-
+    setLoading(true);
     const Topwear = async () => {
       try {
         await fetchKidsTopwear();
@@ -106,9 +113,15 @@ export const KidsContextProvider = ({ children }) => {
         setfooterror("No products for this combination is available");
       }
     };
-    Topwear();
-    Bottomwear();
-    Footwear();
+
+    const timer = setTimeout(() => {
+      Topwear();
+      Bottomwear();
+      Footwear();
+      setLoading(false);
+    }, 2000); // 2 seconds delay
+
+    return () => clearTimeout(timer); // Cleanup timeout on unmount
   }, [kidsFilters]);
 
   return (
@@ -126,6 +139,7 @@ export const KidsContextProvider = ({ children }) => {
         kidstopwearpro,
         CompanyFilter,
         emptyFilter,
+        loading
       }}
     >
       {children}

@@ -3,13 +3,14 @@ import Card from "../../Components/Card/Card";
 import KidsContext from "../../Contexts/KidsContext/KidsContext";
 // import FilterKids from "../../Components/Filter/FilterKids";
 import kidsbottomwear from "../../assets/Kids_Images/Kids_Topwear/banner2.webp";
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 
 
 import { Link } from "react-router-dom";
 import FilterKids from "../../Components/Filter/FilterKids";
 function KidsBottomwear() {
   const {
-    kidsBottomwearpro, sizeFilter, ColorFilter, CategoryFilter, boterror, CompanyFilter, emptyFilter, priceFilter } = useContext(KidsContext);
+    kidsBottomwearpro, sizeFilter, ColorFilter, CategoryFilter, boterror, CompanyFilter, emptyFilter, priceFilter,loading } = useContext(KidsContext);
   const kidcolors = ["Blue", "Black", "Pink", "White", "Purple"]
   const kidcompanys = ["Puma", "Park Avenue", "U.S Polo"]
   const kidcategorys = ["Shorts", "Pants"]
@@ -75,19 +76,27 @@ function KidsBottomwear() {
                 Bottomwear for Kids
               </h2>
 
-              <div className="flex flex-wrap ">
-                {kidsBottomwearpro && kidsBottomwearpro.map((product, index) => (
-                  <div key={product.id} className="m-4">
-                    <Card
-                      id={product.id}
-                      src={product.image}
-                      title={product.Title}
-                      Previous={product.previous_price}
-                      Current={product.Current_price}
-                      discount={product.discount}
-                    />
-                  </div>
-                ))}
+              <div className="flex flex-wrap">
+                {loading ? (
+                  [...Array(8)].map((_, index) => (
+                    <div key={index} className="m-4">
+                      <CardSkeleton />
+                    </div>
+                  ))
+                ) : (
+                  kidsBottomwearpro.map((product) => (
+                    <div key={product.id} className="m-4">
+                      <Card
+                        id={product.id}
+                        src={product.image}
+                        title={product.Title}
+                        Previous={product.previous_price}
+                        Current={product.Current_price}
+                        discount={product.discount}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
               {boterror && (
                 <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">{boterror}</p>

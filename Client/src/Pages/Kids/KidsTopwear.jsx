@@ -1,20 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import Card from "../../Components/Card/Card";
 import KidsContext from "../../Contexts/KidsContext/KidsContext";
 import FilterKids from "../../Components/Filter/FilterKids";
 import kidstopwear from "../../assets/Kids_Images/Kids_Topwear/kids_banner1.jpg";
-
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 
 import { Link } from "react-router-dom";
 function KidsTopwear() {
   const {
-    kidstopwearpro, sizeFilter, ColorFilter, CategoryFilter, toperror, CompanyFilter, emptyFilter, priceFilter } = useContext(KidsContext);
+    kidstopwearpro, sizeFilter, ColorFilter, CategoryFilter, toperror, CompanyFilter, emptyFilter, priceFilter,loading } = useContext(KidsContext);
 
   const kidcolors = ["Blue", "Black", "Yellow", "White", "Green", "Purple", "Red", "Pink", "Gray"]
   const kidcompanys = ["Puma", "Park Avenue", "U.S Polo"]
   const kidcategorys = ["Hoodie", "Sweatshirt", "T-shirt"]
   const kidsizes = ["11Y", "12Y", "13Y", "14Y"]
   const [kidtopfiltervalue, setKidTopFilterValue] = useState(false)
+
+  // useEffect(() => {
+  //   if (kidstopwearpro.length > 0) {
+  //     setLoading(false);
+  //   }
+  // }, [kidstopwearpro]);
   return (
     <>
       <div className="pt-24">
@@ -29,7 +35,7 @@ function KidsTopwear() {
             <li>
               <Link to="/men"> KIDS CLOTHING {'>'} </Link>
             </li>
-            <li> FOOTWEAR</li>
+            <li> TOPWEAR</li>
           </ol>
         </nav>
         <img src={kidstopwear} alt="banner" className="w-full h-[22rem] " />
@@ -71,22 +77,30 @@ function KidsTopwear() {
             </div>
             <div className="ml-6">
               <h2 className="text-2xl font-bold mb-4 mt-6 ml-6 ">
-                Footwear for Kids
+                Topwear for Kids
               </h2>
 
-              <div className="flex flex-wrap ">
-                {kidstopwearpro && kidstopwearpro.map((product, index) => (
-                  <div key={product.id} className="m-4">
-                    <Card
-                      id={product.id}
-                      src={product.image}
-                      title={product.Title}
-                      Previous={product.previous_price}
-                      Current={product.Current_price}
-                      discount={product.discount}
-                    />
-                  </div>
-                ))}
+              <div className="flex flex-wrap">
+                {loading ? (
+                  [...Array(8)].map((_, index) => (
+                    <div key={index} className="m-4">
+                      <CardSkeleton />
+                    </div>
+                  ))
+                ) : (
+                  kidstopwearpro.map((product) => (
+                    <div key={product.id} className="m-4">
+                      <Card
+                        id={product.id}
+                        src={product.image}
+                        title={product.Title}
+                        Previous={product.previous_price}
+                        Current={product.Current_price}
+                        discount={product.discount}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
               {toperror && (
                 <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">{toperror}</p>
