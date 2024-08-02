@@ -39,7 +39,7 @@ function SingleProduct() {
  }
  const addToCart = async () => {
   try {
-    await axios.post("http://localhost:5000/api/addCart/addCart", {
+    await axios.post(`${url}/api/addCart/addCart`, {
       id: singleProduct.product.id,
       title: singleProduct.product.Title,
       src: singleProduct.product.image,

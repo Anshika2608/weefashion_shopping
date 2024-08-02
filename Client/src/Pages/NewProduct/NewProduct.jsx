@@ -11,7 +11,7 @@ function NewProduct() {
     const [discount, setDiscount] = useState("");
     const [gender, setGender] = useState("");
     const [type, setType] = useState("");
-
+const url="http://localhost:5000"
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!Title || !company || !previous_price || !Current_price || !discount || !gender || !type) {
@@ -19,7 +19,7 @@ function NewProduct() {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:5000/api/Clothing/NewProduct', {
+            const response = await axios.post(`${url}/api/Clothing/NewProduct`, {
                 Title,
                 company,
                 previous_price,

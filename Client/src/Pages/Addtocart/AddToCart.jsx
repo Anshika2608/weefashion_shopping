@@ -15,10 +15,11 @@ const AddToCart = () => {
   const [quantityMap, setQuantityMap] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
   const [PreviousAmount, setPreviousAmount] = useState(0);
+  const url="http://localhost:5000"
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/cart/");
+        const res = await axios.get(`${url}/api/cart/`);
         const responseData = await res.data.items
         setCart(responseData);
         const initialQuantityMap = {};
@@ -63,7 +64,7 @@ const AddToCart = () => {
   let serialNo = 1
   const deleteCart = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/cart/deleteCart/${productId}`)
+      await axios.delete(`${url}/api/cart/deleteCart/${productId}`)
       setCart((prevCart) =>
         prevCart.filter((item) => item.id !== productId)
       );

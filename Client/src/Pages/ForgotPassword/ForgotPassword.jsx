@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 function ForgotPassword() {
     const [message, setMessage] = useState("");
     const [emailaddress, setEmailaddress] = useState("")
+    const url="http://localhost:5000"
     const sendLink = async (e) => {
         e.preventDefault();
 
@@ -18,7 +19,7 @@ function ForgotPassword() {
             });
         } else {
             try {
-                const res = await axios.post("http://localhost:5000/api/changePassword/sendpasswordLink", {
+                const res = await axios.post(`${url}/api/changePassword/sendpasswordLink`, {
                     emailaddress
                 });
 

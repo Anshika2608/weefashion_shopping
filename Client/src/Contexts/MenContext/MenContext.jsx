@@ -13,6 +13,7 @@ export const MenContextProvider = ({ children }) => {
   const[errorbott,seterrorbott]=useState(null);
   const[errorfootw,seterrorfootw]=useState(null);
   const[menLoading,setMenLoading]=useState(true)
+  const url="http://localhost:5000"
   useEffect(() => {
     setMenLoading(true);
     const timer = setTimeout(() => {
@@ -27,7 +28,7 @@ export const MenContextProvider = ({ children }) => {
 
   const getTopwear = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/Clothing/",{params:menFilters});
+      const response = await axios.get(`${url}/api/Clothing/`,{params:menFilters});
       settopWearProducts(response.data.products)
       setErrort(null)
     } catch (error) {
@@ -37,7 +38,7 @@ export const MenContextProvider = ({ children }) => {
   };
   const getBottomwear=async()=>{
     try{
-       const response=await axios.get("http://localhost:5000/api/Clothing/bottom",{params:menFilters});
+       const response=await axios.get(`${url}/api/Clothing/bottom`,{params:menFilters});
         setbottomwearProducts(response.data.products)
        seterrorbott(null)
     }
@@ -49,7 +50,7 @@ export const MenContextProvider = ({ children }) => {
   }
   const getFootwear=async()=>{
     try{
-       const response=await axios.get("http://localhost:5000/api/Clothing/MenFootwear",{params:menFilters});
+       const response=await axios.get(`${url}/api/Clothing/MenFootwear`,{params:menFilters});
         setFootwearProducts(response.data.products) 
         seterrorfootw(null)
 
@@ -142,7 +143,7 @@ const handlePriceSort = (sortBy) => {
 const getSingleProduct = async (productId) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/Clothing/menProducts/${productId}`
+        `${url}/api/Clothing/menProducts/${productId}`
       );
       setSingleProduct(response.data);
      console.log(response.data)

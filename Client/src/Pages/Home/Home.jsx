@@ -22,11 +22,11 @@ import b18 from "../../assets/b18.jpg";
 function Home() {
   const [collection, setCollection] = useState([]);
   const [women, setWomen] = useState([]);
-
+const url="http://localhost:5000"
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/home");
+        const response = await axios.get(`${url}/api/home`);
         setCollection(response.data.products);
       } catch (error) {
         console.log("Error fetching data:", error);
@@ -34,7 +34,7 @@ function Home() {
     };
     const womenData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/home/women");
+        const res = await axios.get(`${url}/api/home/women`);
         setWomen(res.data.products);
       } catch (err) {
         console.log(err);

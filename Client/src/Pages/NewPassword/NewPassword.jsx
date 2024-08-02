@@ -7,10 +7,10 @@ function newPassword() {
     const { id, token } = useParams();
     const [passwords, setPasswords] = useState("")
     const [message, setMessage] = useState("");
-    
+    const url="http://localhost:5000"
     const userValid = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/verifyForgot/ForgotPassword/${id}/${token}`, {
+            const res = await axios.get(`${url}/api/verifyForgot/ForgotPassword/${id}/${token}`, {
                 
                 headers: {
                     "Content-Type": "application/json"
@@ -42,7 +42,7 @@ function newPassword() {
                 position: "top-center"
             });
         } else {
-            const res = await axios.post(`http://localhost:5000/api/change/${id}/${token}`, {
+            const res = await axios.post(`${url}/api/change/${id}/${token}`, {
                 passwords
             }, {
                 headers: {
@@ -65,9 +65,7 @@ function newPassword() {
 
     useEffect(() => {
         userValid()
-        // setTimeout(() => {
-        //     setData(true)
-        // }, 3000)
+       
     }, [])
     return (
         <>

@@ -12,7 +12,7 @@ import  LoginContext  from "../../Contexts/LoginContext/LoginContext";
 import "./LogIn.css"
 function LogIn() {
   const { loginData, setLoginData,DashboardValid} = useContext(LoginContext);
-
+const url="http://localhost:5000"
   const [passShow, setPassShow] = useState(false);
 const [inpval, setInpval] = useState({
   email: "",
@@ -54,7 +54,7 @@ const loginuser = async(e) => {
           position: "top-right"
       });}
       try {
-        const response = await axios.post("http://localhost:5000/api/login/login",{
+        const response = await axios.post(`${url}/api/login/login`,{
                 email,password
               })
               const responsedata = await response.data;

@@ -8,7 +8,7 @@ function Wishlist() {
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/wishlist/");
+        const res = await axios.get(`${url}/api/wishlist/`);
         //  console.log(res)
         const wishlistWithKeys = res.data.items.map((item, index) => ({
           ...item,
@@ -27,7 +27,7 @@ function Wishlist() {
 
   const handleDeleteFromWishlist = async (cardKey) => {
     try {
-      await axios.delete(`http://localhost:5000/api/wishlist/delete/${cardKey}`);
+      await axios.delete(`${url}/api/wishlist/delete/${cardKey}`);
       setWish((prevWish) =>
         prevWish.filter((item) => item.cardKey !== cardKey)
       );

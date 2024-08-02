@@ -5,12 +5,13 @@ const LoginContext = createContext();
 
 export const LoginContextProvider = ({ children }) => {
   const [loginData, setLoginData] = useState(null);
+  const url="http://localhost:5000"
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
 
     try {
       
-      const res = await fetch("http://localhost:5000/api/validUser/validuser", {
+      const res = await fetch(`${url}/api/validUser/validuser`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

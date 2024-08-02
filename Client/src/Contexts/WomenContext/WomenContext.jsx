@@ -10,6 +10,7 @@ export const WomenContextProvider=({children})=>{
     const[errorbot,seterrorbot]=useState(null);
     const[errorfoot,seterrorfoot]=useState(null);
   const[womenLoading,setWomenLoading]=useState(true)
+  const url="http://localhost:5000"
     useEffect(()=>{
       setWomenLoading(true)
       const timer=setTimeout(()=>{
@@ -21,7 +22,7 @@ export const WomenContextProvider=({children})=>{
     },[])
     const getTopwearProduct=async()=>{
         try{
-            const response=await axios.get("http://localhost:5000/api/Clothing/womenTopwear",{params:filters})
+            const response=await axios.get(`${url}/api/Clothing/womenTopwear`,{params:filters})
             setTopwearpro(response.data.products)
             setError(null);
         }catch(err){
@@ -32,7 +33,7 @@ export const WomenContextProvider=({children})=>{
     const getBottomwearProduct = async () => {
         // API call to fetch bottomwear products based on filters
         try {
-            const response = await axios.get("http://localhost:5000/api/Clothing/Bottomwear",{params:filters});
+            const response = await axios.get(`${url}/api/Clothing/Bottomwear`,{params:filters});
             setBottomwearpro(response.data.products);
             seterrorbot(null);
         } catch (err) {
@@ -42,7 +43,7 @@ export const WomenContextProvider=({children})=>{
     };
     const getFootwearProduct=async()=>{
         try{
-            const response=await axios.get("http://localhost:5000/api/Clothing/Footwear",{params:filters})
+            const response=await axios.get(`${url}/api/Clothing/Footwear`,{params:filters})
             setFootwearpro(response.data.products)
             seterrorfoot(null)
         }catch(err){
@@ -65,19 +66,6 @@ export const WomenContextProvider=({children})=>{
           radio.checked = false;
         }
       };
-    //   useEffect(() => {
-    //     const fetchProducts = async () => {
-    //         try {
-    //             await getTopwearProduct();
-    //             await getBottomwearProduct();
-    //             await getFootwearProduct();
-    //         } catch (error) {
-    //             console.error("Error fetching products:", error);
-    //         }
-    //     };
-    
-    //     fetchProducts();
-    // }, [filters]);
       useEffect(() => {
         setWomenLoading(true)
         const fetchTopwearProduct = async () => {

@@ -12,6 +12,7 @@ export const KidsContextProvider = ({ children }) => {
   const [boterror, setboterror] = useState(null);
   const [footerror, setfooterror] = useState(null);
   const [loading, setLoading] = useState(true);
+  const url="http://localhost:5000"
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
@@ -27,7 +28,7 @@ export const KidsContextProvider = ({ children }) => {
   const fetchKidsFootwear = async () => {
   
     try {
-      const response = await axios.get("http://localhost:5000/api/Clothing/api/kidsFootwear", { params: kidsFilters });
+      const response = await axios.get(`${url}/api/Clothing/api/kidsFootwear`, { params: kidsFilters });
       setKidsFootwearpro(response.data.products);
       setfooterror(null);
     } catch (err) {
@@ -37,7 +38,7 @@ export const KidsContextProvider = ({ children }) => {
 
   const fetchKidsTopwear = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/Clothing/KidsTopwear", { params: kidsFilters });
+      const response = await axios.get(`${url}/api/Clothing/KidsTopwear`, { params: kidsFilters });
       setKidsTopwearpro(response.data.products);
       setToperror(null);
     } catch (err) {
@@ -48,7 +49,7 @@ export const KidsContextProvider = ({ children }) => {
   const fetchKidsBottomwear = async () => {
     
     try {
-      const response = await axios.get("http://localhost:5000/api/Clothing/KidsBottomwear", { params: kidsFilters });
+      const response = await axios.get(`${url}/api/Clothing/KidsBottomwear`, { params: kidsFilters });
       setKidsBottomwearpro(response.data.products);
       setboterror(null);
     } catch (err) {

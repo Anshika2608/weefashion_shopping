@@ -16,7 +16,7 @@ import "./SignUp.css"
 function SignUp() {
   const [passShow, setPassShow] = useState(false);
   const [cpassShow, setCPassShow] = useState(false);
-
+const url="http://localhost:5000"
 
   const [inpval, setInpval] = useState({
     fname: "",
@@ -60,7 +60,7 @@ function SignUp() {
       toast.error("Passwords do not match!", { position: "top-right" });
     } else {
       try {
-        const response = await axios.post("http://localhost:5000/api/signup/", {
+        const response = await axios.post(`${url}/api/signup/`, {
           fname, email, password, cpassword
         });
         console.log("API response:", response);
