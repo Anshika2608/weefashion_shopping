@@ -13,7 +13,7 @@ function SingleProduct() {
   const { id } = useParams();
   const[quantity,setQuantity]=useState(0);
   const[added,setAdded]=useState(false)
-  
+  const url="https://weefashion-shopping-backend-01lg.onrender.com"
   useEffect(() => {
     getSingleProduct(id);
   }, []);
