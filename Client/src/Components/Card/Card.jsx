@@ -25,7 +25,7 @@ useEffect(() => {
     setWishlist(JSON.parse(storedWishlist));
   }
 }, [id]);
-
+const url="https://weefashion-shopping-backend-01lg.onrender.com"
   const handleWishlist = async () => { 
     try {
         
@@ -38,7 +38,7 @@ useEffect(() => {
       } else {
        
           if (!wishlist) {
-            await axios.post("http://localhost:5000/api/wishlist/liked", {
+            await axios.post(`${url}/api/wishlist/liked`, {
               id,
               title,
               src,
@@ -48,7 +48,7 @@ useEffect(() => {
             });
             console.log("add");
           }else{
-            await axios.delete(`http://localhost:5000/api/wishlist/delete/${id}`);
+            await axios.delete(`${url}/api/wishlist/delete/${id}`);
             console.log("delete");
           }
         
@@ -61,7 +61,7 @@ useEffect(() => {
   const [addedToCart, setAddedToCart] = useState(false);
  const addToCart=async()=>{
 try{
-  await axios.post("http://localhost:5000/api/cart/addCart", {
+  await axios.post(`${url}/api/cart/addCart`, {
               id,
               title,
               src,
