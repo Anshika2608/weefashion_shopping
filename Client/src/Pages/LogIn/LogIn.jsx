@@ -12,7 +12,7 @@ import  LoginContext  from "../../Contexts/LoginContext/LoginContext";
 import "./LogIn.css"
 function LogIn() {
   const { loginData, setLoginData,DashboardValid} = useContext(LoginContext);
-const url="http://localhost:5000"
+const url="https://weefashion-shopping-backend-01lg.onrender.com"
   const [passShow, setPassShow] = useState(false);
 const [inpval, setInpval] = useState({
   email: "",

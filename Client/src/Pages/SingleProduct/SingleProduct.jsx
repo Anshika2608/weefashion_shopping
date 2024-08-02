@@ -13,7 +13,11 @@ function SingleProduct() {
   const { id } = useParams();
   const[quantity,setQuantity]=useState(0);
   const[added,setAdded]=useState(false)
+<<<<<<< HEAD
   const url="http://localhost:5000"
+=======
+  const url="https://weefashion-shopping-backend-01lg.onrender.com"
+>>>>>>> 332847227666761c596fa24b6e5bbd0185b48821
   useEffect(() => {
     getSingleProduct(id);
   }, []);

@@ -13,7 +13,7 @@ export const MenContextProvider = ({ children }) => {
   const[errorbott,seterrorbott]=useState(null);
   const[errorfootw,seterrorfootw]=useState(null);
   const[menLoading,setMenLoading]=useState(true)
-  const url="http://localhost:5000"
+  const url="https://weefashion-shopping-backend-01lg.onrender.com"
   useEffect(() => {
     setMenLoading(true);
     const timer = setTimeout(() => {

@@ -15,7 +15,7 @@ function Navbar() {
   });
   const history = useNavigate()
   const { loginData, setLoginData, DashboardValid } = useContext(LoginContext);
-
+const url="https://weefashion-shopping-backend-01lg.onrender.com"
   useEffect(() => {
 
     DashboardValid();
@@ -35,7 +35,7 @@ function Navbar() {
     console.log("hi")
     let token = localStorage.getItem("usersdatatoken");
     console.log(token)
-    const res = await fetch("http://localhost:5000/api/logoutUser/logout", {
+    const res = await fetch(`${url}/api/logoutUser/logout`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
