@@ -4,18 +4,16 @@ import Card from "../../Components/Card/Card";
 
 function Wishlist() {
   const [wish, setWish] = useState([]);
-
+  const url="http://localhost:5000"
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
         const res = await axios.get(`${url}/api/wishlist/`);
-        //  console.log(res)
         const wishlistWithKeys = res.data.items.map((item, index) => ({
           ...item,
           cardKey: item.id,
         }));
         setWish(wishlistWithKeys);
-        // console.log("Updated wish state:", wish);
         console.log(wish);
       } catch (err) {
         console.log(err);

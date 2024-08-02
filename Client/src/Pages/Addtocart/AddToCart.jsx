@@ -22,6 +22,9 @@ const AddToCart = () => {
         const res = await axios.get(`${url}/api/cart/`);
         const responseData = await res.data.items
         setCart(responseData);
+        localStorage.setItem('cart', JSON.stringify(responseData));
+
+
         const initialQuantityMap = {};
         responseData.forEach(product => {
           initialQuantityMap[product.id] = 1; // Initialize quantity as 0 for each product
@@ -51,25 +54,24 @@ const AddToCart = () => {
   const handleQuantityChange = (productId, change) => {
     setQuantityMap(prevQuantityMap => {
       const updatedQuantity = prevQuantityMap[productId] + change;
-      // Ensure quantity is not negative
       const newQuantity = Math.max(updatedQuantity, 1);
       const newQuantityMap = {
         ...prevQuantityMap,
         [productId]: newQuantity
       };
-      calculateTotalAmount(cart, newQuantityMap); // Recalculate total amount
+      calculateTotalAmount(cart, newQuantityMap); 
       return newQuantityMap;
     });
   };
-  let serialNo = 1
+  
   const deleteCart = async (productId) => {
     try {
       await axios.delete(`${url}/api/cart/deleteCart/${productId}`)
-      setCart((prevCart) =>
-        prevCart.filter((item) => item.id !== productId)
-      );
-      calculateTotalAmount(cart.filter(item => item.id !== productId), quantityMap);
-    } catch (err) {
+      const updatedCart = cart.filter(item => item.id !== productId);
+      setCart(updatedCart);
+      localStorage.setItem('cart', JSON.stringify(updatedCart)); 
+      calculateTotalAmount(updatedCart, quantityMap);
+      } catch (err) {
       console.log(err);
     }
   }

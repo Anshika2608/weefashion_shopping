@@ -13,7 +13,7 @@ function SingleProduct() {
   const { id } = useParams();
   const[quantity,setQuantity]=useState(0);
   const[added,setAdded]=useState(false)
-  
+  const url="http://localhost:5000"
   useEffect(() => {
     getSingleProduct(id);
   }, []);
