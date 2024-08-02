@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 function ForgotPassword() {
     const [message, setMessage] = useState("");
     const [emailaddress, setEmailaddress] = useState("")
-    const url="https://weefashion-shopping-backend-01lg.onrender.com"
+    const url="http://localhost:5000"
     const sendLink = async (e) => {
         e.preventDefault();
 

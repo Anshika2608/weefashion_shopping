@@ -18,7 +18,6 @@ function Card({
   list
 }) {
   const [wishlist, setWishlist] = useState(false);
-<<<<<<< HEAD
   const [addedToCart, setAddedToCart] = useState(false);
   const url = "http://localhost:5000";
 
@@ -36,16 +35,6 @@ function Card({
   }, [id]);
 
   const handleWishlist = async () => {
-=======
-useEffect(() => {
-  const storedWishlist = localStorage.getItem(`wishlist_${id}`);
-  if (storedWishlist !== null) {
-    setWishlist(JSON.parse(storedWishlist));
-  }
-}, [id]);
-const url="https://weefashion-shopping-backend-01lg.onrender.com"
-  const handleWishlist = async () => { 
->>>>>>> 332847227666761c596fa24b6e5bbd0185b48821
     try {
       setWishlist(!wishlist);
       localStorage.setItem(`wishlist_${id}`, !wishlist);
@@ -53,7 +42,6 @@ const url="https://weefashion-shopping-backend-01lg.onrender.com"
       if (list) {
         onDeleteFromWishlist(cardKey);
       } else {
-<<<<<<< HEAD
         if (!wishlist) {
           await axios.post(`${url}/api/wishlist/liked`, {
             id,
@@ -68,46 +56,11 @@ const url="https://weefashion-shopping-backend-01lg.onrender.com"
           await axios.delete(`${url}/api/wishlist/delete/${id}`);
           console.log("Removed from wishlist");
         }
-=======
-       
-          if (!wishlist) {
-            await axios.post(`${url}/api/wishlist/liked`, {
-              id,
-              title,
-              src,
-              Previous,
-              Current,
-              discount,
-            });
-            console.log("add");
-          }else{
-            await axios.delete(`${url}/api/wishlist/delete/${id}`);
-            console.log("delete");
-          }
-        
-     
->>>>>>> 332847227666761c596fa24b6e5bbd0185b48821
       }
     } catch (error) {
       console.error("Error handling wishlist:", error);
     }
   };
-<<<<<<< HEAD
-=======
-  const [addedToCart, setAddedToCart] = useState(false);
- const addToCart=async()=>{
-try{
-  await axios.post(`${url}/api/cart/addCart`, {
-              id,
-              title,
-              src,
-              Previous,
-              Current,
-              discount
-            });
-            console.log("add");
-            setAddedToCart(true);
->>>>>>> 332847227666761c596fa24b6e5bbd0185b48821
 
   const addToCart = async () => {
     try {

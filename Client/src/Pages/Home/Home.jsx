@@ -22,7 +22,7 @@ import b18 from "../../assets/b18.jpg";
 function Home() {
   const [collection, setCollection] = useState([]);
   const [women, setWomen] = useState([]);
-const url="https://weefashion-shopping-backend-01lg.onrender.com"
+const url="http://localhost:5000"
   useEffect(() => {
     const fetchData = async () => {
       try {

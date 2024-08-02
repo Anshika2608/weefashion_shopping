@@ -15,7 +15,7 @@ const AddToCart = () => {
   const [quantityMap, setQuantityMap] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
   const [PreviousAmount, setPreviousAmount] = useState(0);
-  const url="https://weefashion-shopping-backend-01lg.onrender.com"
+  const url="http://localhost:5000"
   useEffect(() => {
     const fetchCart = async () => {
       try {
