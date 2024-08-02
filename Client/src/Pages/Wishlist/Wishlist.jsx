@@ -4,7 +4,7 @@ import Card from "../../Components/Card/Card";
 
 function Wishlist() {
   const [wish, setWish] = useState([]);
-
+const url="https://weefashion-shopping-backend-01lg.onrender.com"
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
