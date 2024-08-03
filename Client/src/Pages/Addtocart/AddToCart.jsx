@@ -118,6 +118,7 @@ const AddToCart = () => {
                   <p>No items in Cart</p>
                 )}
               </div>
+              <div className='flex '>
               <div className='flex flex-col gap-4 mt-12 '>
                 <h2 className='text-2xl font-semibold mx-12 text-amber-700'>Cart Totals</h2>
                 <div className='flex flex-col  gap-2 mx-12'>
@@ -140,7 +141,15 @@ const AddToCart = () => {
                   <button className='bg-green-500 mt-4 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer  '>Proceed to checkout </button>
 
                 </div>
+               
+                
               </div>
+              <div cl>
+                <h3>Promo Code</h3>
+                <input type="text" className='w-96 rounded-md h-10 border-2 border-black '/>
+                </div>
+              </div>
+            
 
             </div>
 
