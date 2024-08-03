@@ -118,7 +118,7 @@ const AddToCart = () => {
                   <p>No items in Cart</p>
                 )}
               </div>
-              <div className='flex '>
+              <div className='flex w-screen justify-around'>
               <div className='flex flex-col gap-4 mt-12 '>
                 <h2 className='text-2xl font-semibold mx-12 text-amber-700'>Cart Totals</h2>
                 <div className='flex flex-col  gap-2 mx-12'>
@@ -144,9 +144,13 @@ const AddToCart = () => {
                
                 
               </div>
-              <div cl>
-                <h3>Promo Code</h3>
-                <input type="text" className='w-96 rounded-md h-10 border-2 border-black '/>
+              <div className='mt-12'>
+                <h3 className='font-bold'>Promo Code</h3>
+                <div>
+                <input type="text" className='w-96 rounded-l-md h-10 border-2 mt-1 border-black '/>
+                <button className='bg-black text-white w-24 outline-none h-10 -mt-6 rounded-r-md'>Apply</button>
+                </div>
+                
                 </div>
               </div>
             
