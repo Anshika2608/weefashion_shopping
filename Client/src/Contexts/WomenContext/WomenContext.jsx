@@ -10,8 +10,8 @@ export const WomenContextProvider=({children})=>{
     const[errorbot,seterrorbot]=useState(null);
     const[errorfoot,seterrorfoot]=useState(null);
   const[womenLoading,setWomenLoading]=useState(true)
-  const url="https://weefashion-shopping-backend-01lg.onrender.com"
-    useEffect(()=>{
+  const url="http://localhost:5000"
+      useEffect(()=>{
       setWomenLoading(true)
       const timer=setTimeout(()=>{
         getTopwearProduct();

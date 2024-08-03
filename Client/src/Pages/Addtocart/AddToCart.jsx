@@ -15,7 +15,7 @@ const AddToCart = () => {
   const [quantityMap, setQuantityMap] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
   const [PreviousAmount, setPreviousAmount] = useState(0);
-  const url="http://localhost:5000"
+  const url = "http://localhost:5000"
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -59,19 +59,19 @@ const AddToCart = () => {
         ...prevQuantityMap,
         [productId]: newQuantity
       };
-      calculateTotalAmount(cart, newQuantityMap); 
+      calculateTotalAmount(cart, newQuantityMap);
       return newQuantityMap;
     });
   };
-  
+
   const deleteCart = async (productId) => {
     try {
       await axios.delete(`${url}/api/cart/deleteCart/${productId}`)
       const updatedCart = cart.filter(item => item.id !== productId);
       setCart(updatedCart);
-      localStorage.setItem('cart', JSON.stringify(updatedCart)); 
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
       calculateTotalAmount(updatedCart, quantityMap);
-      } catch (err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -79,49 +79,47 @@ const AddToCart = () => {
     <div className='pt-24'>
       {
         <div>
-          <h1 className='text-4xl font-bold   w-screen text-center'>Items in Cart</h1>
+          <h1 className='text-4xl font-bold  mt-8 w-screen text-center'>Items in Cart</h1>
           {loginData && loginData.ValidUserOne ? (
 
 
-            <div className="mt-4 mb-8 flex w-screen justify-around">
-              <div className='bg-gray-50 rounded-md justify-center  pb-12 '> 
+            <div className="mt-4 mb-8 w-screen ">
+              <div className='bg-gray-100 flex-wrap flex mx-12 rounded-lg justify-center  pb-12 '>
                 {cart && cart.length > 0 ? (
-                cart.map((product, index) => (
+                  cart.map((product, index) => (
 
-                  <div key={product.id} className="flex h-56 w-[35rem] mx-8 border-2 bg-white border-slate-200 rounded-md gap-2 mt-12 shadow-lg justify-around pt-2 ">
-                   <div>
-                   <img src={product.src} alt="" className='h-40 w-32 rounded-md ' />
-                    <div className='border-2 rounded-md border-black h-8 w-28 mt-4 flex justify-around items-center'>
-                      <RiSubtractFill className='text-xl cursor-pointer' onClick={() => handleQuantityChange(product.id, -1)} />
-                      {quantityMap[product.id]}
-                      <IoIosAdd className='text-xl cursor-pointer' onClick={() => handleQuantityChange(product.id, 1)} />
-                    </div>
-                   </div>
-                    
-                    <div className='flex flex-col h-40    '>
-                      <p className=' text-lg font-semibold capitalize'>{product.title}</p>
-                      <div className='flex gap-4  mt-2'>
-                        <p className='line-through text-sm text-center font-semibold'>Rs.{product.Previous}</p>
-                        <p className='text-sm text-center font-semibold'>Rs.{product.Current}</p>
-                        <p className='text-red-500 ml-1 text-sm'>{product.discount}</p>
+                    <div key={product.id} className="flex  h-40 w-[35rem] mx-8 border-2 bg-white border-slate-200 rounded-md gap-2 mt-12 shadow-lg justify-around pt-2 ">
+                      <div>
+                        <img src={product.src} alt="" className='h-36 w-32 rounded-md ' />
                       </div>
 
+                      <div className='flex flex-col h-40    '>
+                        <p className=' text-lg font-semibold capitalize'>{product.title}</p>
+                        <div className='flex gap-4  mt-2'>
+                          <p className='line-through text-sm text-center font-semibold'>Rs.{product.Previous}</p>
+                          <p className='text-sm text-center font-semibold'>Rs.{product.Current}</p>
+                          <p className='text-red-500 ml-1 text-sm'>{product.discount}</p>
+                        </div>
+                        <div className='border-2 rounded-md border-black h-8 w-28 mt-4 flex justify-around items-center'>
+                          <RiSubtractFill className='text-xl cursor-pointer' onClick={() => handleQuantityChange(product.id, -1)} />
+                          {quantityMap[product.id]}
+                          <IoIosAdd className='text-xl cursor-pointer' onClick={() => handleQuantityChange(product.id, 1)} />
+                        </div>
+                      </div>
+                      <div>
+                        <IoCloseOutline className='text-xl mt-2' onClick={() => deleteCart(product.id)} />
+                      </div>
                     </div>
-                  <div>
-                  <IoCloseOutline className='text-xl ' onClick={() => deleteCart(product.id)} />
-
-                  </div>
-                  </div>
 
 
-                )
+                  )
 
-                )) : (
-                <p>No items in Cart</p>
-              )}
+                  )) : (
+                  <p>No items in Cart</p>
+                )}
               </div>
 
-              <div className='flex flex-col items-center gap-2'>
+              <div className='flex flex-col items-center gap-2 mt-8'>
 
                 <p className='text-lg font-semibold'>Total Amount: {PreviousAmount}</p>
                 <p className='text-lg font-semibold'>After discount: {totalAmount}</p>

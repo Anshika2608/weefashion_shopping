@@ -4,16 +4,16 @@ import { Link } from "react-router-dom";
 import MenContext from "../../Contexts/MenContext/MenContext";
 import { FaStar } from "react-icons/fa6";
 import Stars from "../../Components/Star/Stars";
-import menimage from "../../assets/Kids_Images/Kids_Bottomwear/kidspants1.avif";
-import { GrAdd,GrFormSubtract} from "react-icons/gr";
+import menimage from "/src/assets/Women_Images/Topwear/product_2.png";
+import { GrAdd, GrFormSubtract } from "react-icons/gr";
 import axios from "axios"
 function SingleProduct() {
   const [isMaxQuantityReached, setIsMaxQuantityReached] = useState(false);
   const { getSingleProduct, singleProduct } = useContext(MenContext);
   const { id } = useParams();
-  const[quantity,setQuantity]=useState(0);
-  const[added,setAdded]=useState(false)
-  const url="http://localhost:5000"
+  const [quantity, setQuantity] = useState(0);
+  const [added, setAdded] = useState(false)
+  const url = "http://localhost:5000"
   useEffect(() => {
     getSingleProduct(id);
   }, []);
@@ -23,37 +23,37 @@ function SingleProduct() {
   }
 
 
-  const handleQuantity=()=>{
-    if(singleProduct.product.Quantity>=quantity)
-    setQuantity(quantity+1)
-    else{
+  const handleQuantity = () => {
+    if (singleProduct.product.Quantity >= quantity)
+      setQuantity(quantity + 1)
+    else {
       setIsMaxQuantityReached(!isMaxQuantityReached);
     }
   }
- const handleQuantitysub=()=>{
-  if(quantity>0){
-    setQuantity(quantity-1)
-    setIsMaxQuantityReached(false);
+  const handleQuantitysub = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1)
+      setIsMaxQuantityReached(false);
+    }
+
   }
-  
- }
- const addToCart = async () => {
-  try {
-    await axios.post(`${url}/api/addCart/addCart`, {
-      id: singleProduct.product.id,
-      title: singleProduct.product.Title,
-      src: singleProduct.product.image,
-      Previous: singleProduct.product.previous_price,
-      Current: singleProduct.product.Current_price,
-      discount: singleProduct.product.discount,
-      quantity:singleProduct.product.quantity
-    });
-    console.log("Product added to cart successfully");
-    setAdded(true)
-  } catch (error) {
-    console.error("Error adding product to cart:", error);
-  }
-};
+  const addToCart = async () => {
+    try {
+      await axios.post(`${url}/api/addCart/addCart`, {
+        id: singleProduct.product.id,
+        title: singleProduct.product.Title,
+        src: singleProduct.product.image,
+        Previous: singleProduct.product.previous_price,
+        Current: singleProduct.product.Current_price,
+        discount: singleProduct.product.discount,
+        quantity: singleProduct.product.quantity
+      });
+      console.log("Product added to cart successfully");
+      setAdded(true)
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+    }
+  };
   return (
     <>
       <div>
@@ -62,16 +62,16 @@ function SingleProduct() {
             <div className="pt-32 pl-12 pb-5">
               <div className="flex flex-wrap gap-3">
                 <div className="hidden md:visible md:flex flex-col gap-2 ">
-                  
-                  <img src={singleProduct.product.image} className="h-40 w-24" />
-                  <img src={singleProduct.product.image} className="h-40 w-24" />
-                  <img src={singleProduct.product.image} className="h-40 w-24"  />
-                  <img src={singleProduct.product.image} className="h-40 w-24"  />
+
+                  {Array(4).fill(menimage).map((img, index) => (
+                    <img key={index} src={img} className="h-40 w-24" />
+                  ))}
+
                 </div>
                 <div>
                   <img
-                    src={singleProduct.product.image}
-                    className="md:h-[42rem] md:w-[32rem] h-72 w-64 sm:h-96 sm:w-96 "
+                    src={menimage}
+                    className="md:h-[42rem] md:w-[32rem] h-72 w-64 sm:h-96 sm:w-96"
                     alt={singleProduct.product.Title}
                   />
                 </div>
@@ -83,7 +83,7 @@ function SingleProduct() {
                     {singleProduct.product.Category}
                   </p>
                   <p className=" text-xl text-slate-400 font-semibold mt-7 capitalize">
-                  {singleProduct.product.company}
+                    {singleProduct.product.company}
                   </p>
                   <div className="flex gap-3 pt-8">
                     <p className="font-bold text-xl">
@@ -134,16 +134,16 @@ function SingleProduct() {
                   <div className="mt-10 flex  gap-2">
                     <p className="font-semibold text-lg">QTY : </p>
                     <div className="border-2 border-slate-400 w-24 h-8 rounded-md flex justify-around ">
-                    <button onClick={handleQuantitysub}><GrFormSubtract/></button>
-                     <p className="text-lg">{quantity}</p>
-                     <button onClick={handleQuantity}> <GrAdd /></button>
+                      <button onClick={handleQuantitysub}><GrFormSubtract /></button>
+                      <p className="text-lg">{quantity}</p>
+                      <button onClick={handleQuantity}> <GrAdd /></button>
 
                     </div>
                     {isMaxQuantityReached && <div className="text-red-500 text-lg pt-1 font-semibold">Maximum quantity reached!</div>}
                   </div>
                   <div>
-                    <button className="bg-[#51cccc] text-white font-semibold mt-10 w-48 text-lg h-12 rounded-md cursor-not-allowed " disabled onClick={()=>addToCart()}>
-                      {added?<p>Added</p>:<p>Add to cart</p>}
+                    <button className="bg-[#51cccc] text-white font-semibold mt-10 w-48 text-lg h-12 rounded-md "  onClick={() => addToCart()}>
+                      {added ? <p>Added</p> : <p>Add to cart</p>}
                     </button>
                   </div>
                 </div>

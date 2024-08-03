@@ -5,7 +5,7 @@ const LoginContext = createContext();
 
 export const LoginContextProvider = ({ children }) => {
   const [loginData, setLoginData] = useState(null);
-  const url="https://weefashion-shopping-backend-01lg.onrender.com"
+ const url="http://localhost:5000"
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
 
