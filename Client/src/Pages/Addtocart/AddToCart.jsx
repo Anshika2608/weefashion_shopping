@@ -45,15 +45,15 @@ const AddToCart = () => {
 
     cartData.forEach(product => {
       sum += product.Previous * quantityMap[product.id];
-      total += product.Current * quantityMap[product.id];
+      total += product.Current * quantityMap[product.id] ;
     });
-    setTotalAmount(total);
+    setTotalAmount(total +50);
     setPreviousAmount(sum);
   };
 
   const handleQuantityChange = (productId, change) => {
     setQuantityMap(prevQuantityMap => {
-      const updatedQuantity = prevQuantityMap[productId] + change;
+      const updatedQuantity = prevQuantityMap[productId] + change ;
       const newQuantity = Math.max(updatedQuantity, 1);
       const newQuantityMap = {
         ...prevQuantityMap,
@@ -118,14 +118,18 @@ const AddToCart = () => {
                   <p>No items in Cart</p>
                 )}
               </div>
+              <div className='flex flex-col gap-4 mt-12 '>
+                <h2 className='text-2xl font-semibold mx-12'>Cart Totals</h2>
+                <div className='flex flex-col  gap-2 mx-12'>
 
-              <div className='flex flex-col items-center gap-2 mt-8'>
+                  <p className='text-lg font-semibold'>Total Amount: Rs.{PreviousAmount}</p>
+                  <p className='text-lg font-semibold'>After discount: Rs.{totalAmount}</p>
+                  <p className='text-lg font-semibold'>Delivery fees:    Rs.50</p>
+                  <button className='bg-green-500 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer  '>Proceed to checkout </button>
 
-                <p className='text-lg font-semibold'>Total Amount: {PreviousAmount}</p>
-                <p className='text-lg font-semibold'>After discount: {totalAmount}</p>
-                <button className='bg-green-500 text-white text-lg rounded-md outline-none cursor-pointer px-2 '>place order- Total: Rs. {totalAmount} </button>
-
+                </div>
               </div>
+
             </div>
 
           ) : (
