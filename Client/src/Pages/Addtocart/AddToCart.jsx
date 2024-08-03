@@ -45,15 +45,15 @@ const AddToCart = () => {
 
     cartData.forEach(product => {
       sum += product.Previous * quantityMap[product.id];
-      total += product.Current * quantityMap[product.id] ;
+      total += product.Current * quantityMap[product.id];
     });
-    setTotalAmount(total +50);
+    setTotalAmount(total + 50);
     setPreviousAmount(sum);
   };
 
   const handleQuantityChange = (productId, change) => {
     setQuantityMap(prevQuantityMap => {
-      const updatedQuantity = prevQuantityMap[productId] + change ;
+      const updatedQuantity = prevQuantityMap[productId] + change;
       const newQuantity = Math.max(updatedQuantity, 1);
       const newQuantityMap = {
         ...prevQuantityMap,
@@ -119,13 +119,25 @@ const AddToCart = () => {
                 )}
               </div>
               <div className='flex flex-col gap-4 mt-12 '>
-                <h2 className='text-2xl font-semibold mx-12'>Cart Totals</h2>
+                <h2 className='text-2xl font-semibold mx-12 text-amber-700'>Cart Totals</h2>
                 <div className='flex flex-col  gap-2 mx-12'>
 
-                  <p className='text-lg font-semibold'>Total Amount: Rs.{PreviousAmount}</p>
-                  <p className='text-lg font-semibold'>After discount: Rs.{totalAmount}</p>
-                  <p className='text-lg font-semibold'>Delivery fees:    Rs.50</p>
-                  <button className='bg-green-500 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer  '>Proceed to checkout </button>
+                  <p className='text-lg font-semibold flex '>
+                    <p className='w-40'>Total Amount:</p>
+
+                    <p className='w-20'>Rs.{PreviousAmount}</p>
+                  </p>
+                  <p className='text-lg font-semibold flex '>
+                    <p className='w-40'>After Discount:</p>
+
+                    <p className='w-20'>Rs.{totalAmount}</p>
+                  </p>
+                  <p className='text-lg font-semibold flex '>
+                    <p className='w-40'>Delivery Fees</p>
+
+                    <p className='w-20'>Rs.50</p>
+                  </p>
+                  <button className='bg-green-500 mt-4 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer  '>Proceed to checkout </button>
 
                 </div>
               </div>
