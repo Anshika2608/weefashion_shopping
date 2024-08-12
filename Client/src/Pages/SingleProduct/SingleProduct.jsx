@@ -67,7 +67,7 @@ function SingleProduct() {
                 <div className="hidden md:visible md:flex flex-col gap-2 ">
 
                   {Array(4).fill(menimage).map((img, index) => (
-                    <img key={index} src={img} className="h-40 w-24" />
+                    <img key={index} src={newUrl} className="h-40 w-24" />
                   ))}
 
                 </div>
