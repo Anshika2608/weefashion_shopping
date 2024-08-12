@@ -15,12 +15,6 @@ function KidsTopwear() {
   const kidcategorys = ["Hoodie", "Sweatshirt", "T-shirt"]
   const kidsizes = ["11Y", "12Y", "13Y", "14Y"]
   const [kidtopfiltervalue, setKidTopFilterValue] = useState(false)
-
-  // useEffect(() => {
-  //   if (kidstopwearpro.length > 0) {
-  //     setLoading(false);
-  //   }
-  // }, [kidstopwearpro]);
   return (
     <>
       <div className="pt-24">

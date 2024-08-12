@@ -1,11 +1,10 @@
 // LoginContext.js
 import React, { createContext, useState } from 'react';
-import axios from "axios"
 const LoginContext = createContext();
 
 export const LoginContextProvider = ({ children }) => {
   const [loginData, setLoginData] = useState(null);
- const url="http://localhost:5000"
+ const url="https://weefashion-backend.onrender.com"
   const DashboardValid = async () => {
     let token = localStorage.getItem("usersdatatoken");
 

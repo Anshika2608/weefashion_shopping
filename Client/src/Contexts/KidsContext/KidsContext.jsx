@@ -12,7 +12,7 @@ export const KidsContextProvider = ({ children }) => {
   const [boterror, setboterror] = useState(null);
   const [footerror, setfooterror] = useState(null);
   const [loading, setLoading] = useState(true);
-  const url="http://localhost:5000"
+  const url="https://weefashion-backend.onrender.com"
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {

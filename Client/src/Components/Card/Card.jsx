@@ -19,7 +19,7 @@ function Card({
 }) {
   const [wishlist, setWishlist] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-  const url = "http://localhost:5000";
+  const url = "https://weefashion-backend.onrender.com";
 
   useEffect(() => {
     // Check wishlist state

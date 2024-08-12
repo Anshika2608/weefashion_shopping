@@ -10,7 +10,7 @@ export const WomenContextProvider=({children})=>{
     const[errorbot,seterrorbot]=useState(null);
     const[errorfoot,seterrorfoot]=useState(null);
   const[womenLoading,setWomenLoading]=useState(true)
-  const url="http://localhost:5000"
+  const url="https://weefashion-backend.onrender.com"
       useEffect(()=>{
       setWomenLoading(true)
       const timer=setTimeout(()=>{

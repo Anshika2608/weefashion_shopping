@@ -7,7 +7,7 @@ function newPassword() {
     const { id, token } = useParams();
     const [passwords, setPasswords] = useState("")
     const [message, setMessage] = useState("");
-    const url="http://localhost:5000"
+    const url="https://weefashion-backend.onrender.com"
     const userValid = async () => {
         try {
             const res = await axios.get(`${url}/api/verifyForgot/ForgotPassword/${id}/${token}`, {

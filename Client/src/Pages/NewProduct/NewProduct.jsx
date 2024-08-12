@@ -11,7 +11,7 @@ function NewProduct() {
     const [discount, setDiscount] = useState("");
     const [gender, setGender] = useState("");
     const [type, setType] = useState("");
-const url="http://localhost:5000"
+const url="https://weefashion-backend.onrender.com"
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!Title || !company || !previous_price || !Current_price || !discount || !gender || !type) {

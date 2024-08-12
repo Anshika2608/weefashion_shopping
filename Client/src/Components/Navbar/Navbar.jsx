@@ -15,7 +15,7 @@ function Navbar() {
   });
   const history = useNavigate()
   const { loginData, setLoginData, DashboardValid } = useContext(LoginContext);
-const url="https://weefashion-shopping-backend-01lg.onrender.com"
+const url="https://weefashion-backend.onrender.com"
   useEffect(() => {
 
     DashboardValid();

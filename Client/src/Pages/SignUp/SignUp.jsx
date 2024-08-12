@@ -16,7 +16,7 @@ import "./SignUp.css"
 function SignUp() {
   const [passShow, setPassShow] = useState(false);
   const [cpassShow, setCPassShow] = useState(false);
-const url="http://localhost:5000"
+const url="https://weefashion-backend.onrender.com"
 
   const [inpval, setInpval] = useState({
     fname: "",

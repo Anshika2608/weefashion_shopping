@@ -6,6 +6,8 @@ import { FaStar } from "react-icons/fa6";
 import Stars from "../../Components/Star/Stars";
 import menimage from "/src/assets/Women_Images/Topwear/product_2.png";
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
+
+
 import axios from "axios"
 function SingleProduct() {
   const [isMaxQuantityReached, setIsMaxQuantityReached] = useState(false);
@@ -13,7 +15,7 @@ function SingleProduct() {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(0);
   const [added, setAdded] = useState(false)
-  const url = "http://localhost:5000"
+  const url = "https://weefashion-backend.onrender.com"
   useEffect(() => {
     getSingleProduct(id);
   }, []);
@@ -21,6 +23,7 @@ function SingleProduct() {
   if (!singleProduct) {
     return <div>Loading...</div>;
   }
+  let newUrl = '.' + singleProduct.product.image;
 
 
   const handleQuantity = () => {
@@ -70,7 +73,7 @@ function SingleProduct() {
                 </div>
                 <div>
                   <img
-                    src={menimage}
+                    src={newUrl}
                     className="md:h-[42rem] md:w-[32rem] h-72 w-64 sm:h-96 sm:w-96"
                     alt={singleProduct.product.Title}
                   />
