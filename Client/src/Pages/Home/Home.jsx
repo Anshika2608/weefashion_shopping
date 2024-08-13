@@ -28,6 +28,7 @@ const url="https://weefashion-backend.onrender.com"
       try {
         const response = await axios.get(`${url}/api/home`);
         setCollection(response.data.products);
+        console.log(response.data.products);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
@@ -36,6 +37,8 @@ const url="https://weefashion-backend.onrender.com"
       try {
         const res = await axios.get(`${url}/api/home/women`);
         setWomen(res.data.products);
+        console.log(response.data.products);
+        
       } catch (err) {
         console.log(err);
       }

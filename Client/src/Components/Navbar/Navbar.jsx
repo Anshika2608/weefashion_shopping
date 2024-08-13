@@ -32,30 +32,8 @@ const url="https://weefashion-backend.onrender.com"
     });
   };
   const logoutuser = async () => {
-    console.log("hi")
-    let token = localStorage.getItem("usersdatatoken");
-    console.log(token)
-    const res = await fetch(`${url}/api/logoutUser/logout`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token,
-        Accept: "application/json"
-      },
-      credentials: "include"
-    });
-
-    const data = await res.json();
-    console.log(data);
-
-    if (data.status == 201) {
-      console.log("use logout");
-      localStorage.removeItem("usersdatatoken");
-      setLoginData(false)
-      history("/");
-    } else {
-      console.log("error");
-    }
+    localStorage.clear();
+    window.location.reload();
   }
   const handleHomeClick = () => {
     setDropdownState({
