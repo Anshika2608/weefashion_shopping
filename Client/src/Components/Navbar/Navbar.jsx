@@ -193,20 +193,20 @@ const url="https://weefashion-backend.onrender.com"
           <div >
             <NavLink
               to="/Wishlist"
-              className=  "h-8 p-3 block sm:hidden md:text-2xl text-xl mb-3   hover:bg-black  hover:text-white"               
+              className= "block px-4 py-2 text-gray-800 hover:bg-black  hover:text-white"              
 
             >
-              <CiHeart />
+              Wishlist
             </NavLink>
           </div>
           <div>
             <NavLink
               to="/cart"
-              className="hover:bg-black  hover:text-white  h-8 p-3 block sm:hidden md:text-2xl text-xl mb-3 
-"
+              className="block px-4 py-2 text-gray-800 hover:bg-black  hover:text-white" 
+
   
             >
-              <BsCart3 />
+              Cart
             </NavLink>
           </div>
 
