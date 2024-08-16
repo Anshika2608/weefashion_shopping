@@ -23,7 +23,7 @@ function SingleProduct() {
   if (!singleProduct) {
     return <div>Loading...</div>;
   }
-  let newUrl = '.' + singleProduct.product.image;
+  // let newUrl = '.' + singleProduct.product.image;
 
 
   const handleQuantity = () => {
@@ -67,13 +67,13 @@ function SingleProduct() {
                 <div className="hidden md:visible md:flex flex-col gap-2 ">
 
                   {Array(4).fill(menimage).map((img, index) => (
-                    <img key={index} src={newUrl} className="h-40 w-24" />
+                    <img key={index} src={singleProduct.product.image} className="h-40 w-24" />
                   ))}
 
                 </div>
                 <div>
                   <img
-                    src={newUrl}
+                    src={singleProduct.product.image}
                     className="md:h-[42rem] md:w-[32rem] h-72 w-64 sm:h-96 sm:w-96"
                     alt={singleProduct.product.Title}
                   />

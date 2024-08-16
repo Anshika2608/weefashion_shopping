@@ -6,6 +6,7 @@ import { CiHeart } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
 import LoginContext from "../../Contexts/LoginContext/LoginContext";
+
 function Navbar() {
   const [dropdownState, setDropdownState] = useState({
     isMenuOpen: false,
@@ -20,9 +21,6 @@ const url="https://weefashion-backend.onrender.com"
 
     DashboardValid();
 
-
-    // fetchData();
-
   }, []);
 
   const toggleDropdown = (dropdown) => {
@@ -33,7 +31,7 @@ const url="https://weefashion-backend.onrender.com"
   };
   const logoutuser = async () => {
     localStorage.clear();
-    window.location.reload();
+   history("/LogIn")
   }
   const handleHomeClick = () => {
     setDropdownState({
