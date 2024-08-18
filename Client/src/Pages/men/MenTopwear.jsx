@@ -10,7 +10,7 @@ function MenTopwear() {
 
   const colors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple", "Red"];
   const sizes = ["S", "M", "L", "XL", "XXL"];
-  const categories = ["Activewear", "Half Sleeves Shirt", "Full sleeves Shirt", "Jacket", "T-shirt"];
+  const categories = ["ActiveWear", "Half Sleeves Shirt", "Full sleeves Shirt", "Jacket", "T-shirt"];
   const companies = ["Peter England", "Levi's", "Arrow", "Park Avenue", "U.S Polo"];
   const [mentopfiltervalue, setMenTopFilterValue] = useState(false)
   return (

@@ -23,7 +23,7 @@ const FilterComponent = ({
         <p className="font-bold text-lg text-slate-700 my-5">COLOR</p>
         {colors.map((color) => (
           <label key={color} htmlFor={color}>
-            <input type="radio" id={color} name="color" value={color} onChange={() => handleColor(color)} /> {color}
+            <input type="radio" id={color} name="color" value={color} onChange={(e) => handleColor(e.target.value)} /> {color}
           </label>
         ))}
       </div>
@@ -33,7 +33,7 @@ const FilterComponent = ({
         <p className="font-bold text-lg text-slate-700 my-5">SIZE</p>
         {sizes.map((size) => (
           <label key={size} htmlFor={size}>
-            <input type="radio" id={size} value={size} name="size" onChange={() => handleSize(size)} /> {size}
+            <input type="radio" id={size} value={size} name="size" onChange={(e) => handleSize(e.target.value)} /> {size}
           </label>
         ))}
       </div>
@@ -47,7 +47,7 @@ const FilterComponent = ({
               type="radio"
               id={category}
               value={category}
-              onChange={() => handleCategory(category)}
+              onChange={(e) => handleCategory(e.target.value)}
               name="category"
             />{" "}
             {category}
@@ -65,7 +65,7 @@ const FilterComponent = ({
               type="radio"
               id={company}
               value={company}
-              onChange={() => handleCompany(company)}
+              onChange={(e) => handleCompany(e.target.value)}
             />{" "}
             {company}
           </label>
