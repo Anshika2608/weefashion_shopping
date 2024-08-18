@@ -193,7 +193,7 @@ const url="https://weefashion-backend.onrender.com"
           <div >
             <NavLink
               to="/Wishlist"
-              className= "block px-4 py-2 text-gray-800 hover:bg-black  hover:text-white"              
+              className= "block px-4 py-2 text-gray-800 hover:bg-black sm:hidden hover:text-white"              
 
             >
               Wishlist
@@ -202,7 +202,7 @@ const url="https://weefashion-backend.onrender.com"
           <div>
             <NavLink
               to="/cart"
-              className="block px-4 py-2 text-gray-800 hover:bg-black  hover:text-white" 
+              className="block px-4 py-2 text-gray-800 hover:bg-black  sm:hidden hover:text-white" 
 
   
             >

@@ -18,12 +18,19 @@ function SingleProduct() {
   const url = "https://weefashion-backend.onrender.com"
   useEffect(() => {
     getSingleProduct(id);
-  }, []);
+    const storedCart = localStorage.getItem('cart');
+    const cartItems = storedCart ? JSON.parse(storedCart) : [];
+
+    console.log('Cart Items:', cartItems);
+    console.log('Current Product ID:', id);
+    const itemInCart = cartItems.some(item => item.id === parseInt(id, 10));
+
+    setAdded(itemInCart);
+    }, [id]);
 
   if (!singleProduct) {
     return <div>Loading...</div>;
   }
-  // let newUrl = '.' + singleProduct.product.image;
 
 
   const handleQuantity = () => {
@@ -42,21 +49,51 @@ function SingleProduct() {
   }
   const addToCart = async () => {
     try {
-      await axios.post(`${url}/api/addCart/addCart`, {
-        id: singleProduct.product.id,
-        title: singleProduct.product.Title,
-        src: singleProduct.product.image,
-        Previous: singleProduct.product.previous_price,
-        Current: singleProduct.product.Current_price,
-        discount: singleProduct.product.discount,
-        quantity: singleProduct.product.quantity
-      });
-      console.log("Product added to cart successfully");
-      setAdded(true)
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
+        const storedCart = localStorage.getItem('cart');
+        const cartItems = storedCart ? JSON.parse(storedCart) : [];
+
+
+        if (singleProduct && singleProduct.product) {
+            const {
+                id: productId,
+                Title: title,
+                image: src,
+                previous_price: Previous,
+                Current_price: Current,
+                discount,
+                quantity: productQuantity
+            } = singleProduct.product;
+
+            if (added) {
+                await axios.delete(`${url}/api/cart/deleteCart/${id}`);
+                setAdded(false);
+                const updatedCartItems = cartItems.filter(item => item.id !== parseInt(id, 10));
+                localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+
+                console.log("Removed from cart");
+            } else {
+                await axios.post(`${url}/api/cart/addCart`, {
+                    id: productId,
+                    title,
+                    src,
+                    Previous,
+                    Current,
+                    discount,
+                    quantity: productQuantity
+                });
+                
+                const updatedCartItems = [...cartItems, { id: productId, title, src, Previous, Current, discount, quantity: productQuantity }];
+                localStorage.setItem('cart', JSON.stringify(updatedCartItems));        
+                setAdded(true);
+              }
+        } else {
+            console.error("singleProduct.product is undefined or null");
+        }
+    } catch (err) {
+        console.error("Error handling cart:", err);
     }
-  };
+};
+
   return (
     <>
       <div>
@@ -145,8 +182,8 @@ function SingleProduct() {
                     {isMaxQuantityReached && <div className="text-red-500 text-lg pt-1 font-semibold">Maximum quantity reached!</div>}
                   </div>
                   <div>
-                    <button className="bg-[#51cccc] text-white font-semibold mt-10 w-48 text-lg h-12 rounded-md "  onClick={() => addToCart()}>
-                      {added ? <p>Added</p> : <p>Add to cart</p>}
+                    <button className="bg-[#51cccc] text-white font-semibold mt-10 w-48 text-lg h-12 rounded-md "  onClick={addToCart}>
+                    {added ? "Remove" : "Add to Cart"}
                     </button>
                   </div>
                 </div>
