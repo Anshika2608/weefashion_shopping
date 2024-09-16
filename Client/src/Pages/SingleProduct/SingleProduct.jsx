@@ -13,7 +13,7 @@ function SingleProduct() {
   const [isMaxQuantityReached, setIsMaxQuantityReached] = useState(false);
   const { getSingleProduct, singleProduct } = useContext(MenContext);
   const { id } = useParams();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false)
   const url = "https://weefashion-backend.onrender.com"
   useEffect(() => {

@@ -138,7 +138,7 @@ const AddToCart = () => {
 
                     <p className='w-20'>Rs.50</p>
                   </p>
-                  <button className='bg-green-500 mt-4 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer  '>Proceed to checkout </button>
+                  <button className='bg-green-500 mt-4 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer ' onClick={()=>History("/place-order")}> Proceed to checkout </button>
 
                 </div>
                

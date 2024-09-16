@@ -22,6 +22,7 @@ import AddToCart from "./Pages/Addtocart/AddToCart"
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword"
 import NewPassword from "./Pages/NewPassword/NewPassword"
 import NewProduct from "./Pages/NewProduct/NewProduct"
+import PlaceOrder from "./Pages/Place_Order/PlaceOrder"
 function App() {
   return (
     <>
@@ -49,7 +50,7 @@ function App() {
       <Route path="/LogIn" element={<LogIn/>} />
       <Route path="/SignUp" element={<SignUp/>} />
       <Route path="/Forgot" element={<ForgotPassword/>}/>
-      
+      <Route path="/place-order" element={<PlaceOrder/>}/>
       </Route>
      </Routes>
      
