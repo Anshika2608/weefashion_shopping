@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import Card from "../../Components/Card/Card";
-
+import LoginContext from "../../Contexts/LoginContext/LoginContext";
 function Wishlist() {
   const [wish, setWish] = useState([]);
   const url="https://weefashion-backend.onrender.com"
+  const { loginData } = useContext(LoginContext); 
   useEffect(() => {
     const fetchWishlist = async () => {
+      if (!loginData || !loginData.ValidUserOne) {
+        console.log("User not logged in");
+        return;
+      }
       try {
-        const res = await axios.get(`${url}/api/wishlist/`);
+        const res = await axios.get(`${url}/api/wishlist/`, {
+          params: { email: loginData.ValidUserOne.email }
+        });
         const wishlistWithKeys = res.data.items.map((item, index) => ({
           ...item,
           cardKey: item.id,
@@ -21,11 +28,13 @@ function Wishlist() {
     };
 
     fetchWishlist();
-  }, []);
+  }, [loginData]);
 
   const handleDeleteFromWishlist = async (cardKey) => {
     try {
-      await axios.delete(`${url}/api/wishlist/delete/${cardKey}`);
+      await axios.delete(`${url}/api/wishlist/delete/${cardKey}`,{
+        params:{email:loginData.ValidUserOne.email}
+      });
       setWish((prevWish) =>
         prevWish.filter((item) => item.cardKey !== cardKey)
       );

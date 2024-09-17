@@ -18,6 +18,7 @@ export const LoginContextProvider = ({ children }) => {
         }
       });
       const data = await res.json();
+      console.log(data);
       setLoginData(data);
       
     } catch (error) {

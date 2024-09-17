@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoBag } from "react-icons/io5";
 import { FaHeart, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-
+import LoginContext from "../../Contexts/LoginContext/LoginContext";
 function Card({
   id,
   title,
@@ -20,15 +20,13 @@ function Card({
   const [wishlist, setWishlist] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const url = "https://weefashion-backend.onrender.com";
-
+  const { loginData } = useContext(LoginContext); 
   useEffect(() => {
-    // Check wishlist state
     const storedWishlist = localStorage.getItem(`wishlist_${id}`);
     if (storedWishlist !== null) {
       setWishlist(JSON.parse(storedWishlist));
     }
     
-    // Check cart state
     const storedCart = localStorage.getItem('cart');
     const cartItems = storedCart ? JSON.parse(storedCart) : [];
     setAddedToCart(cartItems.some(item => item.id === id));
@@ -36,6 +34,10 @@ function Card({
 
   const handleWishlist = async () => {
     try {
+      if (!loginData || !loginData.ValidUserOne) {
+        alert("Please log in to add items to your wishlist.");
+        return;
+      }
       setWishlist(!wishlist);
       localStorage.setItem(`wishlist_${id}`, !wishlist);
 
@@ -50,10 +52,12 @@ function Card({
             Previous,
             Current,
             discount,
+            email: loginData.ValidUserOne.email 
           });
-          console.log("Added to wishlist");
         } else {
-          await axios.delete(`${url}/api/wishlist/delete/${id}`);
+          await axios.delete(`${url}/api/wishlist/delete/${id}`, {
+            params: { email: loginData.ValidUserOne.email }
+          });
           console.log("Removed from wishlist");
         }
       }
