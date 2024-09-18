@@ -19,9 +19,6 @@ function SingleProduct() {
     getSingleProduct(id);
     const storedCart = localStorage.getItem('cart');
     const cartItems = storedCart ? JSON.parse(storedCart) : [];
-
-    console.log('Cart Items:', cartItems);
-    console.log('Current Product ID:', id);
     const itemInCart = cartItems.some(item => item.id === parseInt(id, 10));
 
     setAdded(itemInCart);
@@ -54,8 +51,6 @@ function SingleProduct() {
       }
         const storedCart = localStorage.getItem('cart');
         const cartItems = storedCart ? JSON.parse(storedCart) : [];
-
-
         if (singleProduct && singleProduct.product) {
             const {
                 id: productId,

@@ -16,9 +16,10 @@ function Wishlist() {
         const res = await axios.get(`${url}/api/wishlist/`, {
           params: { email: loginData.ValidUserOne.email }
         });
-        const wishlistWithKeys = res.data.items.map((item, index) => ({
+        const wishlistWithKeys = res.data.items.map((item) => ({
           ...item,
           cardKey: item.id,
+          isWishlist: true
         }));
         setWish(wishlistWithKeys);
         console.log(wish);
@@ -47,7 +48,7 @@ function Wishlist() {
     <>
       <div className="flex flex-wrap justify-center items-center mt-8 mb-8 pt-24">
         {wish && wish.length > 0 ? (
-          wish.map((liked, index) => (
+          wish.map((liked) => (
             <div key={liked.id} className="m-4">
               <Card
                 id={liked.id}
@@ -56,7 +57,7 @@ function Wishlist() {
                 Previous={liked.Previous}
                 Current={liked.Current}
                 discount={liked.discount}
-                isWishlist={true}
+                isWishlist={liked.isWishlist} 
                 cardKey={liked.id}
                 onDeleteFromWishlist={handleDeleteFromWishlist}
                 list={wish}

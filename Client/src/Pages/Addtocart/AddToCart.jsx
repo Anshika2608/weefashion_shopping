@@ -8,7 +8,7 @@ import { IoCloseOutline } from "react-icons/io5";
 
 import axios from "axios"
 const AddToCart = () => {
-  const { loginData, setLoginData, DashboardValid } = useContext(LoginContext);
+  const { loginData } = useContext(LoginContext);
   const History = useNavigate()
   const [cart, setCart] = useState([])
   const [quantityMap, setQuantityMap] = useState({});
@@ -89,11 +89,11 @@ const AddToCart = () => {
             <div className="mt-4 mb-8 w-screen ">
               <div className='bg-gray-100 flex-wrap flex mx-12 rounded-lg justify-center  pb-12 '>
                 {cart && cart.length > 0 ? (
-                  cart.map((product, index) => (
+                  cart.map((product) => (
 
                     <div key={product.id} className="flex  h-40 w-[35rem] mx-8 border-2 bg-white border-slate-200 rounded-md gap-2 mt-12 shadow-lg justify-around pt-2 ">
                       <div>
-                        <img src={product.src} alt="" className='h-36 w-32 rounded-md ' />
+                        <img src={product.src}  className='h-36 w-32 rounded-md ' />
                       </div>
 
                       <div className='flex flex-col h-40    '>
