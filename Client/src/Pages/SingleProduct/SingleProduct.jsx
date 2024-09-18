@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import MenContext from "../../Contexts/MenContext/MenContext";
-import { FaStar } from "react-icons/fa6";
 import Stars from "../../Components/Star/Stars";
 import menimage from "/src/assets/Women_Images/Topwear/product_2.png";
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
-
-
+import LoginContext from '../../Contexts/LoginContext/LoginContext';
 import axios from "axios"
 function SingleProduct() {
   const [isMaxQuantityReached, setIsMaxQuantityReached] = useState(false);
   const { getSingleProduct, singleProduct } = useContext(MenContext);
+  const { loginData, setLoginData, DashboardValid } = useContext(LoginContext);
+
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [added, setAdded] = useState(false)
@@ -49,6 +48,10 @@ function SingleProduct() {
   }
   const addToCart = async () => {
     try {
+      if (!loginData || !loginData.ValidUserOne) {
+        alert("Please log in to add items to your cart.");
+        return;
+      }
         const storedCart = localStorage.getItem('cart');
         const cartItems = storedCart ? JSON.parse(storedCart) : [];
 
@@ -65,7 +68,9 @@ function SingleProduct() {
             } = singleProduct.product;
 
             if (added) {
-                await axios.delete(`${url}/api/cart/deleteCart/${id}`);
+                await axios.delete(`${url}/api/cart/deleteCart/${id}`,{
+                  params:{email:loginData.ValidUserOne.email}
+                });
                 setAdded(false);
                 const updatedCartItems = cartItems.filter(item => item.id !== parseInt(id, 10));
                 localStorage.setItem('cart', JSON.stringify(updatedCartItems));
@@ -79,10 +84,11 @@ function SingleProduct() {
                     Previous,
                     Current,
                     discount,
-                    quantity: productQuantity
+                    quantity: productQuantity,
+                    email:loginData.ValidUserOne.email
                 });
                 
-                const updatedCartItems = [...cartItems, { id: productId, title, src, Previous, Current, discount, quantity: productQuantity }];
+                const updatedCartItems = [...cartItems, { id: productId, title, src, Previous, Current, discount, quantity: productQuantity,email: loginData.ValidUserOne.email}];
                 localStorage.setItem('cart', JSON.stringify(updatedCartItems));        
                 setAdded(true);
               }

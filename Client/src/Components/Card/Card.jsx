@@ -17,10 +17,13 @@ function Card({
   onDeleteFromWishlist,
   list
 }) {
-  const [wishlist, setWishlist] = useState(false);
-  const [addedToCart, setAddedToCart] = useState(false);
+  const [wishlist, setWishlist] = useState(isWishlist || false);
+    const [addedToCart, setAddedToCart] = useState(false);
   const url = "https://weefashion-backend.onrender.com";
   const { loginData } = useContext(LoginContext); 
+
+
+
   useEffect(() => {
     const storedWishlist = localStorage.getItem(`wishlist_${id}`);
     if (storedWishlist !== null) {
@@ -68,11 +71,17 @@ function Card({
 
   const addToCart = async () => {
     try {
+      if (!loginData || !loginData.ValidUserOne) {
+        alert("Please log in to add items to your cart.");
+        return;
+      }
       const storedCart = localStorage.getItem('cart');
       const cartItems = storedCart ? JSON.parse(storedCart) : [];
 
       if (addedToCart) {
-        await axios.delete(`${url}/api/cart/deleteCart/${id}`);
+        await axios.delete(`${url}/api/cart/deleteCart/${id}`,{
+          params:{ email: loginData.ValidUserOne.email }
+        });
         setAddedToCart(false);
         localStorage.setItem('cart', JSON.stringify(cartItems.filter(item => item.id !== id)));
         console.log("Removed from cart");
@@ -83,10 +92,11 @@ function Card({
           src,
           Previous,
           Current,
-          discount
-        });
+          discount,
+          email: loginData.ValidUserOne.email       
+          });
         setAddedToCart(true);
-        localStorage.setItem('cart', JSON.stringify([...cartItems, { id, title, src, Previous, Current, discount }]));
+        localStorage.setItem('cart', JSON.stringify([...cartItems, { id, title, src, Previous, Current, discount ,email}]));
         console.log("Added to cart");
       }
     } catch (err) {

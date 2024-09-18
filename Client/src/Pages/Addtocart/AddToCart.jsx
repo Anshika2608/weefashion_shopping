@@ -7,7 +7,6 @@ import { FaArrowRight } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 
 import axios from "axios"
-import SingleProduct from '../SingleProduct/SingleProduct';
 const AddToCart = () => {
   const { loginData, setLoginData, DashboardValid } = useContext(LoginContext);
   const History = useNavigate()
@@ -19,7 +18,9 @@ const AddToCart = () => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get(`${url}/api/cart/`);
+        const res = await axios.get(`${url}/api/cart/`,{
+          params:{email:loginData.ValidUserOne.email}
+        });
         const responseData = await res.data.items
         setCart(responseData);
         localStorage.setItem('cart', JSON.stringify(responseData));
@@ -27,7 +28,7 @@ const AddToCart = () => {
 
         const initialQuantityMap = {};
         responseData.forEach(product => {
-          initialQuantityMap[product.id] = 1; // Initialize quantity as 0 for each product
+          initialQuantityMap[product.id] = 1;
         });
         setQuantityMap(initialQuantityMap);
         calculateTotalAmount(responseData, initialQuantityMap);
@@ -66,7 +67,9 @@ const AddToCart = () => {
 
   const deleteCart = async (productId) => {
     try {
-      await axios.delete(`${url}/api/cart/deleteCart/${productId}`)
+      await axios.delete(`${url}/api/cart/deleteCart/${productId}`,{
+        params:{email:loginData.ValidUserOne.email}
+      })
       const updatedCart = cart.filter(item => item.id !== productId);
       setCart(updatedCart);
       localStorage.setItem('cart', JSON.stringify(updatedCart));
