@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-
+import Cart from '../../Components/Cart/Cart';
+import { useLocation } from 'react-router-dom';
 function PlaceOrder() {
+    const location = useLocation();
+  const { totalAmount, PreviousAmount } = location.state || { totalAmount: 0, PreviousAmount: 0 };
     const url = "https://weefashion-backend.onrender.com";
     const [formData, setFormData] = useState({
         fname: "",
@@ -15,7 +18,7 @@ function PlaceOrder() {
         country: "",
         phone: ""
     });
-
+   
     const handleSubmit = async () => {
         const { fname, lname, email, street, city, state, zipCode, country, phone } = formData;
 
@@ -101,6 +104,13 @@ function PlaceOrder() {
                             Save Address
                         </button>
                     </div>
+                </div>
+                <div>
+                <Cart 
+                        previousAmount={PreviousAmount} 
+                        totalAmount={totalAmount} 
+                        onProceed={() => History("/place-order")} 
+                    />
                 </div>
                 <ToastContainer />
             </div>

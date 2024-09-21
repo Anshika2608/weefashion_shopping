@@ -5,7 +5,7 @@ import { IoIosAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
-
+import Cart from '../../Components/Cart/Cart';
 import axios from "axios"
 const AddToCart = () => {
   const { loginData } = useContext(LoginContext);
@@ -15,6 +15,11 @@ const AddToCart = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [PreviousAmount, setPreviousAmount] = useState(0);
   const url = "https://weefashion-backend.onrender.com"
+  const handleProceed = () => {
+    console.log("hi")
+    History("/place-order", { state: { totalAmount, PreviousAmount } });
+  };
+  
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -48,7 +53,7 @@ const AddToCart = () => {
       sum += product.Previous * quantityMap[product.id];
       total += product.Current * quantityMap[product.id];
     });
-    setTotalAmount(total + 50);
+    setTotalAmount(total);
     setPreviousAmount(sum);
   };
 
@@ -122,7 +127,7 @@ const AddToCart = () => {
                 )}
               </div>
               <div className='flex w-screen justify-around'>
-              <div className='flex flex-col gap-4 mt-12 '>
+              {/* <div className='flex flex-col gap-4 mt-12 '>
                 <h2 className='text-2xl font-semibold mx-12 text-amber-700'>Cart Totals</h2>
                 <div className='flex flex-col  gap-2 mx-12'>
 
@@ -136,17 +141,26 @@ const AddToCart = () => {
 
                     <p className='w-20'>Rs.{totalAmount}</p>
                   </p>
-                  <p className='text-lg font-semibold flex '>
-                    <p className='w-40'>Delivery Fees</p>
-
-                    <p className='w-20'>Rs.50</p>
-                  </p>
+                  
                   <button className='bg-green-500 mt-4 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer ' onClick={()=>History("/place-order")}> Proceed to checkout </button>
 
                 </div>
                
                 
+              </div> */}
+              <div>
+              <Cart 
+                        previousAmount={PreviousAmount} 
+                        totalAmount={totalAmount} 
+                    />
+                    <button
+                    className='bg-green-500 mt-4 ml-10 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer'
+                    onClick={handleProceed}
+                >
+                    Proceed to checkout
+                </button>
               </div>
+              
               <div className='mt-12'>
                 <h3 className='font-bold'>Promo Code</h3>
                 <div>
