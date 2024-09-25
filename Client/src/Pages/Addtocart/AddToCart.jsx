@@ -19,81 +19,8 @@ const AddToCart = () => {
     handleProceed,
   } = useContext(CartContext);
   
-  // const History = useNavigate();
   const { loginData } = useContext(LoginContext);
-  // const History = useNavigate()
-  // const [cart, setCart] = useState([])
-  // const [quantityMap, setQuantityMap] = useState({});
-  // const [totalAmount, setTotalAmount] = useState(0);
-  // const [PreviousAmount, setPreviousAmount] = useState(0);
-  // const url = "https://weefashion-backend.onrender.com"
-  // const handleProceed = () => {
-  //   History("/place-order", { state: { totalAmount, PreviousAmount } });
-  // };
 
-  // useEffect(() => {
-  //   const fetchCart = async () => {
-  //     try {
-  //       const res = await axios.get(`${url}/api/cart/`, {
-  //         params: { email: loginData.ValidUserOne.email }
-  //       });
-  //       const responseData = await res.data.items
-  //       setCart(responseData);
-  //       localStorage.setItem('cart', JSON.stringify(responseData));
-
-
-  //       const initialQuantityMap = {};
-  //       responseData.forEach(product => {
-  //         initialQuantityMap[product.id] = 1;
-  //       });
-  //       setQuantityMap(initialQuantityMap);
-  //       calculateTotalAmount(responseData, initialQuantityMap);
-
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-
-  //   fetchCart();
-  // }, []);
-  // const calculateTotalAmount = (cartData, quantityMap) => {
-  //   let total = 0;
-  //   let sum = 0;
-
-  //   cartData.forEach(product => {
-  //     sum += product.Previous * quantityMap[product.id];
-  //     total += product.Current * quantityMap[product.id];
-  //   });
-  //   setTotalAmount(total);
-  //   setPreviousAmount(sum);
-  // };
-
-  // const handleQuantityChange = (productId, change) => {
-  //   setQuantityMap(prevQuantityMap => {
-  //     const updatedQuantity = prevQuantityMap[productId] + change;
-  //     const newQuantity = Math.max(updatedQuantity, 1);
-  //     const newQuantityMap = {
-  //       ...prevQuantityMap,
-  //       [productId]: newQuantity
-  //     };
-  //     calculateTotalAmount(cart, newQuantityMap);
-  //     return newQuantityMap;
-  //   });
-  // };
-
-  // const deleteCart = async (productId) => {
-  //   try {
-  //     await axios.delete(`${url}/api/cart/deleteCart/${productId}`, {
-  //       params: { email: loginData.ValidUserOne.email }
-  //     })
-  //     const updatedCart = cart.filter(item => item.id !== productId);
-  //     setCart(updatedCart);
-  //     localStorage.setItem('cart', JSON.stringify(updatedCart));
-  //     calculateTotalAmount(updatedCart, quantityMap);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
   return (
     <div className='pt-24'>
       {
