@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Cart = ({ previousAmount, totalAmount }) => {
+    
     return (
         <div className='flex flex-col gap-4 mt-12'>
             <h2 className='text-2xl font-bold mx-12'>Cart Totals</h2>

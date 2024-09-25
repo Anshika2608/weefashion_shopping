@@ -6,7 +6,7 @@ import {loadStripe} from "@stripe/stripe-js"
 import { useLocation } from 'react-router-dom';
 function PlaceOrder() {
     const location = useLocation();
-    const { totalAmount, PreviousAmount } = location.state || { totalAmount: 0, PreviousAmount: 0 };
+    const { totalAmount, previousAmount } = location.state || { totalAmount: 0, previousAmount: 0 };
     const url = "https://weefashion-backend.onrender.com";
     const [formData, setFormData] = useState({
         fname: "",
@@ -112,7 +112,7 @@ function PlaceOrder() {
                 <div className='flex flex-col items-center justify-center mb-20'>
                     <Cart
                     
-                        previousAmount={PreviousAmount}
+                        previousAmount={previousAmount}
                         totalAmount={totalAmount}
                         onProceed={() => History("/place-order")}
                     />
