@@ -12,9 +12,7 @@ export const CartContextProvider = ({ children }) => {
 
   const { loginData } = useContext(LoginContext);
  const History=useNavigate()
-  useEffect(() => {
-    fetchCart();
-  }, [loginData]);
+
 
   const fetchCart = async () => {
     try {

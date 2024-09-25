@@ -13,6 +13,7 @@ const AddToCart = () => {
     cart,
     quantityMap,
     totalAmount,
+    fetchCart,
     previousAmount,
     handleQuantityChange,
     deleteCartItem,
@@ -20,6 +21,9 @@ const AddToCart = () => {
   } = useContext(CartContext);
   
   const { loginData } = useContext(LoginContext);
+  useEffect(() => {
+    fetchCart();
+  }, [loginData]);
 
   return (
     <div className='pt-24'>
