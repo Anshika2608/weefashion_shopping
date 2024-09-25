@@ -1,4 +1,3 @@
-// CartTotals.jsx
 import React from 'react';
 
 const Cart = ({ previousAmount, totalAmount }) => {

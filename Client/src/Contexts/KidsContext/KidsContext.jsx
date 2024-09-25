@@ -20,9 +20,9 @@ export const KidsContextProvider = ({ children }) => {
       fetchKidsTopwear();
       fetchKidsBottomwear();
       setLoading(false);
-    }, 2000); // 2 seconds delay
+    }, 2000);
 
-    return () => clearTimeout(timer); // Cleanup timeout on unmount
+    return () => clearTimeout(timer); 
   }, []);
 
   const fetchKidsFootwear = async () => {
@@ -120,9 +120,9 @@ export const KidsContextProvider = ({ children }) => {
       Bottomwear();
       Footwear();
       setLoading(false);
-    }, 2000); // 2 seconds delay
+    }, 2000); 
 
-    return () => clearTimeout(timer); // Cleanup timeout on unmount
+    return () => clearTimeout(timer);
   }, [kidsFilters]);
 
   return (

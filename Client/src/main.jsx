@@ -7,6 +7,7 @@ import { MenContextProvider } from "./Contexts/MenContext/MenContext.jsx";
 import { WomenContextProvider } from "./Contexts/WomenContext/WomenContext.jsx";
 import { KidsContextProvider } from "./Contexts/KidsContext/KidsContext.jsx";
 import { LoginContextProvider } from "./Contexts/LoginContext/LoginContext.jsx";
+import { CartContextProvider } from "./Contexts/CartContext/CartContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <MenContextProvider>
         <WomenContextProvider>
           <KidsContextProvider>
+            <CartContextProvider>
           <App />
+          </CartContextProvider>
           </KidsContextProvider>
         </WomenContextProvider>
       </MenContextProvider>

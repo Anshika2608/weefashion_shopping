@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import Cart from '../../Components/Cart/Cart';
+import {loadStripe} from "@stripe/stripe-js"
 import { useLocation } from 'react-router-dom';
 function PlaceOrder() {
     const location = useLocation();
-  const { totalAmount, PreviousAmount } = location.state || { totalAmount: 0, PreviousAmount: 0 };
+    const { totalAmount, PreviousAmount } = location.state || { totalAmount: 0, PreviousAmount: 0 };
     const url = "https://weefashion-backend.onrender.com";
     const [formData, setFormData] = useState({
         fname: "",
@@ -18,7 +19,10 @@ function PlaceOrder() {
         country: "",
         phone: ""
     });
-   
+  const makePayment=async()=>{
+    const stripe=await loadStripe("pk_test_51Q1VhFGOB3MpsHa68zznQZ0fFGismuEKdshdpW5p7S8tp4TlDcXSw9f2CJCU1nf5iFKboHogRNoLdqDQCoz8z9Ph00WvENZnwB")
+    
+  }
     const handleSubmit = async () => {
         const { fname, lname, email, street, city, state, zipCode, country, phone } = formData;
 
@@ -42,15 +46,15 @@ function PlaceOrder() {
 
         try {
             const response = await axios.post(`${url}/order/`, {
-                fname, 
-                lname, 
-                email, 
-                street, 
-                city, 
-                state, 
-                zipCode: zipCode.toString(), 
-                country, 
-                phone: phone.toString() 
+                fname,
+                lname,
+                email,
+                street,
+                city,
+                state,
+                zipCode: zipCode.toString(),
+                country,
+                phone: phone.toString()
             });
 
             setFormData({
@@ -68,7 +72,7 @@ function PlaceOrder() {
             toast.success("Order placed successfully!", { position: "top-right" });
 
         } catch (error) {
-            console.log("Error:", error.response ? error.response.data : error.message); 
+            console.log("Error:", error.response ? error.response.data : error.message);
             toast.error("Failed to save delivery information", { position: "top-right" });
         }
     };
@@ -105,12 +109,25 @@ function PlaceOrder() {
                         </button>
                     </div>
                 </div>
-                <div>
-                <Cart 
-                        previousAmount={PreviousAmount} 
-                        totalAmount={totalAmount} 
-                        onProceed={() => History("/place-order")} 
+                <div className='flex flex-col items-center justify-center mb-20'>
+                    <Cart
+                    
+                        previousAmount={PreviousAmount}
+                        totalAmount={totalAmount}
+                        onProceed={() => History("/place-order")}
                     />
+                    <div className=''>
+                    <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-20' onClick={makePayment}>
+                        Pay with Stripe
+                    </button>
+                    <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
+                        Pay with RazorPay
+                    </button>
+                    <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
+                        Pay with PhonePay
+                    </button>
+                    </div>
+                    
                 </div>
                 <ToastContainer />
             </div>

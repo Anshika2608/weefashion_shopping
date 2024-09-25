@@ -16,15 +16,14 @@ const AddToCart = () => {
   const [PreviousAmount, setPreviousAmount] = useState(0);
   const url = "https://weefashion-backend.onrender.com"
   const handleProceed = () => {
-    console.log("hi")
     History("/place-order", { state: { totalAmount, PreviousAmount } });
   };
-  
+
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const res = await axios.get(`${url}/api/cart/`,{
-          params:{email:loginData.ValidUserOne.email}
+        const res = await axios.get(`${url}/api/cart/`, {
+          params: { email: loginData.ValidUserOne.email }
         });
         const responseData = await res.data.items
         setCart(responseData);
@@ -72,8 +71,8 @@ const AddToCart = () => {
 
   const deleteCart = async (productId) => {
     try {
-      await axios.delete(`${url}/api/cart/deleteCart/${productId}`,{
-        params:{email:loginData.ValidUserOne.email}
+      await axios.delete(`${url}/api/cart/deleteCart/${productId}`, {
+        params: { email: loginData.ValidUserOne.email }
       })
       const updatedCart = cart.filter(item => item.id !== productId);
       setCart(updatedCart);
@@ -98,7 +97,7 @@ const AddToCart = () => {
 
                     <div key={product.id} className="flex  h-40 w-[35rem] mx-8 border-2 bg-white border-slate-200 rounded-md gap-2 mt-12 shadow-lg justify-around pt-2 ">
                       <div>
-                        <img src={product.src}  className='h-36 w-32 rounded-md ' />
+                        <img src={product.src} className='h-36 w-32 rounded-md ' />
                       </div>
 
                       <div className='flex flex-col h-40    '>
@@ -127,50 +126,30 @@ const AddToCart = () => {
                 )}
               </div>
               <div className='flex w-screen justify-around'>
-              {/* <div className='flex flex-col gap-4 mt-12 '>
-                <h2 className='text-2xl font-semibold mx-12 text-amber-700'>Cart Totals</h2>
-                <div className='flex flex-col  gap-2 mx-12'>
 
-                  <p className='text-lg font-semibold flex '>
-                    <p className='w-40'>Total Amount:</p>
-
-                    <p className='w-20'>Rs.{PreviousAmount}</p>
-                  </p>
-                  <p className='text-lg font-semibold flex '>
-                    <p className='w-40'>After Discount:</p>
-
-                    <p className='w-20'>Rs.{totalAmount}</p>
-                  </p>
-                  
-                  <button className='bg-green-500 mt-4 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer ' onClick={()=>History("/place-order")}> Proceed to checkout </button>
-
-                </div>
-               
-                
-              </div> */}
-              <div>
-              <Cart 
-                        previousAmount={PreviousAmount} 
-                        totalAmount={totalAmount} 
-                    />
-                    <button
+                <div>
+                  <Cart
+                    previousAmount={PreviousAmount}
+                    totalAmount={totalAmount}
+                  />
+                  <button
                     className='bg-green-500 mt-4 ml-10 text-white text-lg rounded-md w-48 h-10 outline-none cursor-pointer'
                     onClick={handleProceed}
-                >
+                  >
                     Proceed to checkout
-                </button>
-              </div>
-              
-              <div className='mt-12'>
-                <h3 className='font-bold'>Promo Code</h3>
-                <div>
-                <input type="text" className='w-96 rounded-l-md h-10 border-2 mt-1 border-black '/>
-                <button className='bg-black text-white w-24 outline-none h-10 -mt-6 rounded-r-md'>Apply</button>
+                  </button>
                 </div>
-                
+
+                <div className='mt-12'>
+                  <h3 className='font-bold'>Promo Code</h3>
+                  <div>
+                    <input type="text" className='w-96 rounded-l-md h-10 border-2 mt-1 border-black ' />
+                    <button className='bg-black text-white w-24 outline-none h-10 -mt-6 rounded-r-md'>Apply</button>
+                  </div>
+
                 </div>
               </div>
-            
+
 
             </div>
 
