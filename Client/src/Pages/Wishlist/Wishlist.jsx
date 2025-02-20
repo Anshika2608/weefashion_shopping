@@ -57,7 +57,7 @@ function Wishlist() {
                 Previous={liked.Previous}
                 Current={liked.Current}
                 discount={liked.discount}
-                isWishlist={liked.isWishlist} 
+                isWishlist={true}
                 cardKey={liked.id}
                 onDeleteFromWishlist={handleDeleteFromWishlist}
                 list={wish}
