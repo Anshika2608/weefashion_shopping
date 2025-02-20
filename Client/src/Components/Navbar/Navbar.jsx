@@ -33,7 +33,6 @@ const url="https://weefashion-backend.onrender.com"
     localStorage.clear();
     setLoginData(null);
    history("/LogIn")
-   window.location.reload()
   }
   const handleHomeClick = () => {
     setDropdownState({
