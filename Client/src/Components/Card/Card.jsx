@@ -24,16 +24,33 @@ function Card({
 
 
 
-  useEffect(() => {
-    const storedWishlist = localStorage.getItem(`wishlist_${id}`);
-    if (storedWishlist !== null) {
-      setWishlist(JSON.parse(storedWishlist));
-    }
-    
-    const storedCart = localStorage.getItem('cart');
-    const cartItems = storedCart ? JSON.parse(storedCart) : [];
-    setAddedToCart(cartItems.some(item => item.id === id));
-  }, [id]);
+ useEffect(() => {
+    const fetchData = async () => {
+      if (!loginData || !loginData.ValidUserOne) return;
+  
+      try {
+        const res = await axios.get(`${url}/api/wishlist/`, {
+          params: { email: loginData.ValidUserOne.email }
+        });
+  
+        const wishlistItems = res.data.items || [];
+        const isWishlisted = wishlistItems.some(item => item.id === id);
+        setWishlist(isWishlisted);
+  
+      } catch (error) {
+        console.error("Error fetching wishlist:", error);
+      }
+  
+      const storedCart = localStorage.getItem("cart");
+      const cartItems = storedCart ? JSON.parse(storedCart) : [];
+      setAddedToCart(cartItems.some((item) => item.id === id));
+    };
+  
+    fetchData();
+  }, [loginData, id]); 
+  
+  
+  
 
   const handleWishlist = async () => {
     try {
@@ -41,29 +58,27 @@ function Card({
         alert("Please log in to add items to your wishlist.");
         return;
       }
-      setWishlist(!wishlist);
-      localStorage.setItem(`wishlist_${id}`, !wishlist);
-
-      if (list) {
-        onDeleteFromWishlist(cardKey);
+  
+      if (!wishlist) {
+        await axios.post(`${url}/api/wishlist/liked`, {
+          id,
+          title,
+          src,
+          Previous,
+          Current,
+          discount,
+          email: loginData.ValidUserOne.email 
+        });
+        setWishlist(true);
       } else {
-        if (!wishlist) {
-          await axios.post(`${url}/api/wishlist/liked`, {
-            id,
-            title,
-            src,
-            Previous,
-            Current,
-            discount,
-            email: loginData.ValidUserOne.email 
-          });
-        } else {
-          await axios.delete(`${url}/api/wishlist/delete/${id}`, {
-            params: { email: loginData.ValidUserOne.email }
-          });
-          console.log("Removed from wishlist");
-        }
+        await axios.delete(`${url}/api/wishlist/delete/${id}`, {
+          params: { email: loginData.ValidUserOne.email }
+        });
+        setWishlist(false);
       }
+  
+      
+  
     } catch (error) {
       console.error("Error handling wishlist:", error);
     }
