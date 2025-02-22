@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import Slider from "../../Components/Slider/Slider";
 import axios from "axios";
 import Card from "../../Components/Card/Card";
@@ -22,31 +22,33 @@ import b18 from "../../assets/b18.jpg";
 function Home() {
   const [collection, setCollection] = useState([]);
   const [women, setWomen] = useState([]);
+  const [loadingWomen, setLoadingWomen] = useState(true);
+  const [loadingCollection, setLoadingCollection] = useState(true);
 const url="https://weefashion-backend.onrender.com"
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${url}/api/home`);
-        setCollection(response.data.products);
-        console.log(response.data.products);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-    const womenData = async () => {
-      try {
-        const res = await axios.get(`${url}/api/home/women`);
-        setWomen(res.data.products);
-        console.log(response.data.products);
-        
-      } catch (err) {
-        console.log(err);
-      }
-    };
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${url}/api/home`);
+      setCollection(response.data.products);
+    } catch (error) {
+      console.log("Error fetching latest collections:", error);
+    }
+    setLoadingCollection(false);
+  };
 
-    fetchData();
-    womenData();
-  }, []);
+  const womenData = async () => {
+    try {
+      const res = await axios.get(`${url}/api/home/women`);
+      setWomen(res.data.products);
+    } catch (err) {
+      console.log("Error fetching women collection:", err);
+    }
+    setLoadingWomen(false);
+  };
+
+  fetchData();
+  womenData();
+}, []);
 
   return (
     <>
@@ -65,18 +67,24 @@ const url="https://weefashion-backend.onrender.com"
         </h1>
         <hr className="mt-4 border-b-2 border-black w-48 mx-auto" />
         <div className="flex flex-wrap justify-center items-center mt-8 mb-8">
-          {women.map((women, index) => (
-            <div key={women.id} className="m-4">
-              <Card
-                id={women.id}
-                title={women.Title}
-                src={women.image}
-                Previous={women.previous_price}
-                Current={women.Current_price}
-                discount={women.discount}
-              />
-            </div>
-          ))}
+        {loadingWomen
+            ? 
+              Array(6)
+                .fill(null)
+                .map((_, index) => <CardSkeleton key={index} />)
+            : 
+              women.map((item) => (
+                <div key={item.id} className="m-4">
+                  <Card
+                    id={item.id}
+                    title={item.Title}
+                    src={item.image}
+                    Previous={item.previous_price}
+                    Current={item.Current_price}
+                    discount={item.discount}
+                  />
+                </div>
+              ))}
           <Link to="/Women" className="rounded-full bg-slate-200 p-4 text-xl">
             <TbMathGreater />
           </Link>
@@ -99,18 +107,24 @@ const url="https://weefashion-backend.onrender.com"
         </h2>
         <hr className="mt-4 border-b-2 border-black w-40 mx-auto" />
         <div className="flex flex-wrap justify-center mt-8 mb-8">
-          {collection.map((product, index) => (
-            <div key={product.id} className="m-4">
-              <Card
-                id={product.id}
-                title={product.Title}
-                src={product.image}
-                Previous={product.previous_price}
-                Current={product.Current_price}
-                discount={product.discount}
-              />
-            </div>
-          ))}
+        {loadingCollection
+            ? 
+              Array(6)
+                .fill(null)
+                .map((_, index) => <CardSkeleton key={index} />)
+            : 
+              collection.map((product) => (
+                <div key={product.id} className="m-4">
+                  <Card
+                    id={product.id}
+                    title={product.Title}
+                    src={product.image}
+                    Previous={product.previous_price}
+                    Current={product.Current_price}
+                    discount={product.discount}
+                  />
+                </div>
+              ))}
         </div>
         <div className="flex items-center justify-center flex-wrap mb-4">
           <div
@@ -192,3 +206,4 @@ const url="https://weefashion-backend.onrender.com"
 }
 
 export default Home;
+
