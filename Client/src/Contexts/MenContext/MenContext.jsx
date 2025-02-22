@@ -4,156 +4,113 @@ import axios from "axios";
 const MenContext = createContext();
 
 export const MenContextProvider = ({ children }) => {
-  const [topWearProducts,settopWearProducts]=useState([])
-  const [bottomwearProducts,setbottomwearProducts]=useState([])
-  const[footwearProducts,setFootwearProducts]=useState([])
+  const [topWearProducts, setTopWearProducts] = useState([]);
+  const [bottomwearProducts, setBottomwearProducts] = useState([]);
+  const [footwearProducts, setFootwearProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState(null);
-  const[menFilters,setMenFilters]=useState({})
+  const [menFilters, setMenFilters] = useState({});
   const [errort, setErrort] = useState(null);
-  const[errorbott,seterrorbott]=useState(null);
-  const[errorfootw,seterrorfootw]=useState(null);
-  const[menLoading,setMenLoading]=useState(true)
-  const url="https://weefashion-backend.onrender.com"
+  const [errorbott, setErrorbott] = useState(null);
+  const [errorfootw, setErrorfootw] = useState(null);
+  const [menLoading, setMenLoading] = useState(true);
+  const url = "https://weefashion-backend.onrender.com";
+
   useEffect(() => {
     setMenLoading(true);
-    const timer = setTimeout(() => {
-      getFootwear();
-      getTopwear();
-      getBottomwear();
-      setMenLoading(false);
-    }, 2000); 
 
-    return () => clearTimeout(timer); 
-  }, []);
-
-  const getTopwear = async () => {
-    try {
-      const response = await axios.get(`${url}/api/Clothing/`,{params:menFilters});
-      settopWearProducts(response.data.products)
-      setErrort(null)
-    } catch (error) {
-      console.log("Error fetching data:", error);
-      setErrort("No products for this combination is available")
-    }
-  };
-  const getBottomwear=async()=>{
-    try{
-       const response=await axios.get(`${url}/api/Clothing/bottom`,{params:menFilters});
-        setbottomwearProducts(response.data.products)
-       seterrorbott(null)
-    }
-    catch(err){
-      console.log(err);
-      seterrorbott("No products for this combination is available")
-
-    }
-  }
-  const getFootwear=async()=>{
-    try{
-       const response=await axios.get(`${url}/api/Clothing/MenFootwear`,{params:menFilters});
-        setFootwearProducts(response.data.products) 
-        seterrorfootw(null)
-
-    }
-    catch(err){
-      console.log(err);
-      seterrorfootw("No products for this combination is available")
-
-    }
-  }
-  const clearFilter =async (radioId) => {
-    setMenFilters({});
-    setErrort(null); // Clear error for topwear
-        seterrorbott(null); // Clear error for bottomwear
-        seterrorfootw(null);
-    // Uncheck all radio buttons
-    const radioButtons = document.querySelectorAll('input[type="radio"]');
-    radioButtons.forEach((radio) => {
-      radio.checked = false;
-    });
-    const radio = document.getElementById(radioId);
-    if (radio) {
-      radio.checked = false;
-    }
-  };
-  const empty=async(radioId)=>{
-    const radio = document.getElementById(radioId);
-    if (radio) {
-      radio.checked = !radio.checked;
-    }
-  }
-  useEffect(() => {
-    setMenLoading(true);
-    const fetchTopwear = async () => {
+    const fetchData = async () => {
       try {
-        await getTopwear();
+        await Promise.all([getTopwear(), getBottomwear(), getFootwear()]);
       } catch (error) {
-        console.error("Error fetching topwear products:", error);
-        setErrort("No products for this combination is available")
-
+        console.error("Error fetching data:", error);
+      } finally {
+        setMenLoading(false); 
       }
     };
-    const fetchBottomwear = async () => {
-        try {
-          await getBottomwear();
-        } catch (error) {
-          console.error("Error fetching topwear products:", error);
-          seterrorbott("No products for this combination is available")
 
-        }
-      };
-      const fetchFootwear = async () => {
-        try {
-          await getFootwear();
-        } catch (error) {
-          console.error("Error fetching topwear products:", error);
-          seterrorfootw("No products for this combination is available")
+    fetchData();
+  }, [menFilters]); 
 
-        }
-      };
-      const timer = setTimeout(() => {
-        fetchTopwear();
-        fetchBottomwear();
-        fetchFootwear();
-        setMenLoading(false);
-      }, 2000); // 2 seconds delay
   
-      return () => clearTimeout(timer);
-  }, [menFilters]);
-const handleColor = (color) => {
-  setMenFilters(prevFilters => ({ ...prevFilters, color }));
-};
-
-const handleSize = (size) => {
-  setMenFilters(prevFilters => ({ ...prevFilters, size }));
-};
-
-const handleCategory = (Category) => {
-  setMenFilters(prevFilters => ({ ...prevFilters, Category }));
-};
-
-const handleCompany= (company) => {
-  setMenFilters(prevFilters => ({ ...prevFilters, company }));
-};
-
-const handlePriceSort = (sortBy) => {
-  setMenFilters(prevFilters => ({ ...prevFilters, sortBy }));
-};
-
-const getSingleProduct = async (productId) => {
+  const getTopwear = async () => {
     try {
-      const response = await axios.get(
-        `${url}/api/Clothing/menProducts/${productId}`
-      );
+      const response = await axios.get(`${url}/api/Clothing/`, { params: menFilters });
+      setTopWearProducts(response.data.products);
+      setErrort(null);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+      setErrort("No products for this combination is available");
+    }
+  };
+
+  const getBottomwear = async () => {
+    try {
+      const response = await axios.get(`${url}/api/Clothing/bottom`, { params: menFilters });
+      setBottomwearProducts(response.data.products);
+      setErrorbott(null);
+    } catch (err) {
+      console.log(err);
+      setErrorbott("No products for this combination is available");
+    }
+  };
+
+  const getFootwear = async () => {
+    try {
+      const response = await axios.get(`${url}/api/Clothing/MenFootwear`, { params: menFilters });
+      setFootwearProducts(response.data.products);
+      setErrorfootw(null);
+    } catch (err) {
+      console.log(err);
+      setErrorfootw("No products for this combination is available");
+    }
+  };
+
+  
+  const handleColor = (color) => setMenFilters((prev) => ({ ...prev, color }));
+  const handleSize = (size) => setMenFilters((prev) => ({ ...prev, size }));
+  const handleCategory = (Category) => setMenFilters((prev) => ({ ...prev, Category }));
+  const handleCompany = (company) => setMenFilters((prev) => ({ ...prev, company }));
+  const handlePriceSort = (sortBy) => setMenFilters((prev) => ({ ...prev, sortBy }));
+
+  
+  const clearFilter = () => {
+    setMenFilters({});
+    setErrort(null);
+    setErrorbott(null);
+    setErrorfootw(null);
+    document.querySelectorAll('input[type="radio"]').forEach((radio) => (radio.checked = false));
+  };
+
+
+  const getSingleProduct = async (productId) => {
+    try {
+      const response = await axios.get(`${url}/api/Clothing/menProducts/${productId}`);
       setSingleProduct(response.data);
-     console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
-return (
+
+  return (
     <MenContext.Provider
-      value={{ bottomwearProducts,topWearProducts,footwearProducts,clearFilter ,menLoading,errorfootw,errorbott,errort,empty, getSingleProduct, singleProduct,handleColor,handleCategory,handleCompany,handleSize,handlePriceSort }}
+      value={{
+        bottomwearProducts,
+        topWearProducts,
+        footwearProducts,
+        clearFilter,
+        menLoading,
+        errorfootw,
+        errorbott,
+        errort,
+        getSingleProduct,
+        singleProduct,
+        handleColor,
+        handleCategory,
+        handleCompany,
+        handleSize,
+        handlePriceSort,
+      }}
     >
       {children}
     </MenContext.Provider>
@@ -161,3 +118,4 @@ return (
 };
 
 export default MenContext;
+
