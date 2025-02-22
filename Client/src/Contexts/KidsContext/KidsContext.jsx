@@ -13,18 +13,21 @@ export const KidsContextProvider = ({ children }) => {
   const [footerror, setfooterror] = useState(null);
   const [loading, setLoading] = useState(true);
   const url="https://weefashion-backend.onrender.com"
-  useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => {
-      fetchKidsFootwear();
-      fetchKidsTopwear();
-      fetchKidsBottomwear();
-      setLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer); 
-  }, []);
-
+    useEffect(() => {
+      setLoading(true);
+  
+      const fetchData = async () => {
+        try {
+          await Promise.all([fetchKidsFootwear(), fetchKidsTopwear(), fetchKidsBottomwear()]);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false); 
+        }
+      };
+  
+      fetchData();
+    }, [kidsFilters]); 
   const fetchKidsFootwear = async () => {
   
     try {
@@ -89,42 +92,6 @@ export const KidsContextProvider = ({ children }) => {
  
     setKidsFilter((prevFilters) => ({ ...prevFilters, sortBy }));
   };
-
-  useEffect(() => {
-    setLoading(true);
-    const Topwear = async () => {
-      try {
-        await fetchKidsTopwear();
-      } catch (error) {
-        setToperror("No products for this combination is available");
-      }
-    };
-    const Bottomwear = async () => {
-      try {
-        await fetchKidsBottomwear();
-      } catch (error) {
-        setboterror("No products for this combination is available");
-      }
-    };
-    const Footwear = async () => {
-      try {
-        await fetchKidsFootwear();
-      } catch (error) {
-        console.error("Error fetching footwear products:", error);
-        setfooterror("No products for this combination is available");
-      }
-    };
-
-    const timer = setTimeout(() => {
-      Topwear();
-      Bottomwear();
-      Footwear();
-      setLoading(false);
-    }, 2000); 
-
-    return () => clearTimeout(timer);
-  }, [kidsFilters]);
-
   return (
     <KidsContext.Provider
       value={{
@@ -149,3 +116,4 @@ export const KidsContextProvider = ({ children }) => {
 };
 
 export default KidsContext;
+
