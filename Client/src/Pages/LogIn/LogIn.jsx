@@ -15,6 +15,7 @@ function LogIn() {
 
    const url="https://weefashion-backend.onrender.com"
   const [passShow, setPassShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 const [inpval, setInpval] = useState({
   email: "",
   password: "",
@@ -35,25 +36,30 @@ const setVal = (e) => {
 };
 const loginuser = async(e) => {
   e.preventDefault();
-
+  setLoading(true);
   const { email, password } = inpval;
 
-  if (email === "") {
-      toast.error("email is required!", {
-          position: "top-right"
-      });
-  } else if (!email.includes("@")) {
-      toast.warning("includes @ in your email!", {
-          position: "top-right"
-      });
-  } else if (password === "") {
-      toast.error("password is required!", {
-          position: "top-right"
-      });
-  } else if (password.length < 6) {
-      toast.error("password must be 6 char!", {
-          position: "top-right"
-      });}
+
+  if (!email) {
+    toast.error("Email is required!");
+    setLoading(false);
+    return;
+  }
+  if (!email.includes("@")) {
+    toast.warning("Include @ in your email!");
+    setLoading(false);
+    return;
+  }
+  if (!password) {
+    toast.error("Password is required!");
+    setLoading(false);
+    return;
+  }
+  if (password.length < 6) {
+    toast.error("Password must be at least 6 characters!");
+    setLoading(false);
+    return;
+  }
       try {
         const response = await axios.post(`${url}/api/login/login`,{
                 email,password
@@ -69,7 +75,7 @@ const loginuser = async(e) => {
                     }
       } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
-          const errorMessage = error.response.data.error; // Assuming your API returns error messages in a 'message' field
+          const errorMessage = error.response.data.error; 
           toast.error(errorMessage, {
             position: "top-right"
           });
@@ -78,6 +84,8 @@ const loginuser = async(e) => {
             position: "top-right"
           });
         }
+      }finally {
+        setLoading(false);
       }
 
 }
@@ -119,7 +127,9 @@ const loginuser = async(e) => {
           <div>
           <Link to="/Forgot" className="text-blue-500 md:ml-60 ml-40">Forgot Password?</Link>
           </div>
-          <button className="rounded-md w-40 h-8 border-2  bg-black text-white" onClick={loginuser}>LOG IN</button>
+          <button className="rounded-md w-40 h-8 border-2 bg-black text-white flex justify-center items-center" onClick={loginuser} disabled={loading}>
+              {loading ? "Loading..." : "LOG IN"}
+            </button>
           <p className="sm:text-slate-500 font-semibold">Don't have an account?
             <Link to="/SignUp" className="ml-1 sm:text-blue-500 text-black">Sign Up</Link>
           </p>
