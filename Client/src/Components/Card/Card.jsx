@@ -123,7 +123,9 @@ function Card({
       return (
         <button
           className="rounded-md h-8 px-2.5 bg-slate-200 text-2xl text-red-500"
-          onClick={handleWishlist}
+           onClick={() => {
+            onDeleteFromWishlist(cardKey); 
+          }}
         >
           <FaTrash />
         </button>
