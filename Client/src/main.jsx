@@ -8,20 +8,23 @@ import { WomenContextProvider } from "./Contexts/WomenContext/WomenContext.jsx";
 import { KidsContextProvider } from "./Contexts/KidsContext/KidsContext.jsx";
 import { LoginContextProvider } from "./Contexts/LoginContext/LoginContext.jsx";
 import { CartContextProvider } from "./Contexts/CartContext/CartContext.jsx";
+import { WishlistProvider } from "./Contexts/WishlistContext/wishlistContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-    <LoginContextProvider>
-      <MenContextProvider>
-        <WomenContextProvider>
-          <KidsContextProvider>
-            <CartContextProvider>
-          <App />
-          </CartContextProvider>
-          </KidsContextProvider>
-        </WomenContextProvider>
-      </MenContextProvider>
+      <LoginContextProvider>
+        <MenContextProvider>
+          <WomenContextProvider>
+            <KidsContextProvider>
+              <WishlistProvider>
+                <CartContextProvider>
+                  <App />
+                </CartContextProvider>
+              </WishlistProvider>
+            </KidsContextProvider>
+          </WomenContextProvider>
+        </MenContextProvider>
       </LoginContextProvider>
     </BrowserRouter>
   </React.StrictMode>

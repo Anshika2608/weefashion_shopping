@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useContext} from "react";
 import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import Slider from "../../Components/Slider/Slider";
 import axios from "axios";
@@ -6,7 +6,9 @@ import Card from "../../Components/Card/Card";
 import { Link } from "react-router-dom";
 import { TbMathGreater } from "react-icons/tb";
 import Features from "../../Components/Features/Features";
-
+import WishlistContext from "../../Contexts/WishlistContext/wishlistContext";
+import LoginContext from "../../Contexts/LoginContext/LoginContext";
+import { CartContext } from "../../Contexts/CartContext/CartContext";
 import f1 from "../../assets/f1.png";
 import f2 from "../../assets/f2.png";
 import f3 from "../../assets/f3.png";
@@ -24,36 +26,45 @@ function Home() {
   const [women, setWomen] = useState([]);
   const [loadingWomen, setLoadingWomen] = useState(true);
   const [loadingCollection, setLoadingCollection] = useState(true);
-const url="https://weefashion-backend.onrender.com"
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${url}/api/home`);
-      setCollection(response.data.products);
-    } catch (error) {
-      console.log("Error fetching latest collections:", error);
+  const url = "https://weefashion-backend.onrender.com"
+    const { loginData } = useContext(LoginContext);
+  const { fetchWishlist } = useContext(WishlistContext);
+   const {fetchCart} =useContext(CartContext)
+  useEffect(() => {
+    if (loginData?.ValidUserOne?.email) {
+      fetchWishlist(loginData.ValidUserOne.email);
+      fetchCart(loginData.ValidUserOne.email)
     }
-    setLoadingCollection(false);
-  };
+  }, [loginData]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${url}/api/home`);
+        setCollection(response.data.products);
+      } catch (error) {
+        console.log("Error fetching latest collections:", error);
+      }
+      setLoadingCollection(false);
+    };
 
-  const womenData = async () => {
-    try {
-      const res = await axios.get(`${url}/api/home/women`);
-      setWomen(res.data.products);
-    } catch (err) {
-      console.log("Error fetching women collection:", err);
-    }
-    setLoadingWomen(false);
-  };
+    const womenData = async () => {
+      try {
+        const res = await axios.get(`${url}/api/home/women`);
+        setWomen(res.data.products);
+      } catch (err) {
+        console.log("Error fetching women collection:", err);
+      }
+      setLoadingWomen(false);
+    };
 
-  fetchData();
-  womenData();
-}, []);
+    fetchData();
+    womenData();
+  }, []);
 
   return (
     <>
-     <div className="pt-24 w-full overflow-x-hidden">
-        <Slider/>
+      <div className="pt-24 w-full overflow-x-hidden">
+        <Slider />
         <div className="flex justify-center items-center flex-wrap ">
           <Features source={f1} text="Free Shipping" bgcolor="bg-red-100" />
           <Features source={f2} text="Online Order" bgcolor="bg-lime-300" />
@@ -67,24 +78,24 @@ useEffect(() => {
         </h1>
         <hr className="mt-4 border-b-2 border-black w-48 mx-auto" />
         <div className="flex flex-wrap justify-center items-center mt-8 mb-8">
-        {loadingWomen
-            ? 
-              Array(6)
-                .fill(null)
-                .map((_, index) => <CardSkeleton key={index} />)
-            : 
-              women.map((item) => (
-                <div key={item.id} className="m-4">
-                  <Card
-                    id={item.id}
-                    title={item.Title}
-                    src={item.image}
-                    Previous={item.previous_price}
-                    Current={item.Current_price}
-                    discount={item.discount}
-                  />
-                </div>
-              ))}
+          {loadingWomen
+            ?
+            Array(6)
+              .fill(null)
+              .map((_, index) => <CardSkeleton key={index} />)
+            :
+            women.map((item) => (
+              <div key={item.id} className="m-4">
+                <Card
+                  id={item.id}
+                  title={item.Title}
+                  src={item.image}
+                  Previous={item.previous_price}
+                  Current={item.Current_price}
+                  discount={item.discount}
+                />
+              </div>
+            ))}
           <Link to="/Women" className="rounded-full bg-slate-200 p-4 text-xl">
             <TbMathGreater />
           </Link>
@@ -107,24 +118,24 @@ useEffect(() => {
         </h2>
         <hr className="mt-4 border-b-2 border-black w-40 mx-auto" />
         <div className="flex flex-wrap justify-center mt-8 mb-8">
-        {loadingCollection
-            ? 
-              Array(6)
-                .fill(null)
-                .map((_, index) => <CardSkeleton key={index} />)
-            : 
-              collection.map((product) => (
-                <div key={product.id} className="m-4">
-                  <Card
-                    id={product.id}
-                    title={product.Title}
-                    src={product.image}
-                    Previous={product.previous_price}
-                    Current={product.Current_price}
-                    discount={product.discount}
-                  />
-                </div>
-              ))}
+          {loadingCollection
+            ?
+            Array(6)
+              .fill(null)
+              .map((_, index) => <CardSkeleton key={index} />)
+            :
+            collection.map((product) => (
+              <div key={product.id} className="m-4">
+                <Card
+                  id={product.id}
+                  title={product.Title}
+                  src={product.image}
+                  Previous={product.previous_price}
+                  Current={product.Current_price}
+                  discount={product.discount}
+                />
+              </div>
+            ))}
         </div>
         <div className="flex items-center justify-center flex-wrap mb-4">
           <div
@@ -136,7 +147,7 @@ useEffect(() => {
             <p className="text-sm mt-1">
               The best classic dress is on sale on weefashion
             </p>
-           
+
           </div>
           <div
             className="h-80 w-2/5 rounded-md text-white text-xl pt-20 pl-8"
@@ -147,7 +158,7 @@ useEffect(() => {
             <p className="text-sm mt-1">
               The best classic dress is on sale on weefashion
             </p>
-           
+
           </div>
         </div>
         <div className="flex justify-center items-center flex-wrap my-8">

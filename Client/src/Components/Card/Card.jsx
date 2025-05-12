@@ -1,10 +1,12 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { CiHeart } from "react-icons/ci";
 import { IoBag } from "react-icons/io5";
 import { FaHeart, FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import LoginContext from "../../Contexts/LoginContext/LoginContext";
+import WishlistContext from "../../Contexts/WishlistContext/wishlistContext";
+import { CartContext } from "../../Contexts/CartContext/CartContext";
 function Card({
   id,
   title,
@@ -17,40 +19,32 @@ function Card({
   onDeleteFromWishlist,
   list
 }) {
+  const { wishlist: wishlistData } = useContext(WishlistContext);
+
   const [wishlist, setWishlist] = useState(isWishlist || false);
-    const [addedToCart, setAddedToCart] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
   const url = "https://weefashion-backend.onrender.com";
-  const { loginData } = useContext(LoginContext); 
+  const { loginData } = useContext(LoginContext);
+  const { isInCart, fetchCart } = useContext(CartContext);
 
 
-
- useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       if (!loginData || !loginData.ValidUserOne) return;
-  
-      try {
-        const res = await axios.get(`${url}/api/wishlist/`, {
-          params: { email: loginData.ValidUserOne.email }
-        });
-  
-        const wishlistItems = res.data.items || [];
-        const isWishlisted = wishlistItems.some(item => item.id === id);
+
+      if (wishlistData && wishlistData.length > 0) {
+        const isWishlisted = wishlistData.some(item => item.id === id);
         setWishlist(isWishlisted);
-  
-      } catch (error) {
-        console.error("Error fetching wishlist:", error);
       }
-  
-      const storedCart = localStorage.getItem("cart");
-      const cartItems = storedCart ? JSON.parse(storedCart) : [];
-      setAddedToCart(cartItems.some((item) => item.id === id));
+
+      setAddedToCart(isInCart(id));
     };
-  
+
     fetchData();
-  }, [loginData, id]); 
-  
-  
-  
+  }, [loginData, id, wishlistData, isInCart]);
+
+
+
 
   const handleWishlist = async () => {
     try {
@@ -58,7 +52,7 @@ function Card({
         alert("Please log in to add items to your wishlist.");
         return;
       }
-  
+
       if (!wishlist) {
         await axios.post(`${url}/api/wishlist/liked`, {
           id,
@@ -67,7 +61,7 @@ function Card({
           Previous,
           Current,
           discount,
-          email: loginData.ValidUserOne.email 
+          email: loginData.ValidUserOne.email
         });
         setWishlist(true);
       } else {
@@ -76,9 +70,9 @@ function Card({
         });
         setWishlist(false);
       }
-  
-      
-  
+
+
+
     } catch (error) {
       console.error("Error handling wishlist:", error);
     }
@@ -94,12 +88,12 @@ function Card({
       const cartItems = storedCart ? JSON.parse(storedCart) : [];
 
       if (addedToCart) {
-        await axios.delete(`${url}/api/cart/deleteCart/${id}`,{
-          params:{ email: loginData.ValidUserOne.email }
+        await axios.delete(`${url}/api/cart/deleteCart/${id}`, {
+          params: { email: loginData.ValidUserOne.email }
         });
         setAddedToCart(false);
+         await fetchCart();
         localStorage.setItem('cart', JSON.stringify(cartItems.filter(item => item.id !== id)));
-        console.log("Removed from cart");
       } else {
         await axios.post(`${url}/api/cart/addCart`, {
           id,
@@ -108,11 +102,11 @@ function Card({
           Previous,
           Current,
           discount,
-          email: loginData.ValidUserOne.email       
-          });
+          email: loginData.ValidUserOne.email
+        });
         setAddedToCart(true);
-        localStorage.setItem('cart', JSON.stringify([...cartItems, { id, title, src, Previous, Current, discount ,email}]));
-        console.log("Added to cart");
+         await fetchCart();
+        localStorage.setItem('cart', JSON.stringify([...cartItems, { id, title, src, Previous, Current, discount, email }]));
       }
     } catch (err) {
       console.error("Error handling cart:", err);
@@ -123,8 +117,8 @@ function Card({
       return (
         <button
           className="rounded-md h-8 px-2.5 bg-slate-200 text-2xl text-red-500"
-           onClick={() => {
-            onDeleteFromWishlist(cardKey); 
+          onClick={() => {
+            onDeleteFromWishlist(cardKey);
           }}
         >
           <FaTrash />

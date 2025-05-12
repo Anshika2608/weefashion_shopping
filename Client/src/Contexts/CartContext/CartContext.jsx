@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect,useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import LoginContext from '../LoginContext/LoginContext';
 export const CartContext = createContext();
@@ -11,9 +11,13 @@ export const CartContextProvider = ({ children }) => {
   const [previousAmount, setPreviousAmount] = useState(0);
 
   const { loginData } = useContext(LoginContext);
- const History=useNavigate()
+  const History = useNavigate()
 
-
+  useEffect(() => {
+    if (loginData?.ValidUserOne?.email) {
+      fetchCart();
+    }
+  }, [loginData?.ValidUserOne?.email]);
   const fetchCart = async () => {
     try {
       const res = await axios.get(`${url}/api/cart/`, {
@@ -37,7 +41,9 @@ export const CartContextProvider = ({ children }) => {
       console.error(err);
     }
   };
-
+  const isInCart = (productId) => {
+    return cart.some((item) => item.id === productId);
+  };
   const calculateTotalAmount = (cartData, quantityMap) => {
     let total = 0;
     let sum = 0;
@@ -92,6 +98,7 @@ export const CartContextProvider = ({ children }) => {
         deleteCartItem,
         handleProceed,
         fetchCart,
+        isInCart
       }}
     >
       {children}
