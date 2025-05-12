@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import Card from "../../Components/Card/Card";
+import React, { useContext, useState,lazy, useEffect, Suspense } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
 import WomenContext from "../../Contexts/WomenContext/WomenContext";
 import FilterWomen from "../../Components/Filter/FilterWomen";
 import womenTopwear from "../../assets/Women_Images/banner2.jpg";
@@ -43,7 +43,7 @@ function WomenTopwear() {
             <div className="flex relative flex-col justify-end">
                 {(womentopfiltervalue) ?
                     <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
-                    <FilterWomen
+                        <FilterWomen
                             womencolors={womencolors}
                             womencompanys={womencompanys}
                             womencategorys={womencategorys}
@@ -76,27 +76,29 @@ function WomenTopwear() {
                     <div className="ml-6">
                         <h2 className="text-2xl font-bold mb-4 mt-6 ml-6">Topwear for Women</h2>
                         <div className="flex flex-wrap">
-                {womenLoading ? (
-                  [...Array(8)].map((_, index) => (
-                    <div key={index} className="m-4">
-                      <CardSkeleton />
-                    </div>
-                  ))
-                ) : (
-                  topwearpro.map((product) => (
-                    <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
+                            {womenLoading ? (
+                                [...Array(8)].map((_, index) => (
+                                    <div key={index} className="m-4">
+                                        <CardSkeleton />
+                                    </div>
+                                ))
+                            ) : (
+                                topwearpro.map((product) => (
+                                    <div key={product.id} className="m-4">
+                                        <Suspense fallback={<CardSkeleton />}>
+                                            <Card
+                                                id={product.id}
+                                                src={product.image}
+                                                title={product.Title}
+                                                Previous={product.previous_price}
+                                                Current={product.Current_price}
+                                                discount={product.discount}
+                                            />
+                                        </Suspense>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                         {error && (
                             <p className="text-center mt-6 mb-4 text-gray-600 text-xl italic capitalize">
                                 {error}

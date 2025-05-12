@@ -139,7 +139,7 @@ function Card({
   return (
     <div className="h-[26rem] rounded-lg shadow-xl w-64 flex items-center flex-col">
       <NavLink to={`/Singleproduct/${id}`}>
-        <img src={src} className="h-64 w-60 rounded-md" alt={title} />
+        <img src={src} className="h-64 w-60 rounded-md" alt={title} loading="lazy" />
       </NavLink>
       <p className="text-sm mt-1 px-2 h-12">{title}</p>
       <div className="flex font-bold mt-1">

@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import Card from "../../Components/Card/Card";
+import React, { useContext, lazy,useState, useEffect, Suspense } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
 import WomenContext from "../../Contexts/WomenContext/WomenContext";
 import FilterWomen from "../../Components/Filter/FilterWomen";
 import womenFootwear from "../../assets/Women_Images/footwearbannerw.jpg";
@@ -12,7 +12,7 @@ function WomenFootwear() {
     handleCategoryChange,
     handleCompanyChange,
     handlePriceSortChange,
-    clearFilters, errorfoot,womenLoading } = useContext(WomenContext);
+    clearFilters, errorfoot, womenLoading } = useContext(WomenContext);
 
   const womencolors = ["Blue", "Black", "Yellow", "White", "Gray", "Pink"];
   const womencompanys = ["Puma", "Nike", "Campus"];
@@ -43,7 +43,7 @@ function WomenFootwear() {
         <div className="flex relative flex-col justify-end">
           {(womenfootfiltervalue) ?
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
-                            <FilterWomen
+              <FilterWomen
                 womencolors={womencolors}
                 womencompanys={womencompanys}
                 womencategorys={womencategorys}
@@ -89,14 +89,16 @@ function WomenFootwear() {
                 ) : (
                   Footwearpro.map((product) => (
                     <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
+                      <Suspense fallback={<CardSkeleton />}>
+                        <Card
+                          id={product.id}
+                          src={product.image}
+                          title={product.Title}
+                          Previous={product.previous_price}
+                          Current={product.Current_price}
+                          discount={product.discount}
+                        />
+                      </Suspense>
                     </div>
                   ))
                 )}

@@ -1,5 +1,5 @@
-import React, { useContext, useState,useEffect } from "react";
-import Card from "../../Components/Card/Card";
+import React, {useContext, useState,lazy, useEffect, Suspense } from "react";
+const Card=lazy(()=> import("../../Components/Card/Card") );
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
 import menTopwear from "../../assets/Men_Images/banner.jpg";
@@ -82,6 +82,7 @@ function MenTopwear() {
                 ) : (
                   topWearProducts.map((product) => (
                     <div key={product.id} className="m-4">
+                      <Suspense fallback={<CardSkeleton/>}>
                       <Card
                         id={product.id}
                         src={product.image}
@@ -90,6 +91,7 @@ function MenTopwear() {
                         Current={product.Current_price}
                         discount={product.discount}
                       />
+                      </Suspense>
                     </div>
                   ))
                 )}

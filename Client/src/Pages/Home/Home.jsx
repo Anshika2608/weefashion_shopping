@@ -1,8 +1,8 @@
-import React, { useEffect, useState ,useContext} from "react";
+import React, { Suspense, lazy,useEffect, useState, useContext } from "react";
 import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import Slider from "../../Components/Slider/Slider";
 import axios from "axios";
-import Card from "../../Components/Card/Card";
+const Card = lazy(() => import("../../Components/Card/Card"))
 import { Link } from "react-router-dom";
 import { TbMathGreater } from "react-icons/tb";
 import Features from "../../Components/Features/Features";
@@ -27,9 +27,9 @@ function Home() {
   const [loadingWomen, setLoadingWomen] = useState(true);
   const [loadingCollection, setLoadingCollection] = useState(true);
   const url = "https://weefashion-backend.onrender.com"
-    const { loginData } = useContext(LoginContext);
+  const { loginData } = useContext(LoginContext);
   const { fetchWishlist } = useContext(WishlistContext);
-   const {fetchCart} =useContext(CartContext)
+  const { fetchCart } = useContext(CartContext)
   useEffect(() => {
     if (loginData?.ValidUserOne?.email) {
       fetchWishlist(loginData.ValidUserOne.email);
@@ -86,14 +86,16 @@ function Home() {
             :
             women.map((item) => (
               <div key={item.id} className="m-4">
-                <Card
-                  id={item.id}
-                  title={item.Title}
-                  src={item.image}
-                  Previous={item.previous_price}
-                  Current={item.Current_price}
-                  discount={item.discount}
-                />
+                <Suspense fallback={<CardSkeleton />}>
+                  <Card
+                    id={item.id}
+                    title={item.Title}
+                    src={item.image}
+                    Previous={item.previous_price}
+                    Current={item.Current_price}
+                    discount={item.discount}
+                  />
+                </Suspense>
               </div>
             ))}
           <Link to="/Women" className="rounded-full bg-slate-200 p-4 text-xl">
@@ -126,14 +128,16 @@ function Home() {
             :
             collection.map((product) => (
               <div key={product.id} className="m-4">
-                <Card
-                  id={product.id}
-                  title={product.Title}
-                  src={product.image}
-                  Previous={product.previous_price}
-                  Current={product.Current_price}
-                  discount={product.discount}
-                />
+                <Suspense fallback={<CardSkeleton />}>
+                  <Card
+                    id={product.id}
+                    title={product.Title}
+                    src={product.image}
+                    Previous={product.previous_price}
+                    Current={product.Current_price}
+                    discount={product.discount}
+                  />
+                </Suspense>
               </div>
             ))}
         </div>

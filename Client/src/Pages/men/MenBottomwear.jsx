@@ -1,5 +1,5 @@
-import React, { useContext, useState ,useEffect} from "react";
-import Card from "../../Components/Card/Card";
+import React, {useContext, useState,lazy, useEffect, Suspense } from "react";
+const Card=lazy(()=> import("../../Components/Card/Card") );
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
 import menBottomwear from "../../assets/Men_Images/banner1.jpg";
@@ -7,7 +7,7 @@ import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function MenBottomwear() {
   const { bottomwearProducts,
-    handleColor, handleCategory, errorbott, handleCompany, handleSize, handlePriceSort, clearFilter,menLoading } = useContext(MenContext);
+    handleColor, handleCategory, errorbott, handleCompany, handleSize, handlePriceSort, clearFilter, menLoading } = useContext(MenContext);
 
 
   const colors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple"];
@@ -39,7 +39,7 @@ function MenBottomwear() {
         <div className="flex relative justify-end flex-col">
           {(menbottomfiltervalue) ?
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
-            <FilterComponent
+              <FilterComponent
                 colors={colors}
                 sizes={sizes}
                 categories={categories}
@@ -54,7 +54,7 @@ function MenBottomwear() {
             </div>
             : ""}
           <div className="sm:flex relative ">
-          <div className="hidden sm:block h-full sticky top-12">
+            <div className="hidden sm:block h-full sticky top-12">
               <FilterComponent
                 colors={colors}
                 sizes={sizes}
@@ -83,14 +83,16 @@ function MenBottomwear() {
                 ) : (
                   bottomwearProducts.map((product) => (
                     <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
+                      <Suspense fallback={<CardSkeleton />}>
+                        <Card
+                          id={product.id}
+                          src={product.image}
+                          title={product.Title}
+                          Previous={product.previous_price}
+                          Current={product.Current_price}
+                          discount={product.discount}
+                        />
+                      </Suspense>
                     </div>
                   ))
                 )}

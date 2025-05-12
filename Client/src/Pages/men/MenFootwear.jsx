@@ -1,5 +1,5 @@
-import React, { useContext, useState,useEffect } from "react";
-import Card from "../../Components/Card/Card";
+import React, { useContext, useState, lazy,useEffect, Suspense } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
 import menfootwear from "../../assets/Men_Images/bannerfoot.jpg";
@@ -7,7 +7,7 @@ import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function MenFootwear() {
   const { footwearProducts,
-    handleColor, handleCategory, handleCompany, handleSize, handlePriceSort, clearFilter, errorfootw,menLoading } = useContext(MenContext);
+    handleColor, handleCategory, handleCompany, handleSize, handlePriceSort, clearFilter, errorfootw, menLoading } = useContext(MenContext);
   const colors = ["Blue", "Black", "Yellow", "White", "Gray", "Red"];
   const sizes = ["UK6", "UK7", "UK8", "UK8"];
   const categories = ["Walking Shoes", "Sneakers", "Flipflops & Sandals"];
@@ -37,7 +37,7 @@ function MenFootwear() {
         <div className="flex relative flex-col justify-end">
           {(menfootfiltervalue) ?
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
-                            <FilterComponent
+              <FilterComponent
                 colors={colors}
                 sizes={sizes}
                 categories={categories}
@@ -81,14 +81,16 @@ function MenFootwear() {
                 ) : (
                   footwearProducts.map((product) => (
                     <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
+                      <Suspense fallback={<CardSkeleton />}>
+                        <Card
+                          id={product.id}
+                          src={product.image}
+                          title={product.Title}
+                          Previous={product.previous_price}
+                          Current={product.Current_price}
+                          discount={product.discount}
+                        />
+                      </Suspense>
                     </div>
                   ))
                 )}
@@ -99,9 +101,9 @@ function MenFootwear() {
             </div>
           </div>
         </div>
-</div>
-      </>
-      );
+      </div>
+    </>
+  );
 }
 
-      export default MenFootwear;
+export default MenFootwear;

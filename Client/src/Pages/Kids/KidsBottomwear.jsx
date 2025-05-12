@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
-import Card from "../../Components/Card/Card";
+import React, { Suspense, lazy, useContext, useState } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
+
 import KidsContext from "../../Contexts/KidsContext/KidsContext";
 // import FilterKids from "../../Components/Filter/FilterKids";
 import kidsbottomwear from "../../assets/Kids_Images/Kids_Topwear/banner2.webp";
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 import FilterKids from "../../Components/Filter/FilterKids";
 function KidsBottomwear() {
   const {
-    kidsBottomwearpro, sizeFilter, ColorFilter, CategoryFilter, boterror, CompanyFilter, emptyFilter, priceFilter,loading } = useContext(KidsContext);
+    kidsBottomwearpro, sizeFilter, ColorFilter, CategoryFilter, boterror, CompanyFilter, emptyFilter, priceFilter, loading } = useContext(KidsContext);
   const kidcolors = ["Blue", "Black", "Pink", "White", "Purple"]
   const kidcompanys = ["Puma", "Park Avenue", "U.S Polo"]
   const kidcategorys = ["Shorts", "Pants"]
@@ -35,11 +36,11 @@ function KidsBottomwear() {
         </nav>
         <img src={kidsbottomwear} alt="banner" className="w-full h-[22rem] " />
         <div className="flex sm:hidden justify-end">
-          <button className="  h-9 font-bold  m-4  w-20 cursor-pointer bg-cyan-700 text-white rounded-md " onClick={(e)=> setFiltervalue(!filterValue)}>Filters</button>
+          <button className="  h-9 font-bold  m-4  w-20 cursor-pointer bg-cyan-700 text-white rounded-md " onClick={(e) => setFiltervalue(!filterValue)}>Filters</button>
         </div>
         <div className="flex flex-col relative justify-end ">
 
-        {filterValue && (
+          {filterValue && (
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
               <FilterKids
                 kidcolors={kidcolors}
@@ -56,7 +57,7 @@ function KidsBottomwear() {
             </div>
           )}
           <div className=" sm:flex relative ">
-          <div className="hidden sm:block h-full sticky top-12">
+            <div className="hidden sm:block h-full sticky top-12">
               <FilterKids
                 className=" h-full"
                 kidcolors={kidcolors}
@@ -86,14 +87,16 @@ function KidsBottomwear() {
                 ) : (
                   kidsBottomwearpro.map((product) => (
                     <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
+                      <Suspense fallback={<CardSkeleton />}>
+                        <Card
+                          id={product.id}
+                          src={product.image}
+                          title={product.Title}
+                          Previous={product.previous_price}
+                          Current={product.Current_price}
+                          discount={product.discount}
+                        />
+                      </Suspense>
                     </div>
                   ))
                 )}

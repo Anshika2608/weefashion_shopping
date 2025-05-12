@@ -1,5 +1,5 @@
-import React, { useContext, useState,useEffect } from "react";
-import Card from "../../Components/Card/Card";
+import React, { Suspense, lazy, useContext, useState } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
 import KidsContext from "../../Contexts/KidsContext/KidsContext";
 import FilterKids from "../../Components/Filter/FilterKids";
 import kidstopwear from "../../assets/Kids_Images/Kids_Topwear/kids_banner1.jpg";
@@ -8,7 +8,7 @@ import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function KidsTopwear() {
   const {
-    kidstopwearpro, sizeFilter, ColorFilter, CategoryFilter, toperror, CompanyFilter, emptyFilter, priceFilter,loading } = useContext(KidsContext);
+    kidstopwearpro, sizeFilter, ColorFilter, CategoryFilter, toperror, CompanyFilter, emptyFilter, priceFilter, loading } = useContext(KidsContext);
 
   const kidcolors = ["Blue", "Black", "Yellow", "White", "Green", "Purple", "Red", "Pink", "Gray"]
   const kidcompanys = ["Puma", "Park Avenue", "U.S Polo"]
@@ -84,14 +84,16 @@ function KidsTopwear() {
                 ) : (
                   kidstopwearpro.map((product) => (
                     <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
+                      <Suspense fallback={<CardSkeleton />}>
+                        <Card
+                          id={product.id}
+                          src={product.image}
+                          title={product.Title}
+                          Previous={product.previous_price}
+                          Current={product.Current_price}
+                          discount={product.discount}
+                        />
+                      </Suspense>
                     </div>
                   ))
                 )}
@@ -102,9 +104,9 @@ function KidsTopwear() {
             </div>
           </div>
         </div>
-       </div>
-      </>
-      );
+      </div>
+    </>
+  );
 }
 
-      export default KidsTopwear;
+export default KidsTopwear;

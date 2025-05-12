@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import Card from "../../Components/Card/Card";
+import React, { Suspense, lazy, useContext, useState } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
 import KidsContext from "../../Contexts/KidsContext/KidsContext";
 import FilterKids from "../../Components/Filter/FilterKids";
 import kidfootwear from "../../assets/Kids_Images/Kids_Topwear/kidsfootbanner.png";
@@ -8,7 +8,7 @@ import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 
 function KidsFootwear() {
   const {
-    kidsfootwearpro, sizeFilter, ColorFilter, CategoryFilter, footerror, CompanyFilter, emptyFilter, priceFilter,loading } = useContext(KidsContext);
+    kidsfootwearpro, sizeFilter, ColorFilter, CategoryFilter, footerror, CompanyFilter, emptyFilter, priceFilter, loading } = useContext(KidsContext);
   const [kidfootfiltervalue, setKidFootFilterValue] = useState(false)
   const kidcolors = ["Blue", "Black", "Yello", "White", "Green", "Red", "Pink"]
   const kidcompanys = ["Puma", "Nike", "Campus"]
@@ -51,7 +51,7 @@ function KidsFootwear() {
                 CategoryFilter={CategoryFilter}
               />
             </div>
-}
+          }
 
           <div className="sm:flex relative ">
             <div className=" hidden sm:block h-full sticky top-12">
@@ -83,14 +83,16 @@ function KidsFootwear() {
                 ) : (
                   kidsfootwearpro.map((product) => (
                     <div key={product.id} className="m-4">
-                      <Card
-                        id={product.id}
-                        src={product.image}
-                        title={product.Title}
-                        Previous={product.previous_price}
-                        Current={product.Current_price}
-                        discount={product.discount}
-                      />
+                      <Suspense fallback={<CardSkeleton />}>
+                        <Card
+                          id={product.id}
+                          src={product.image}
+                          title={product.Title}
+                          Previous={product.previous_price}
+                          Current={product.Current_price}
+                          discount={product.discount}
+                        />
+                      </Suspense>
                     </div>
                   ))
                 )}
