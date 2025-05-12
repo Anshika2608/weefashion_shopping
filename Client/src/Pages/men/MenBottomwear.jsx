@@ -1,5 +1,5 @@
-import React, {useContext, useState,lazy, useEffect, Suspense } from "react";
-const Card=lazy(()=> import("../../Components/Card/Card") );
+import React, { useContext, useState, lazy, useEffect, Suspense } from "react";
+const Card = lazy(() => import("../../Components/Card/Card"));
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
 import menBottomwear from "../../assets/Men_Images/banner1.jpg";
@@ -8,8 +8,6 @@ import { Link } from "react-router-dom";
 function MenBottomwear() {
   const { bottomwearProducts,
     handleColor, handleCategory, errorbott, handleCompany, handleSize, handlePriceSort, clearFilter, menLoading } = useContext(MenContext);
-
-
   const colors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple"];
   const sizes = ["S", "M", "L", "XL", "XXL"];
   const categories = ["Joggers", "Cargo-Pants", "Jeans"];
