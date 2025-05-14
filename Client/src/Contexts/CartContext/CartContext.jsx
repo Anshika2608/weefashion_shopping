@@ -12,7 +12,7 @@ export const CartContextProvider = ({ children }) => {
 
   const { loginData } = useContext(LoginContext);
   const History = useNavigate()
-
+  let token = localStorage.getItem("usersdatatoken");
   useEffect(() => {
     if (loginData?.ValidUserOne?.email) {
       fetchCart();
@@ -56,18 +56,37 @@ export const CartContextProvider = ({ children }) => {
     setPreviousAmount(sum);
   };
 
-  const handleQuantityChange = (productId, change) => {
-    setQuantityMap(prevQuantityMap => {
-      const updatedQuantity = prevQuantityMap[productId] + change;
-      const newQuantity = Math.max(updatedQuantity, 1); // Ensure quantity is at least 1
-      const newQuantityMap = {
-        ...prevQuantityMap,
-        [productId]: newQuantity
-      };
-      calculateTotalAmount(cart, newQuantityMap);
-      return newQuantityMap;
-    });
-  };
+const handleQuantityChange = async (productId, delta) => {
+  const updatedQuantity = quantityMap[productId] + delta;
+
+  if (updatedQuantity <= 0) return;
+
+  setQuantityMap((prevQuantityMap) => ({
+    ...prevQuantityMap,
+    [productId]: updatedQuantity,
+  }));
+
+  try {
+    await axios.put(
+      `${url}/api/cart/editQuantity`,
+      {
+        productId,
+        quantity: updatedQuantity,
+      },
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
+
+    fetchCart();
+  } catch (error) {
+    console.error("Error updating cart quantity:", error);
+    // toast.error("Failed to update cart quantity.");
+  }
+};
+
 
   const deleteCartItem = async (productId) => {
     try {

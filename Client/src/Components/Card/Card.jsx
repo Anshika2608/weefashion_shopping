@@ -86,7 +86,7 @@ function Card({
       }
       const storedCart = localStorage.getItem('cart');
       const cartItems = storedCart ? JSON.parse(storedCart) : [];
-
+      const quantity = 1;
       if (addedToCart) {
         await axios.delete(`${url}/api/cart/deleteCart/${id}`, {
           params: { email: loginData.ValidUserOne.email }
@@ -102,11 +102,12 @@ function Card({
           Previous,
           Current,
           discount,
+          quantity,
           email: loginData.ValidUserOne.email
         });
         setAddedToCart(true);
          await fetchCart();
-        localStorage.setItem('cart', JSON.stringify([...cartItems, { id, title, src, Previous, Current, discount, email }]));
+        localStorage.setItem('cart', JSON.stringify([...cartItems, { id, title, src, Previous, quantity,Current, discount, email }]));
       }
     } catch (err) {
       console.error("Error handling cart:", err);
