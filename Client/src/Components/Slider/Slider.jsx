@@ -54,6 +54,7 @@ const MUISlider = () => {
             key={index}
             component="img"
             src={img}
+            loading={index === 0 ? "eager" : "lazy"} 
             alt={`Slide ${index + 1}`}
             sx={{
               width: "100%",
