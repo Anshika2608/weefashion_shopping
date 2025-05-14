@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import Cart from '../../Components/Cart/Cart';
-import {loadStripe} from "@stripe/stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { useLocation } from 'react-router-dom';
 function PlaceOrder() {
     const location = useLocation();
@@ -19,10 +19,18 @@ function PlaceOrder() {
         country: "",
         phone: ""
     });
-  const makePayment=async()=>{
-    const stripe=await loadStripe("pk_test_51Q1VhFGOB3MpsHa68zznQZ0fFGismuEKdshdpW5p7S8tp4TlDcXSw9f2CJCU1nf5iFKboHogRNoLdqDQCoz8z9Ph00WvENZnwB")
-    
-  }
+    const makePayment = async () => {
+        try {
+            const response = await axios.post(`${url}/api/payment/create-checkout-session`, {
+                email: formData.email
+            });
+            window.location.href = response.data.url;
+        } catch (error) {
+            toast.error("Payment initialization failed.");
+            console.error("Stripe error:", error);
+        }
+    };
+
     const handleSubmit = async () => {
         const { fname, lname, email, street, city, state, zipCode, country, phone } = formData;
 
@@ -57,19 +65,7 @@ function PlaceOrder() {
                 phone: phone.toString()
             });
 
-            setFormData({
-                fname: "",
-                lname: "",
-                email: "",
-                street: "",
-                city: "",
-                state: "",
-                zipCode: "",
-                country: "",
-                phone: ""
-            });
 
-            toast.success("Order placed successfully!", { position: "top-right" });
 
         } catch (error) {
             console.log("Error:", error.response ? error.response.data : error.message);
@@ -111,23 +107,23 @@ function PlaceOrder() {
                 </div>
                 <div className='flex flex-col items-center justify-center mb-20'>
                     <Cart
-                    
+
                         previousAmount={previousAmount}
                         totalAmount={totalAmount}
                         onProceed={() => History("/place-order")}
                     />
                     <div className=''>
-                    <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-20' onClick={makePayment}>
-                        Pay with Stripe
-                    </button>
-                    <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
-                        Pay with RazorPay
-                    </button>
-                    <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
-                        Pay with PhonePay
-                    </button>
+                        <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-20' onClick={makePayment}>
+                            Pay with Stripe
+                        </button>
+                        <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
+                            Pay with RazorPay
+                        </button>
+                        <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
+                            Pay with PhonePay
+                        </button>
                     </div>
-                    
+
                 </div>
                 <ToastContainer />
             </div>
