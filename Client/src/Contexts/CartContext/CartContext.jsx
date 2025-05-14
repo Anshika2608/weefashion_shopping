@@ -18,29 +18,30 @@ export const CartContextProvider = ({ children }) => {
       fetchCart();
     }
   }, [loginData?.ValidUserOne?.email]);
-  const fetchCart = async () => {
-    try {
-      const res = await axios.get(`${url}/api/cart/`, {
-        params: { email: loginData?.ValidUserOne?.email }
-      });
-      const responseData = res.data.items;
-      setCart(responseData);
-      localStorage.setItem('cart', JSON.stringify(responseData));
+const fetchCart = async () => {
+  try {
+    const res = await axios.get(`${url}/api/cart/`, {
+      params: { email: loginData?.ValidUserOne?.email }
+    });
 
-      // Initialize quantity map
-      const initialQuantityMap = {};
-      responseData.forEach(product => {
-        initialQuantityMap[product.id] = 1;
-      });
-      setQuantityMap(initialQuantityMap);
+    const responseData = res.data.items;
 
-      // Calculate initial total
-      calculateTotalAmount(responseData, initialQuantityMap);
+    setCart(responseData);
+    localStorage.setItem('cart', JSON.stringify(responseData));
 
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    const initialQuantityMap = {};
+    responseData.forEach(product => {
+      initialQuantityMap[product.id] = product.quantity;
+    });
+    setQuantityMap(initialQuantityMap);
+
+    calculateTotalAmount(responseData, initialQuantityMap);
+
+  } catch (err) {
+    console.error("Error fetching cart:", err);
+  }
+};
+
   const isInCart = (productId) => {
     return cart.some((item) => item.id === productId);
   };
@@ -80,12 +81,16 @@ const handleQuantityChange = async (productId, delta) => {
       }
     );
 
-    fetchCart();
+     fetchCart();
   } catch (error) {
     console.error("Error updating cart quantity:", error);
-    // toast.error("Failed to update cart quantity.");
+    setQuantityMap((prevQuantityMap) => ({
+      ...prevQuantityMap,
+      [productId]: quantityMap[productId], 
+    }));
   }
 };
+
 
 
   const deleteCartItem = async (productId) => {
