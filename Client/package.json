@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.0",
     "@stripe/stripe-js": "^4.5.0",
     "axios": "^1.7.2",
     "json-server": "^1.0.0-alpha.23",
@@ -18,7 +21,9 @@
     "react-icons": "^5.0.1",
     "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.22.3",
-    "react-toastify": "^10.0.5"
+    "react-slick": "^0.30.3",
+    "react-toastify": "^10.0.5",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

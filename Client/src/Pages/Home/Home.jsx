@@ -1,6 +1,6 @@
 import React, { Suspense, lazy,useEffect, useState, useContext } from "react";
 import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
-import Slider from "../../Components/Slider/Slider";
+import MUISlider from "../../Components/Slider/Slider";
 import axios from "axios";
 const Card = lazy(() => import("../../Components/Card/Card"))
 import { Link } from "react-router-dom";
@@ -64,7 +64,7 @@ function Home() {
   return (
     <>
       <div className="pt-24 w-full overflow-x-hidden">
-        <Slider />
+        <MUISlider />
         <div className="flex justify-center items-center flex-wrap ">
           <Features source={f1} text="Free Shipping" bgcolor="bg-red-100" />
           <Features source={f2} text="Online Order" bgcolor="bg-lime-300" />

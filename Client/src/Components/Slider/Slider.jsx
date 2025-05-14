@@ -1,55 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import bannerImage1 from '../../assets/banner_women.png';
-import bannerImage2 from '../../assets/banner_mens.png';
-import bannerImage3 from '../../assets/banner_kids.png';
+import React from "react";
+import Slider from "react-slick";
+import { Box, useTheme } from "@mui/material";
 
+import bannerImage1 from "../../assets/banner_women.png";
+import bannerImage2 from "../../assets/banner_mens.png";
+import bannerImage3 from "../../assets/banner_kids.png";
 
-import './Slider.css'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const Slider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  
-  const images = [bannerImage1, bannerImage2, bannerImage3];
+const images = [bannerImage1, bannerImage2, bannerImage3];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % images.length);
-    }, 2700); // Change slide every 2.7 seconds
+const MUISlider = () => {
+  const theme = useTheme();
 
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [images.length]);
-
-  const handleDotClick = (index) => {
-    setCurrentSlide(index);
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 400,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    pauseOnHover: true,
+    customPaging: () => (
+      <span
+        style={{
+          width: "10px",
+          height: "10px",
+          backgroundColor: "gray",
+          borderRadius: "50%",
+          display: "inline-block",
+          margin: "0 5px",
+        }}
+      />
+    ),
+    dotsClass: "slick-dots custom-dots",
   };
 
   return (
-    <div className="slider-container w-full">
-      <div className="slider-images"
-     >
-        {images.map((image, index) => (
-          <img
+    <Box
+      sx={{
+        position: "relative",
+        width: "100%",
+        overflow: "hidden",
+        borderRadius: 2,
+      }}
+    >
+      <Slider {...settings}>
+        {images.map((img, index) => (
+          <Box
             key={index}
-            src={image}
+            component="img"
+            src={img}
             alt={`Slide ${index + 1}`}
-            className={`slide-image ${currentSlide === index ? 'active' : ''}`}
-            style={{
-              transform: `translateX(-${currentSlide * 100}%)`,
+            sx={{
+              width: "100%",
+              height: { xs: "200px", sm: "300px", md: "400px" },
+              objectFit: "fill",
             }}
           />
         ))}
-      </div>
-      <div className="pagination">
-        {images.map((_,index) => (
-          <span
-            key={index}
-            className={currentSlide === index ? 'dot active' : 'dot'}
-            onClick={() => handleDotClick(index)}
-          ></span>
-        ))}
-      </div>
-    </div>
+      </Slider>
+    </Box>
   );
 };
 
-export default Slider;
+export default MUISlider;
