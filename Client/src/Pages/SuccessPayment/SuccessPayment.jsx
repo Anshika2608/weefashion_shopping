@@ -6,10 +6,9 @@ import { toast } from "react-toastify";
 
 const SuccessPayment = () => {
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  let token = localStorage.getItem("usersdatatoken");
   const url = "https://weefashion-backend.onrender.com";
 
-  // Extract orderId from query params
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("orderId");
 
