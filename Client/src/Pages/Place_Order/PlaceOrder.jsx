@@ -65,8 +65,6 @@ function PlaceOrder() {
                 phone: phone.toString()
             });
 
-
-
         } catch (error) {
             console.log("Error:", error.response ? error.response.data : error.message);
             toast.error("Failed to save delivery information", { position: "top-right" });

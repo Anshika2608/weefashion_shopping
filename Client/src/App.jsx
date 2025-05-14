@@ -52,8 +52,9 @@ function App() {
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Forgot" element={<ForgotPassword />} />
           <Route path="/place-order" element={<PlaceOrder />} />
+          <Route path="/success" element={<SuccessPayment />} />
         </Route>
-        <Route path="/success" element={<SuccessPayment />} />
+        
 
       </Routes>
 
