@@ -184,13 +184,13 @@ const url="https://weefashion-backend.onrender.com"
                 </NavLink>
               }
               
-              <NavLink
+              {/* <NavLink
                 to="/newProduct"
                 className="block px-4 py-2 text-gray-800 hover:bg-black  hover:text-white"
               >
                 Add Product
-              </NavLink>
-            
+              </NavLink> */}
+          
           <div >
             <NavLink
               to="/Wishlist"
