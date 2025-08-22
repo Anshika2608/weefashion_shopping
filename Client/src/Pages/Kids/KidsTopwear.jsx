@@ -8,12 +8,12 @@ import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function KidsTopwear() {
   const {
-    kidstopwearpro, sizeFilter, ColorFilter, CategoryFilter, toperror, CompanyFilter, emptyFilter, priceFilter, loading } = useContext(KidsContext);
+    kidsTopwearPro, handleKidsTopwearFilter, toperror,emptyFilter,loading } = useContext(KidsContext);
 
-  const kidcolors = ["Blue", "Black", "Yellow", "White", "Green", "Purple", "Red", "Pink", "Gray"]
-  const kidcompanys = ["Puma", "Park Avenue", "U.S Polo"]
-  const kidcategorys = ["Hoodie", "Sweatshirt", "T-shirt"]
-  const kidsizes = ["11Y", "12Y", "13Y", "14Y"]
+  const kidColors = ["Blue", "Black", "Yellow", "White", "Green", "Purple", "Red", "Pink", "Gray"]
+  const kidCompanies = ["Puma", "Park Avenue", "U.S Polo"]
+  const kidCategories = ["Hoodie", "Sweatshirt", "T-shirt"]
+  const kidSizes = ["11Y", "12Y", "13Y", "14Y"]
   const [kidtopfiltervalue, setKidTopFilterValue] = useState(false)
   return (
     <>
@@ -41,32 +41,33 @@ function KidsTopwear() {
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
               <FilterKids
 
-                kidcolors={kidcolors}
-                kidcompanys={kidcompanys}
-                kidsizes={kidsizes}
-                kidcategorys={kidcategorys}
-                CompanyFilter={CompanyFilter}
-                emptyFilter={emptyFilter}
-                priceFilter={priceFilter}
-                sizeFilter={sizeFilter}
-                ColorFilter={ColorFilter}
-                CategoryFilter={CategoryFilter}
+                kidColors={kidColors}
+                kidCompanies={kidCompanies}
+                kidCategories={kidCategories}
+                kidSizes={kidSizes}
+                ColorFilter={(val) => handleKidsTopwearFilter("color", val)}
+                CategoryFilter={(val) => handleKidsTopwearFilter("category", val)}
+                CompanyFilter={(val) => handleKidsTopwearFilter("company", val)}
+                sizeFilter={(val) => handleKidsTopwearFilter("size", val)}
+                priceFilter={(val) => handleKidsTopwearFilter("sort", val)}
+                clearFilters={emptyFilter}
               />
             </div>
             : ""}
           <div className="sm:flex relative ">
             <div className="hidden sm:block h-full sticky top-12">
-              <FilterKids
-                kidcolors={kidcolors}
-                kidcompanys={kidcompanys}
-                kidsizes={kidsizes}
-                kidcategorys={kidcategorys}
-                CompanyFilter={CompanyFilter}
-                emptyFilter={emptyFilter}
-                priceFilter={priceFilter}
-                sizeFilter={sizeFilter}
-                ColorFilter={ColorFilter}
-                CategoryFilter={CategoryFilter}
+             <FilterKids
+
+                kidColors={kidColors}
+                kidCompanies={kidCompanies}
+                kidCategories={kidCategories}
+                kidSizes={kidSizes}
+                ColorFilter={(val) => handleKidsTopwearFilter("color", val)}
+                CategoryFilter={(val) => handleKidsTopwearFilter("category", val)}
+                CompanyFilter={(val) => handleKidsTopwearFilter("company", val)}
+                sizeFilter={(val) => handleKidsTopwearFilter("size", val)}
+                priceFilter={(val) => handleKidsTopwearFilter("sort", val)}
+                clearFilters={emptyFilter}
               />
             </div>
             <div className="ml-6">
@@ -82,7 +83,7 @@ function KidsTopwear() {
                     </div>
                   ))
                 ) : (
-                  kidstopwearpro.map((product) => (
+                  kidsTopwearPro.map((product) => (
                     <div key={product.id} className="m-4">
                       <Suspense fallback={<CardSkeleton />}>
                         <Card

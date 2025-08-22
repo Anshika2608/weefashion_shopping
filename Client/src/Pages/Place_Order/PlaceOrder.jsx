@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import Cart from '../../Components/Cart/Cart';
-import { loadStripe } from "@stripe/stripe-js"
 import { useLocation } from 'react-router-dom';
 function PlaceOrder() {
     const location = useLocation();
@@ -37,7 +36,6 @@ function PlaceOrder() {
         const nameRegex = /^[A-Za-z]{2,50}$/;
         const phoneRegex = /^[6-9]\d{9}$/;
         const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-        console.log("Form Data:", formData);
         if (Object.values(formData).some(field => field === "")) {
             toast.error("Fill all details", { position: "top-right" });
             return;
@@ -73,8 +71,8 @@ function PlaceOrder() {
 
     return (
         <>
-            <div className='flex flex-col sm:flex-row justify-between gap-4 pt-24 min-h-[80vh] border-t'>
-                <div className='flex flex-col gap-4 w-full sm:max-w-[480px] ml-20 mt-10'>
+            <div className='flex flex-col items-center justify-center sm:flex-row sm:justify-between gap-4 pt-24 min-h-[80vh] border-t bg-pink-50'>
+                <div className='flex flex-col pr-4 md:pr-0 gap-4 w-full sm:max-w-[480px] ml-20 mt-10'>
                     <h1 className='text-3xl font-semibold my-3 mx-20'>Delivery Information</h1>
                     <div className='flex justify-between gap-2'>
                         <input type="text" placeholder='First Name' name="fname" onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} value={formData.fname} className='p-4 w-full h-10 border-2 border-gray-300 rounded' />
@@ -103,7 +101,7 @@ function PlaceOrder() {
                         </button>
                     </div>
                 </div>
-                <div className='flex flex-col items-center justify-center mb-20'>
+                <div className='flex flex-col  justify-center mb-20'>
                     <Cart
 
                         previousAmount={previousAmount}
@@ -111,15 +109,15 @@ function PlaceOrder() {
                         onProceed={() => History("/place-order")}
                     />
                     <div className=''>
-                        <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-20' onClick={makePayment}>
+                        <button className='border-2 cursor-pointer border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-20' onClick={makePayment}>
                             Pay with Stripe
                         </button>
-                        <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
+                        {/* <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
                             Pay with RazorPay
                         </button>
                         <button className='border-2 border-black hover:border-green-500 rounded-md w-40 h-8 mt-4 ml-3'>
                             Pay with PhonePay
-                        </button>
+                        </button> */}
                     </div>
 
                 </div>

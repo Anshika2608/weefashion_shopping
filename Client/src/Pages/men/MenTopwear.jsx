@@ -6,7 +6,7 @@ import menTopwear from "../../assets/Men_Images/banner.jpg";
 import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function MenTopwear() {
-  const { topWearProducts, errort, handleColor, handleCategory, handleCompany, handleSize, handlePriceSort, clearFilter, menLoading } = useContext(MenContext);
+  const { topWearProducts, errort, handleTopwearFilter, clearFilter, menLoading } = useContext(MenContext);
 
   const colors = ["Blue", "Black", "Green", "Yellow", "White", "Gray", "Purple", "Red"];
   const sizes = ["S", "M", "L", "XL", "XXL"];
@@ -42,11 +42,11 @@ function MenTopwear() {
                 sizes={sizes}
                 categories={categories}
                 companies={companies}
-                handleColor={handleColor}
-                handleCategory={handleCategory}
-                handleCompany={handleCompany}
-                handleSize={handleSize}
-                handlePriceSort={handlePriceSort}
+                handleColor={(value) => handleTopwearFilter("color", value)}
+                handleCategory={(value) => handleTopwearFilter("category", value)}
+                handleCompany={(value) => handleTopwearFilter("company", value)}
+                handleSize={(value) => handleTopwearFilter("size", value)}
+                handlePriceSort={(value) => handleTopwearFilter("sort", value)}
                 clearFilter={clearFilter}
               />
             </div>
@@ -58,11 +58,11 @@ function MenTopwear() {
                 sizes={sizes}
                 categories={categories}
                 companies={companies}
-                handleColor={handleColor}
-                handleCategory={handleCategory}
-                handleCompany={handleCompany}
-                handleSize={handleSize}
-                handlePriceSort={handlePriceSort}
+                handleColor={(value) => handleTopwearFilter("color", value)}
+                handleCategory={(value) => handleTopwearFilter("category", value)}
+                handleCompany={(value) => handleTopwearFilter("company", value)}
+                handleSize={(value) => handleTopwearFilter("size", value)}
+                handlePriceSort={(value) => handleTopwearFilter("sort", value)}
                 clearFilter={clearFilter}
               />
             </div>

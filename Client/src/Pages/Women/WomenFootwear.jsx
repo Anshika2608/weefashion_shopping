@@ -6,12 +6,8 @@ import womenFootwear from "../../assets/Women_Images/footwearbannerw.jpg";
 import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function WomenFootwear() {
-  const { Footwearpro,
-    handleSizeChange,
-    handleColorChange,
-    handleCategoryChange,
-    handleCompanyChange,
-    handlePriceSortChange,
+  const { footwearpro,
+      handleFootwearFilter,
     clearFilters, errorfoot, womenLoading } = useContext(WomenContext);
 
   const womencolors = ["Blue", "Black", "Yellow", "White", "Gray", "Pink"];
@@ -43,35 +39,35 @@ function WomenFootwear() {
         <div className="flex relative flex-col justify-end">
           {(womenfootfiltervalue) ?
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
-              <FilterWomen
-                womencolors={womencolors}
-                womencompanys={womencompanys}
-                womencategorys={womencategorys}
-                womensizes={womensizes}
-                handleColorChange={handleColorChange}
-                handleSizeChange={handleSizeChange}
-                handleCategoryChange={handleCategoryChange}
-                handleCompanyChange={handleCompanyChange}
-                handlePriceSortChange={handlePriceSortChange}
-                clearFilters={clearFilters}
-              />
+               <FilterWomen
+              womencolors={womencolors}
+              womensizes={womensizes}
+              womencategorys={womencategorys}
+              womencompanys={womencompanys}
+              handleColorChange={(value) => handleFootwearFilter("color", value)}
+              handleCategoryChange={(value) => handleFootwearFilter("category", value)}
+              handleCompanyChange={(value) => handleFootwearFilter("company", value)}
+              handleSizeChange={(value) => handleFootwearFilter("size", value)}
+              handlePriceSortChange={(value) => handleFootwearFilter("sort", value)}
+              clearFilters={clearFilters}
+            />
 
             </div>
             : ""}
           <div className="sm:flex relative ">
             <div className=" h-full sm:block hidden sticky top-12">
-              <FilterWomen
-                womencolors={womencolors}
-                womencompanys={womencompanys}
-                womencategorys={womencategorys}
-                womensizes={womensizes}
-                handleColorChange={handleColorChange}
-                handleSizeChange={handleSizeChange}
-                handleCategoryChange={handleCategoryChange}
-                handleCompanyChange={handleCompanyChange}
-                handlePriceSortChange={handlePriceSortChange}
-                clearFilters={clearFilters}
-              />
+             <FilterWomen
+              womencolors={womencolors}
+              womensizes={womensizes}
+              womencategorys={womencategorys}
+              womencompanys={womencompanys}
+              handleColorChange={(value) => handleFootwearFilter("color", value)}
+              handleCategoryChange={(value) => handleFootwearFilter("category", value)}
+              handleCompanyChange={(value) => handleFootwearFilter("company", value)}
+              handleSizeChange={(value) => handleFootwearFilter("size", value)}
+              handlePriceSortChange={(value) => handleFootwearFilter("sort", value)}
+              clearFilters={clearFilters}
+            />
             </div>
             <div className="ml-6">
               <h2 className="text-2xl font-bold mb-4 mt-6 ml-6 ">
@@ -87,7 +83,7 @@ function WomenFootwear() {
                     </div>
                   ))
                 ) : (
-                  Footwearpro.map((product) => (
+                  footwearpro.map((product) => (
                     <div key={product.id} className="m-4">
                       <Suspense fallback={<CardSkeleton />}>
                         <Card

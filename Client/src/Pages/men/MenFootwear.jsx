@@ -1,4 +1,4 @@
-import React, { useContext, useState, lazy,useEffect, Suspense } from "react";
+import React, { useContext, useState, lazy, useEffect, Suspense } from "react";
 const Card = lazy(() => import("../../Components/Card/Card"));
 import MenContext from "../../Contexts/MenContext/MenContext";
 import FilterComponent from "../../Components/Filter/FilterMen";
@@ -7,7 +7,7 @@ import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function MenFootwear() {
   const { footwearProducts,
-    handleColor, handleCategory, handleCompany, handleSize, handlePriceSort, clearFilter, errorfootw, menLoading } = useContext(MenContext);
+    handleFootwearFilter, clearFilter, errorfootw, menLoading } = useContext(MenContext);
   const colors = ["Blue", "Black", "Yellow", "White", "Gray", "Red"];
   const sizes = ["UK6", "UK7", "UK8", "UK8"];
   const categories = ["Walking Shoes", "Sneakers", "Flipflops & Sandals"];
@@ -42,11 +42,11 @@ function MenFootwear() {
                 sizes={sizes}
                 categories={categories}
                 companies={companies}
-                handleColor={handleColor}
-                handleCategory={handleCategory}
-                handleCompany={handleCompany}
-                handleSize={handleSize}
-                handlePriceSort={handlePriceSort}
+                handleColor={(value) => handleFootwearFilter("color", value)}
+                handleCategory={(value) => handleFootwearFilter("category", value)}
+                handleCompany={(value) => handleFootwearFilter("company", value)}
+                handleSize={(value) => handleFootwearFilter("size", value)}
+                handlePriceSort={(value) => handleFootwearFilter("sort", value)}
                 clearFilter={clearFilter}
               />
             </div>
@@ -58,11 +58,11 @@ function MenFootwear() {
                 sizes={sizes}
                 categories={categories}
                 companies={companies}
-                handleColor={handleColor}
-                handleCategory={handleCategory}
-                handleCompany={handleCompany}
-                handleSize={handleSize}
-                handlePriceSort={handlePriceSort}
+                handleColor={(value) => handleFootwearFilter("color", value)}
+                handleCategory={(value) => handleFootwearFilter("category", value)}
+                handleCompany={(value) => handleFootwearFilter("company", value)}
+                handleSize={(value) => handleFootwearFilter("size", value)}
+                handlePriceSort={(value) => handleFootwearFilter("sort", value)}
                 clearFilter={clearFilter}
               />
             </div>

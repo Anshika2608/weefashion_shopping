@@ -5,96 +5,127 @@ const WomenContext = createContext();
 
 export const WomenContextProvider = ({ children }) => {
   const [topwearpro, setTopwearpro] = useState([]);
-  const [BottomWearpro, setBottomwearpro] = useState([]);
-  const [Footwearpro, setFootwearpro] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [error, setError] = useState(null);
-  const [errorbot, setErrorBot] = useState(null);
-  const [errorfoot, setErrorFoot] = useState(null);
-  const [womenLoading, setWomenLoading] = useState(true);
+  const [bottomwearpro, setBottomwearpro] = useState([]);
+  const [footwearpro, setFootwearpro] = useState([]);
+
+  // ✅ Separate filters for each category
+  const [womenTopwearFilters, setWomenTopwearFilters] = useState({});
+  const [womenBottomwearFilters, setWomenBottomwearFilters] = useState({});
+  const [womenFootwearFilters, setWomenFootwearFilters] = useState({});
+
+  // Errors
+  const [errorTop, setErrorTop] = useState(null);
+  const [errorBot, setErrorBot] = useState(null);
+  const [errorFoot, setErrorFoot] = useState(null);
+
+  const [womenLoading, setWomenLoading] = useState(false);
   const url = "https://weefashion-backend.onrender.com";
 
+  // 🎯 useEffect for Topwear
   useEffect(() => {
-    setWomenLoading(true);
-
-    const fetchData = async () => {
+    const fetchTopwear = async () => {
+      setWomenLoading(true);
       try {
-        await Promise.all([getTopwearProduct(), getBottomwearProduct(), getFootwearProduct()]);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        const response = await axios.get(`${url}/api/Clothing/womenTopwear`, {
+          params: womenTopwearFilters,
+        });
+        setTopwearpro(response.data.products);
+        setErrorTop(null);
+      } catch (err) {
+        console.log(err);
+        setErrorTop("No products for this combination is available");
       } finally {
-        setWomenLoading(false); 
+        setWomenLoading(false);
       }
     };
 
-    fetchData();
-  }, [filters]); 
+    fetchTopwear();
+  }, [womenTopwearFilters]);
 
-  
-  const getTopwearProduct = async () => {
-    try {
-      const response = await axios.get(`${url}/api/Clothing/womenTopwear`, { params: filters });
-      setTopwearpro(response.data.products);
-      setError(null);
-    } catch (err) {
-      console.log(err);
-      setError("No products for this combination is available");
-    }
-  };
+  // 🎯 useEffect for Bottomwear
+  useEffect(() => {
+    const fetchBottomwear = async () => {
+      setWomenLoading(true);
+      try {
+        const response = await axios.get(`${url}/api/Clothing/Bottomwear`, {
+          params: womenBottomwearFilters,
+        });
+        setBottomwearpro(response.data.products);
+        setErrorBot(null);
+      } catch (err) {
+        console.log(err);
+        setErrorBot("No products for this combination is available");
+      } finally {
+        setWomenLoading(false);
+      }
+    };
 
-  const getBottomwearProduct = async () => {
-    try {
-      const response = await axios.get(`${url}/api/Clothing/Bottomwear`, { params: filters });
-      setBottomwearpro(response.data.products);
-      setErrorBot(null);
-    } catch (err) {
-      console.log(err);
-      setErrorBot("No products for this combination is available");
-    }
-  };
+    fetchBottomwear();
+  }, [womenBottomwearFilters]);
 
-  const getFootwearProduct = async () => {
-    try {
-      const response = await axios.get(`${url}/api/Clothing/Footwear`, { params: filters });
-      setFootwearpro(response.data.products);
-      setErrorFoot(null);
-    } catch (err) {
-      console.log(err);
-      setErrorFoot("No products for this combination is available");
-    }
-  };
+  // 🎯 useEffect for Footwear
+  useEffect(() => {
+    const fetchFootwear = async () => {
+      setWomenLoading(true);
+      try {
+        const response = await axios.get(`${url}/api/Clothing/Footwear`, {
+          params: womenFootwearFilters,
+        });
+        setFootwearpro(response.data.products);
+        setErrorFoot(null);
+      } catch (err) {
+        console.log(err);
+        setErrorFoot("No products for this combination is available");
+      } finally {
+        setWomenLoading(false);
+      }
+    };
 
-  
+    fetchFootwear();
+  }, [womenFootwearFilters]);
+
+  // ✅ separate filter handlers
+  const handleTopwearFilter = (key, value) =>
+    setWomenTopwearFilters((prev) => ({ ...prev, [key]: value }));
+
+  const handleBottomwearFilter = (key, value) =>
+    setWomenBottomwearFilters((prev) => ({ ...prev, [key]: value }));
+
+  const handleFootwearFilter = (key, value) =>
+    setWomenFootwearFilters((prev) => ({ ...prev, [key]: value }));
+
+  // ✅ clear filters for all categories
   const clearFilters = () => {
-    setFilters({});
-    setError(null);
+    setWomenTopwearFilters({});
+    setWomenBottomwearFilters({});
+    setWomenFootwearFilters({});
+    setErrorTop(null);
     setErrorBot(null);
     setErrorFoot(null);
-    document.querySelectorAll('input[type="radio"]').forEach((radio) => (radio.checked = false));
-  };
 
- 
-  const handleColorChange = (color) => setFilters((prev) => ({ ...prev, color }));
-  const handleSizeChange = (size) => setFilters((prev) => ({ ...prev, size }));
-  const handleCategoryChange = (Category) => setFilters((prev) => ({ ...prev, Category }));
-  const handleCompanyChange = (company) => setFilters((prev) => ({ ...prev, company }));
-  const handlePriceSortChange = (sortBy) => setFilters((prev) => ({ ...prev, sortBy }));
+    document
+      .querySelectorAll('input[type="radio"]')
+      .forEach((radio) => (radio.checked = false));
+  };
 
   return (
     <WomenContext.Provider
       value={{
+        // products
         topwearpro,
-        BottomWearpro,
-        Footwearpro,
+        bottomwearpro,
+        footwearpro,
+
+        // loading + errors
         womenLoading,
-        handleColorChange,
-        handleSizeChange,
-        error,
-        errorbot,
-        errorfoot,
-        handleCategoryChange,
-        handleCompanyChange,
-        handlePriceSortChange,
+        errorTop,
+        errorBot,
+        errorFoot,
+
+        // handlers
+        handleTopwearFilter,
+        handleBottomwearFilter,
+        handleFootwearFilter,
         clearFilters,
       }}
     >
@@ -104,4 +135,3 @@ export const WomenContextProvider = ({ children }) => {
 };
 
 export default WomenContext;
-

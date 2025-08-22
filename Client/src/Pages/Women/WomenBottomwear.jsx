@@ -1,4 +1,4 @@
-import React, { useContext, lazy,useState, useEffect, Suspense } from "react";
+import React, { useContext, lazy, useState, useEffect, Suspense } from "react";
 const Card = lazy(() => import("../../Components/Card/Card"));
 import WomenContext from "../../Contexts/WomenContext/WomenContext";
 import FilterWomen from "../../Components/Filter/FilterWomen";
@@ -6,12 +6,8 @@ import womenBottomwear from "../../assets/Women_Images/banner3.jpg";
 import CardSkeleton from "../../Components/Card Skeleton/Card_skeleton";
 import { Link } from "react-router-dom";
 function WomenBottomwear() {
-  const { BottomWearpro,
-    handleSizeChange,
-    handleColorChange,
-    handleCategoryChange,
-    handleCompanyChange,
-    handlePriceSortChange,
+  const { bottomWearpro,
+      handleBottomwearFilter,
     errorbot,
     clearFilters,
     womenLoading } = useContext(WomenContext);
@@ -47,16 +43,17 @@ function WomenBottomwear() {
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
               <FilterWomen
                 womencolors={womencolors}
-                womencompanys={womencompanys}
-                womencategorys={womencategorys}
                 womensizes={womensizes}
-                handleColorChange={handleColorChange}
-                handleSizeChange={handleSizeChange}
-                handleCategoryChange={handleCategoryChange}
-                handleCompanyChange={handleCompanyChange}
-                handlePriceSortChange={handlePriceSortChange}
+                womencategorys={womencategorys}
+                womencompanys={womencompanys}
+                handleColorChange={(value) => handleBottomwearFilter("color", value)}
+                handleCategoryChange={(value) => handleBottomwearFilter("category", value)}
+                handleCompanyChange={(value) => handleBottomwearFilter("company", value)}
+                handleSizeChange={(value) => handleBottomwearFilter("size", value)}
+                handlePriceSortChange={(value) => handleBottomwearFilter("sort", value)}
                 clearFilters={clearFilters}
               />
+
 
             </div>
             : ""}
@@ -64,16 +61,17 @@ function WomenBottomwear() {
             <div className=" h-full sticky top-12 sm:block hidden">
               <FilterWomen
                 womencolors={womencolors}
-                womencompanys={womencompanys}
-                womencategorys={womencategorys}
                 womensizes={womensizes}
-                handleColorChange={handleColorChange}
-                handleSizeChange={handleSizeChange}
-                handleCategoryChange={handleCategoryChange}
-                handleCompanyChange={handleCompanyChange}
-                handlePriceSortChange={handlePriceSortChange}
+                womencategorys={womencategorys}
+                womencompanys={womencompanys}
+                handleColorChange={(value) => handleBottomwearFilter("color", value)}
+                handleCategoryChange={(value) => handleBottomwearFilter("category", value)}
+                handleCompanyChange={(value) => handleBottomwearFilter("company", value)}
+                handleSizeChange={(value) => handleBottomwearFilter("size", value)}
+                handlePriceSortChange={(value) => handleBottomwearFilter("sort", value)}
                 clearFilters={clearFilters}
               />
+
             </div>
             <div className="ml-6">
               <h2 className="text-2xl font-bold mb-4 mt-6 ml-6">Bottomwear for Women</h2>
@@ -86,7 +84,7 @@ function WomenBottomwear() {
                     </div>
                   ))
                 ) : (
-                  BottomWearpro.map((product) => (
+                  bottomWearpro.map((product) => (
                     <div key={product.id} className="m-4">
                       <Suspense fallback={<CardSkeleton />}>
                         <Card

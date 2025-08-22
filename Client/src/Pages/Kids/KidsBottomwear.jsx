@@ -11,11 +11,11 @@ import { Link } from "react-router-dom";
 import FilterKids from "../../Components/Filter/FilterKids";
 function KidsBottomwear() {
   const {
-    kidsBottomwearpro, sizeFilter, ColorFilter, CategoryFilter, boterror, CompanyFilter, emptyFilter, priceFilter, loading } = useContext(KidsContext);
-  const kidcolors = ["Blue", "Black", "Pink", "White", "Purple"]
-  const kidcompanys = ["Puma", "Park Avenue", "U.S Polo"]
-  const kidcategorys = ["Shorts", "Pants"]
-  const kidsizes = ["11Y", "12Y", "13Y", "14Y"]
+    kidsBottomwearPro, handleKidsBottomwearFilter, boterror, loading,emptyFilter } = useContext(KidsContext);
+  const kidColors = ["Blue", "Black", "Pink", "White", "Purple"]
+  const kidCompanies = ["Puma", "Park Avenue", "U.S Polo"]
+  const kidCategories = ["Shorts", "Pants"]
+  const kidSizes = ["11Y", "12Y", "13Y", "14Y"]
   const [filterValue, setFiltervalue] = useState(false)
   return (
     <>
@@ -43,34 +43,36 @@ function KidsBottomwear() {
           {filterValue && (
             <div className="absolute top-0 left-0 w-full h-full bg-white z-50 p-4">
               <FilterKids
-                kidcolors={kidcolors}
-                kidcompanys={kidcompanys}
-                kidsizes={kidsizes}
-                kidcategorys={kidcategorys}
-                CompanyFilter={CompanyFilter}
-                emptyFilter={emptyFilter}
-                priceFilter={priceFilter}
-                sizeFilter={sizeFilter}
-                ColorFilter={ColorFilter}
-                CategoryFilter={CategoryFilter}
+
+                kidColors={kidColors}
+                kidCompanies={kidCompanies}
+                kidCategories={kidCategories}
+                kidSizes={kidSizes}
+                ColorFilter={(val) => handleKidsBottomwearFilter("color", val)}
+                CategoryFilter={(val) => handleKidsBottomwearFilter("category", val)}
+                CompanyFilter={(val) => handleKidsBottomwearFilter("company", val)}
+                sizeFilter={(val) => handleKidsBottomwearFilter("size", val)}
+                priceFilter={(val) => handleKidsBottomwearFilter("sort", val)}
+                clearFilters={emptyFilter}
               />
             </div>
           )}
           <div className=" sm:flex relative ">
             <div className="hidden sm:block h-full sticky top-12">
               <FilterKids
-                className=" h-full"
-                kidcolors={kidcolors}
-                kidcompanys={kidcompanys}
-                kidsizes={kidsizes}
-                kidcategorys={kidcategorys}
-                CompanyFilter={CompanyFilter}
-                emptyFilter={emptyFilter}
-                priceFilter={priceFilter}
-                sizeFilter={sizeFilter}
-                ColorFilter={ColorFilter}
-                CategoryFilter={CategoryFilter}
+
+                kidColors={kidColors}
+                kidCompanies={kidCompanies}
+                kidCategories={kidCategories}
+                kidSizes={kidSizes}
+                ColorFilter={(val) => handleKidsBottomwearFilter("color", val)}
+                CategoryFilter={(val) => handleKidsBottomwearFilter("category", val)}
+                CompanyFilter={(val) => handleKidsBottomwearFilter("company", val)}
+                sizeFilter={(val) => handleKidsBottomwearFilter("size", val)}
+                priceFilter={(val) => handleKidsBottomwearFilter("sort", val)}
+                clearFilters={emptyFilter}
               />
+              
             </div>
             <div className="ml-6">
               <h2 className="text-2xl font-bold mb-4 mt-6 ml-6 ">
@@ -85,7 +87,7 @@ function KidsBottomwear() {
                     </div>
                   ))
                 ) : (
-                  kidsBottomwearpro.map((product) => (
+                  kidsBottomwearPro.map((product) => (
                     <div key={product.id} className="m-4">
                       <Suspense fallback={<CardSkeleton />}>
                         <Card
